@@ -20,7 +20,7 @@
 
 <script>
 import mxgraph from './../utils/mxgraph'
-const { mxGraph, mxClient, mxCodec, mxUtils, mxEvent, mxCell, mxGeometry, mxRubberband, mxImage } = mxgraph
+const { mxGraph, mxClient, mxCodec, mxUtils, mxEvent, mxCell, mxGeometry, mxRubberband, mxImage, mxRectangle } = mxgraph
 
 Object.assign(mxEvent, {
   NORMAL_TYPE_CLICKED: 'NORMAL_TYPE_CLICKED'
@@ -29,6 +29,7 @@ let MxCell = mxCell
 let MxGeometry = mxGeometry
 let MxRubberband = mxRubberband
 let MxImage = mxImage
+let MxRectangle = mxRectangle
 
 export default {
   data () {
@@ -47,7 +48,14 @@ export default {
       let MxCodec = mxCodec
       this.graph = new MxGraph(container)
 
-      this.graph.setBackgroundImage(new MxImage('~@/images/bg.svg', 600, 600))
+      // 设置背景
+      this.graph.setBackgroundImage(new MxImage('http://10.12.70.60:8280/zutai/stencils/editor/simulationDiya/byq_S.svg', 600, 600))
+
+      this.graph.maximumGraphBounds = new MxRectangle(0, 0, 600, 600)
+
+      // Resizes the container but never make it bigger than the background
+      this.graph.minimumContainerSize = new MxRectangle(0, 0, 600, 600)
+      this.graph.setResizeContainer(true)
 
       // 生成 Hello world!
       var parent = this.graph.getDefaultParent()
@@ -128,7 +136,7 @@ export default {
       mxUtils.makeDraggable(ele, dropGraph, dropSuccessCb, dragElt,
         null, null, null, true)
 
-      // Changes the zoom on mouseWheel events
+      // j监听鼠标滚动事件
       mxEvent.addMouseWheelListener((evt, up) => {
         if (!mxEvent.isConsumed(evt)) {
           if (up) {
@@ -181,18 +189,17 @@ export default {
     }
     #graph-content {
       flex: 1;
+      width: 100%;
+      height: 100%;
+      background: url("~@/images/grid.gif");
       #graph-container {
         width: 100%;
         // height: 100%;
         cursor: default;
         touch-action: none;
-        overflow: auto;
-        background: url("~@/images/grid.gif");
+        overflow: hidden;
       }
     }
   }
 }
-</style>
-
-<style lang="scss">
 </style>
