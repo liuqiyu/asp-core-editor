@@ -5,32 +5,13 @@
            alt="哈哈哈"
            class="drap">
     </div>
-    <div :graph="graph"
-         id="graph-map">
-      <!-- <div id="graph-tool">
-        <el-button @click="zoomIn"
-                   type="text"
-                   icon="iconfont iconiconset0158"></el-button>
-        <el-button @click="zoomOut"
-                   type="text"
-                   icon="iconfont iconsuoxiao"></el-button>
-        <el-button @click="handleUndo"
-                   type="text"
-                   icon="iconfont iconundo"></el-button>
-        <el-button @click="handleRedo"
-                   type="text"
-                   icon="iconfont iconredo"></el-button>
-      </div> -->
-
-      <Tool :graph="graph"
-            id="graph-tool"></Tool>
-
+    <div id="graph-map">
+      <div id="graph-tool">
+        <el-button @click="zoomIn">in</el-button>
+        <el-button @click="zoomOut">out</el-button>
+      </div>
       <div id="graph-content">
         <div id="graph-container">
-        </div>
-        <div id="outlineContainer"
-             ref="outlineContainer"
-             style="z-index:1;position:absolute;overflow:hidden;top:0px;right:0px;width:220px;height:160px;background:transparent;border: 3px solid black;">
         </div>
       </div>
     </div>
@@ -38,16 +19,12 @@
 </template>
 
 <script>
-import Tool from './tool'
 import mxgraph from './../utils/mxgraph'
-const { mxGraph, mxClient, mxCodec, mxUtils, mxEvent, mxCell, mxGeometry,
-  mxRubberband, mxImage, mxRectangle, mxConstants,
-  mxPerimeter, mxOutline, mxDivResizer, mxUndoManager } = mxgraph
+const { mxGraph, mxClient, mxCodec, mxUtils, mxEvent, mxCell, mxGeometry, mxRubberband, mxImage, mxRectangle, mxFastOrganicLayout, mxConstants, mxPerimeter } = mxgraph
 
 Object.assign(mxEvent, {
   NORMAL_TYPE_CLICKED: 'NORMAL_TYPE_CLICKED'
 })
-
 let MxCell = mxCell
 let MxGeometry = mxGeometry
 let MxRubberband = mxRubberband
@@ -55,18 +32,13 @@ let MxImage = mxImage
 let MxRectangle = mxRectangle
 let MxGraph = mxGraph
 let MxCodec = mxCodec
-let MxOutline = mxOutline
-let MxDivResizer = mxDivResizer
-let MxUndoManager = mxUndoManager
+let MxFastOrganicLayout = mxFastOrganicLayout
 
 export default {
   data () {
     return {
       graph: null
     }
-  },
-  components: {
-    Tool
   },
   mounted () {
     if (!mxClient.isBrowserSupported()) {
@@ -91,9 +63,7 @@ export default {
 
       // Resizes the container but never make it bigger than the background
       this.graph.minimumContainerSize = new MxRectangle(0, 0, 600, 600)
-      // this.graph.setResizeContainer(true) // 取消自适应屏幕
-
-      const outlineContainer = this.$refs.outlineContainer
+      this.graph.setResizeContainer(true)
 
       // Changes the default vertex style in-place
       var style = this.graph.getStylesheet().getDefaultVertexStyle()
@@ -116,16 +86,38 @@ export default {
 
       this.graph.gridSize = 20
 
+      var layout = new MxFastOrganicLayout(this.graph)
+
       // 生成 Hello world!
       var parent = this.graph.getDefaultParent()
+      // this.graph.getModel().beginUpdate()
+      // try {
+      //   var v1 = this.graph.insertVertex(parent, null, 'Hello,', 20, 200, 80, 30)
+      //   var v2 = this.graph.insertVertex(parent, null, 'World', 200, 150, 80, 30)
+      //   var v3 = this.graph.insertVertex(parent, null, 'everyBody!', 300, 350, 60, 60)
+      //   this.graph.insertEdge(parent, null, '', v1, v2)
+      //   this.graph.insertEdge(parent, null, '', v2, v3)
+      //   this.graph.insertEdge(parent, null, '', v1, v3)
+      // } finally {
+      //   // Updates the display
+      //   this.graph.getModel().endUpdate()
+      // }
+
+      // Load cells and layouts the graph
       this.graph.getModel().beginUpdate()
       try {
-        var v1 = this.graph.insertVertex(parent, null, 'Hello,', 20, 200, 80, 30)
-        var v2 = this.graph.insertVertex(parent, null, 'World', 200, 150, 80, 30)
-        var v3 = this.graph.insertVertex(parent, null, 'everyBody!', 300, 350, 60, 60)
-        this.graph.insertEdge(parent, null, '', v1, v2)
-        this.graph.insertEdge(parent, null, '', v2, v3)
-        this.graph.insertEdge(parent, null, '', v1, v3)
+        // Loads the custom file format (TXT file)
+        // parse(graph, 'fileio.txt');
+
+        // Loads the mxGraph file format (XML file)
+        this.read(this.graph, 'fileio.xml')
+
+        // Gets the default parent for inserting new cells. This
+        // is normally the first child of the root (ie. layer 0).
+        // var parent = this.graph.getDefaultParent()
+
+        // Executes the layout
+        layout.execute(parent)
       } finally {
         // Updates the display
         this.graph.getModel().endUpdate()
@@ -207,25 +199,17 @@ export default {
           mxEvent.consume(evt, false, false) // 消耗给定的事件
         }
       })
-
-      if (mxClient.IS_QUIRKS) {
-        document.body.style.overflow = 'hidden'
-        /* eslint-disable no-new */
-        new MxDivResizer(outlineContainer)
-      }
-      /* eslint-disable no-new */
-      new MxOutline(this.graph, outlineContainer)
-
-      this.undoManager = new MxUndoManager()
-
-      var listener = (sender, evt) => {
-        this.undoManager.undoableEditHappened(evt.getProperty('edit'))
-      }
-      this.graph.getModel().addListener(mxEvent.UNDO, listener)
-      this.graph.getView().addListener(mxEvent.UNDO, listener)
     }
   },
   methods: {
+    zoomIn () {
+      console.log(this.graph.view.scale, 1)
+      this.graph.zoomIn()
+    },
+    zoomOut () {
+      console.log(this.graph.view.scale)
+      this.graph.zoomOut()
+    },
     read (filename) {
       var req = mxUtils.load(filename)
       var root = req.getDocumentElement()
@@ -266,14 +250,12 @@ export default {
       height: 40px;
     }
     #graph-content {
-      position: relative;
-      flex: 999;
+      flex: 1;
       width: 100%;
       height: 100%;
       background: url("~@/images/grid.gif");
       #graph-container {
         width: 100%;
-        height: 100%;
         // height: 100%;
         cursor: default;
         touch-action: none;

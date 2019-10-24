@@ -1,29 +1,16 @@
-# vue-mxgraph
+# mxgraph
 
-## Project setup
-```
-npm install
-```
+记录api
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## graph 
 
-### Compiles and minifies for production
-```
-npm run build
-```
+* graph.zoomIn()  // 放大
+* graph.zoomOut()  // 缩小
+* this.graph.view.scale  // 当前缩放比例
 
-### Run your tests
-```
-npm run test
-```
+## mxEvent
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+* mxEvent.consume(evt) // 消耗给定的事件
+  * evt	要消耗的本机事件。
+  * preventDefault	可选的boolean，以防止默认事件。默认为true。
+  * 停止传播	布尔值选项，用于停止事件传播。默认为true。
