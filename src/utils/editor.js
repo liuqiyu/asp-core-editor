@@ -1,15 +1,15 @@
 import mxgraph from '@/utils/mxgraph'
+import Tool from './tool'
+import Events from './events'
 
 const {
   mxGraph,
   mxImage,
   mxRectangle,
   mxUtils,
-  mxCodec,
   mxRubberband,
   mxEvent,
   mxClient,
-  mxOutline,
   mxUndoManager,
   mxCell,
   mxGeometry
@@ -18,9 +18,7 @@ const {
 let MxGraph = mxGraph
 let MxImage = mxImage
 let MxRectangle = mxRectangle
-let MxCodec = mxCodec
 let MxRubberband = mxRubberband
-let MxOutline = mxOutline
 let MxUndoManager = mxUndoManager
 let MxCell = mxCell
 let MxGeometry = mxGeometry
@@ -35,6 +33,11 @@ class Editor {
       mxUtils.error('Browser is not supported!', 200, false)
     } else {
       this.graph = new MxGraph(container)
+
+      // 初始化 tool
+      Tool.init(this.graph)
+      Events.init()
+
       // 设置
       this.graph.setEnabled(true) // 是否可以交互
       this.graph.setPanning(true) // 指定是否应启用平移
@@ -72,60 +75,12 @@ class Editor {
       // this.graph.getModel().addListener(mxEvent.UNDO, this._listener)
       // this.graph.getView().addListener(mxEvent.UNDO, this._listener)
 
-      // 监听鼠标滚动事件
-      mxEvent.addMouseWheelListener((evt, up) => {
-        if (!mxEvent.isConsumed(evt)) {
-          if (up) {
-            this.zoomIn()
-          } else {
-            this.zoomOut()
-          }
-
-          mxEvent.consume(evt, false, false) // 消耗给定的事件
-        }
-      })
+      return this.graph
     }
   }
 
   _listener (sender, evt) {
     this.undoManager.undoableEditHappened(evt.getProperty('edit'))
-  }
-
-  // 打包XML文件
-  static getXml () {
-    let encoder = new MxCodec()
-    let xx = encoder.encode(this.graph.getModel())
-    // 保存到getXml参数中
-    xx.setAttribute('backgroundImage', this.graph.backgroundImage.src)
-    const getXml = mxUtils.getXml(xx)
-    console.log(getXml)
-  }
-
-  // 缩略图
-  static outLine (outlineContainer) {
-    new MxOutline(this.graph, outlineContainer)
-  }
-
-  // 放大
-  static zoomIn () {
-    console.log(this.graph.view.scale)
-    this.graph.zoomIn()
-  }
-
-  // 缩小
-  static zoomOut () {
-    console.log(this.graph.view.scale)
-    this.graph.zoomOut()
-  }
-
-  // 撤销
-  static undo () {
-    this.undoManager.undo()
-  }
-
-  // 重做
-  static redo () {
-    this.undoManager.redo()
   }
 
   static addToolbarItem (ele) {

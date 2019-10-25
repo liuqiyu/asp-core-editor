@@ -1,45 +1,50 @@
-// import mxgraph from './mxgraph'
-// import init from './init'
-// const {
-//   mxEvent,
-//   mxUndoManager
-// } = mxgraph
-// const {
-//   graph
-// } = init
+import mxgraph from '@/utils/mxgraph'
 
-// let MxUndoManager = mxUndoManager
+const {
+  mxUtils,
+  mxCodec
+} = mxgraph
 
-// class Tool {
-//   static undoManager = new MxUndoManager()
+let MxCodec = mxCodec
 
-//   constructor () {
-//     graph.getModel().addListener(mxEvent.UNDO, this._listener)
-//     graph.getView().addListener(mxEvent.UNDO, this._listener)
-//   }
+class Tool {
+  static graph = null
 
-//   static _listener (sender, evt) {
-//     this.undoManager.undoableEditHappened(evt.getProperty('edit'))
-//   }
+  // Tool 初始化
+  static init (graph) {
+    this.graph = graph
+  }
+  // 放大
+  static zoomIn () {
+    console.log(this.graph.view.scale)
+    this.graph.zoomIn()
+  }
 
-//   static zoomIn () {
-//     console.log(123)
-//     // console.log(graph.view.scale, 1)
-//     graph.zoomIn()
-//   }
+  // 缩小
+  static zoomOut () {
+    console.log(this.graph.view.scale)
+    this.graph.zoomOut()
+  }
 
-//   static zoomOut () {
-//     // console.log(graph.view.scale)
-//     graph.zoomOut()
-//   }
+  // 撤销
+  static undo () {
+    this.undoManager.undo()
+  }
 
-//   static handleUndo () {
-//     this.undoManager.undo()
-//   }
+  // 重做
+  static redo () {
+    this.undoManager.redo()
+  }
 
-//   static handleRedo () {
-//     this.undoManager.redo()
-//   }
-// }
+  // 打包XML文件
+  static getXml () {
+    let encoder = new MxCodec()
+    let xx = encoder.encode(this.graph.getModel())
+    // 保存到getXml参数中
+    xx.setAttribute('backgroundImage', this.graph.backgroundImage.src)
+    const getXml = mxUtils.getXml(xx)
+    console.log(getXml)
+  }
+}
 
-// export default Tool
+export default Tool

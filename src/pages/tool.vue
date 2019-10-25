@@ -19,23 +19,23 @@
 </template>
 
 <script>
-import editor from '@/utils/editor'
+import Tool from '@/utils/tool'
 export default {
   methods: {
     zoomIn () {
-      editor.zoomIn()
+      Tool.zoomIn()
     },
     zoomOut () {
-      editor.zoomOut()
+      Tool.zoomOut()
     },
     handleUndo () {
-      editor.undo()
+      Tool.undo()
     },
     handleRedo () {
-      editor.redo()
+      Tool.redo()
     },
     handleGetXml () {
-      editor.getXml()
+      Tool.getXml()
     }
   }
 }

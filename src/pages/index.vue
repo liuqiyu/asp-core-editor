@@ -23,6 +23,7 @@ import Tool from './tool'
 import Sidebar from './sidebar'
 import mxgraph from './../utils/mxgraph'
 import editor from '@/utils/editor'
+import OutLine from '@/utils/outLine'
 
 const { mxEvent } = mxgraph
 
@@ -44,8 +45,8 @@ export default {
     let container = document.getElementById('graph-container')
     let outlineContainer = this.$refs.outlineContainer
 
-    editor.init(container) // 初始化
-    editor.outLine(outlineContainer) // 缩略框
+    const graph = editor.init(container) // 初始化
+    OutLine.init(graph, outlineContainer) // 缩略框
 
     // if (mxClient.IS_QUIRKS) {
     //   document.body.style.overflow = 'hidden'
