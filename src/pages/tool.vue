@@ -12,26 +12,30 @@
     <el-button @click="handleRedo"
                type="text"
                icon="iconfont iconredo"></el-button>
+    <el-button @click="handleGetXml"
+               type="text"
+               icon="iconfont iconredo"></el-button>
   </div>
 </template>
 
 <script>
+import editor from '@/utils/editor'
 export default {
-  props: ['graph'],
   methods: {
     zoomIn () {
-      console.log(this.graph.view.scale, 1)
-      this.graph.zoomIn()
+      editor.zoomIn()
     },
     zoomOut () {
-      console.log(this.graph.view.scale)
-      this.graph.zoomOut()
+      editor.zoomOut()
     },
     handleUndo () {
-      this.undoManager.undo()
+      editor.undo()
     },
     handleRedo () {
-      this.undoManager.redo()
+      editor.redo()
+    },
+    handleGetXml () {
+      editor.getXml()
     }
   }
 }

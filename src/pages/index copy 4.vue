@@ -1,8 +1,27 @@
 <template>
   <div id="graph-wrapper">
-    <Sidebar id="graph-sidebar">
-    </Sidebar>
-    <div id="graph-map">
+    <div id="graph-sidebar">
+      <img src="./../images/bhd_D.svg"
+           alt="哈哈哈"
+           class="drap">
+    </div>
+    <div :graph="graph"
+         id="graph-map">
+      <!-- <div id="graph-tool">
+        <el-button @click="zoomIn"
+                   type="text"
+                   icon="iconfont iconiconset0158"></el-button>
+        <el-button @click="zoomOut"
+                   type="text"
+                   icon="iconfont iconsuoxiao"></el-button>
+        <el-button @click="handleUndo"
+                   type="text"
+                   icon="iconfont iconundo"></el-button>
+        <el-button @click="handleRedo"
+                   type="text"
+                   icon="iconfont iconredo"></el-button>
+      </div> -->
+
       <Tool :graph="graph"
             id="graph-tool"></Tool>
 
@@ -20,7 +39,6 @@
 
 <script>
 import Tool from './tool'
-import Sidebar from './sidebar'
 import mxgraph from './../utils/mxgraph'
 import editor from '@/utils/editor'
 
@@ -37,8 +55,7 @@ export default {
     }
   },
   components: {
-    Tool,
-    Sidebar
+    Tool
   },
   mounted () {
     let container = document.getElementById('graph-container')
