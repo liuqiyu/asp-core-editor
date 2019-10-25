@@ -1,7 +1,7 @@
 <template>
   <div class="graph-sidebar">
     <img ref="ele"
-         src="./../images/bhd_D.svg"
+         src="./../images/mark.svg"
          alt="哈哈哈"
          class="drap">
   </div>
