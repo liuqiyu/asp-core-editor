@@ -48,21 +48,19 @@ export default {
     const graph = editor.init(container) // 初始化
     OutLine.init(graph, outlineContainer) // 缩略框
 
-    // if (mxClient.IS_QUIRKS) {
-    //   document.body.style.overflow = 'hidden'
-    //   /* eslint-disable no-new */
-    //   new MxDivResizer(outlineContainer)
-    // }
-    // /* eslint-disable no-new */
-    // new MxOutline(this.graph, outlineContainer)
+    // 单击事件
+    graph.addListener(mxEvent.CLICK, (sender, evt) => {
+      var cell = evt.getProperty('cell') // 元件
+      console.log(cell)
+      if (cell) { }
+    })
 
-    // this.undoManager = new MxUndoManager()
-
-    // var listener = (sender, evt) => {
-    //   this.undoManager.undoableEditHappened(evt.getProperty('edit'))
-    // }
-    // this.graph.getModel().addListener(mxEvent.UNDO, listener)
-    // this.graph.getView().addListener(mxEvent.UNDO, listener)
+    // 双击事件
+    graph.addListener(mxEvent.DOUBLE_CLICK, (sender, evt) => {
+      var cell = evt.getProperty('cell') // 元件
+      console.log(cell)
+      if (cell) { }
+    })
   },
   methods: {
   }
@@ -97,13 +95,12 @@ export default {
     }
     #graph-content {
       position: relative;
-      flex: 999;
+      flex: 1;
       width: 100%;
       height: 100%;
       background: url("~@/images/grid.gif");
       #graph-container {
         width: 100%;
-        height: 100%;
         // height: 100%;
         cursor: default;
         touch-action: none;

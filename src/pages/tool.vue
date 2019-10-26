@@ -1,32 +1,86 @@
 <template>
   <div class="graph-tool">
-    <el-button @click="zoomIn"
-               type="text"
-               icon="iconfont iconiconset0158"></el-button>
-    <el-button @click="zoomOut"
-               type="text"
-               icon="iconfont iconsuoxiao"></el-button>
-    <el-button @click="handleUndo"
-               type="text"
-               icon="iconfont iconundo"></el-button>
-    <el-button @click="handleRedo"
-               type="text"
-               icon="iconfont iconredo"></el-button>
-    <el-button @click="handleGetXml"
-               type="text"
-               icon="iconfont iconredo"></el-button>
+    <el-tooltip class="item"
+                effect="dark"
+                content="方大"
+                placement="top">
+      <el-button @click="zoomIn"
+                 type="text"
+                 icon="iconfont iconiconset0158"></el-button>
+    </el-tooltip>
+
+    <el-tooltip class="item"
+                effect="dark"
+                content="缩小"
+                placement="top">
+      <el-button @click="zoomOut"
+                 type="text"
+                 icon="iconfont iconsuoxiao"></el-button>
+    </el-tooltip>
+
+    <el-tooltip class="item"
+                effect="dark"
+                content="1:1"
+                placement="top">
+      <el-button @click="handleInit"
+                 type="text"
+                 icon="iconfont iconhuanyuan"></el-button>
+    </el-tooltip>
+
+    <el-tooltip class="item"
+                effect="dark"
+                content="还原"
+                placement="top">
+      <el-button @click="handleUndo"
+                 type="text"
+                 icon="iconfont iconundo"></el-button>
+    </el-tooltip>
+
+    <el-tooltip class="item"
+                effect="dark"
+                content="重做"
+                placement="top">
+      <el-button @click="handleRedo"
+                 type="text"
+                 icon="iconfont iconredo"></el-button>
+    </el-tooltip>
+
+    <el-tooltip class="item"
+                effect="dark"
+                content="获取XML"
+                placement="top">
+      <el-button @click="handleGetXml"
+                 type="text"
+                 icon="iconfont iconXML"></el-button>
+    </el-tooltip>
+
+    <el-tooltip class="item"
+                effect="dark"
+                content="删除"
+                placement="top">
+      <el-button @click="hanleDelete"
+                 type="text"
+                 icon="iconfont iconshanchu"></el-button>
+    </el-tooltip>
   </div>
 </template>
 
 <script>
 import Tool from '@/utils/tool'
 export default {
+  data () {
+    return {
+    }
+  },
   methods: {
     zoomIn () {
       Tool.zoomIn()
     },
     zoomOut () {
       Tool.zoomOut()
+    },
+    handleInit () {
+      Tool.zoomActual()
     },
     handleUndo () {
       Tool.undo()
@@ -36,6 +90,9 @@ export default {
     },
     handleGetXml () {
       Tool.getXml()
+    },
+    hanleDelete () {
+      Tool.delete()
     }
   }
 }

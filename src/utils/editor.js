@@ -1,6 +1,6 @@
 import mxgraph from '@/utils/mxgraph'
 import Tool from './tool'
-import Events from './events'
+import MxEvents from './mxEvents'
 
 const {
   mxGraph,
@@ -24,7 +24,7 @@ let MxCell = mxCell
 let MxGeometry = mxGeometry
 
 class Editor {
-  static graph = null;
+  static graph = null
   static undoManager = null
 
   static init (container) {
@@ -36,12 +36,13 @@ class Editor {
 
       // 初始化 tool
       Tool.init(this.graph)
-      Events.init()
+      MxEvents.init()
 
       // 设置
       this.graph.setEnabled(true) // 是否可以交互
       this.graph.setPanning(true) // 指定是否应启用平移
       this.graph.setTooltips(true) // 指定是否应启用工具提示
+      this.graph.centerZoom = false
       this.graph.panningHandler.useLeftButtonForPanning = false // 指定是否应为鼠标左键激活平移。将此设置为true可能与mxRubberband冲突。默认为false。
 
       this.graph.maximumGraphBounds = new MxRectangle(0, 0, 600, 600)
@@ -52,14 +53,33 @@ class Editor {
 
       // this.graph.gridSize = 20
 
+      this.graph.isCellVisible = cell => {
+        return cell.lod == null || cell.lod / 2 < this.graph.view.scale
+      }
+
       var parent = this.graph.getDefaultParent()
       this.graph.getModel().beginUpdate()
       try {
         // 创建空的画布
         this.graph.insertVertex(parent, null)
-        this.graph.insertVertex(parent, null, 'World', 200, 150, 80, 30)
+        var v1 = this.graph.insertVertex(
+          parent,
+          null,
+          'World',
+          200,
+          150,
+          80,
+          30
+        )
+        v1.lod = 3
         // 设置背景
-        this.graph.setBackgroundImage(new MxImage('http://10.12.70.60:8280/zutai/stencils/editor/simulationDiya/byq_S.svg', 600, 600))
+        this.graph.setBackgroundImage(
+          new MxImage(
+            'http://10.12.70.60:8280/zutai/stencils/editor/simulationDiya/byq_S.svg',
+            600,
+            600
+          )
+        )
         // this.graph.view.validateBackgroundImage()
       } finally {
         // Updates the display
@@ -84,7 +104,7 @@ class Editor {
   }
 
   static addToolbarItem (ele) {
-    const _dropGraph = (evt) => {
+    const _dropGraph = evt => {
       const x = mxEvent.getClientX(evt)
       const y = mxEvent.getClientY(evt)
       // 获取 x,y 所在的元素
@@ -105,20 +125,40 @@ class Editor {
 
       console.log(`node;image=${ele.getAttribute('src')}`)
 
-      const cell = new MxCell('鼠标双击输入1', new MxGeometry(0, 0, 100, 135), `node;image=${ele.getAttribute('src')}`)
+      const cell = new MxCell(
+        '鼠标双击输入1',
+        new MxGeometry(0, 0, 100, 135),
+        `node;image=${ele.getAttribute('src')}`
+      )
       cell.vertex = true
 
       const title = ele.getAttribute('alt')
-      const titleVertex = this.graph.insertVertex(cell, null, title,
-        0.1, 0.65, 80, 16,
+      const titleVertex = this.graph.insertVertex(
+        cell,
+        null,
+        title,
+        0.1,
+        0.65,
+        80,
+        16,
         'constituent=1;whiteSpace=wrap;strokeColor=none;fillColor=none;fontColor=#e6a23c',
-        true)
+        true
+      )
       titleVertex.setConnectable(false)
 
-      const normalTypeVertex = this.graph.insertVertex(cell, null, null,
-        0.05, 0.05, 19, 14,
-        `normalType;constituent=1;fillColor=none;node:image=${ele.getAttribute('src')}`,
-        true)
+      const normalTypeVertex = this.graph.insertVertex(
+        cell,
+        null,
+        null,
+        0.05,
+        0.05,
+        19,
+        14,
+        `normalType;constituent=1;fillColor=none;node:image=${ele.getAttribute(
+          'src'
+        )}`,
+        true
+      )
 
       normalTypeVertex.setConnectable(false)
 

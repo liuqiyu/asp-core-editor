@@ -1,9 +1,6 @@
 import mxgraph from '@/utils/mxgraph'
 
-const {
-  mxUtils,
-  mxCodec
-} = mxgraph
+const { mxUtils, mxCodec } = mxgraph
 
 let MxCodec = mxCodec
 
@@ -26,6 +23,12 @@ class Tool {
     this.graph.zoomOut()
   }
 
+  // 1:1还原
+  static zoomActual () {
+    console.log(this.graph.view.scale)
+    this.graph.zoomActual()
+  }
+
   // 撤销
   static undo () {
     this.undoManager.undo()
@@ -44,6 +47,12 @@ class Tool {
     xx.setAttribute('backgroundImage', this.graph.backgroundImage.src)
     const getXml = mxUtils.getXml(xx)
     console.log(getXml)
+  }
+
+  // 打包XML文件
+  static delete () {
+    var cells = this.graph.getDeletableCells(this.graph.getSelectionCells())
+    this.graph.removeCells(cells)
   }
 }
 

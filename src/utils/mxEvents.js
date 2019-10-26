@@ -1,13 +1,11 @@
 import mxgraph from '@/utils/mxgraph'
 import Tool from './tool'
 
-const {
-  mxEvent
-} = mxgraph
+const { mxEvent } = mxgraph
 
 // let MxOutline = mxOutline
 
-class Events {
+class MxEvents {
   static init () {
     this.addMouseWheelListener()
   }
@@ -27,4 +25,4 @@ class Events {
   }
 }
 
-export default Events
+export default MxEvents
