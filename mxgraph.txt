@@ -1,0 +1,8 @@
+1、表单：http://jgraph.github.io/mxgraph/javascript/examples/userobject.html
+2、旋转：http://jgraph.github.io/mxgraph/javascript/examples/stencils.html  				http://jgraph.github.io/mxgraph/javascript/examples/touch.html
+3、锚点：http://jgraph.github.io/mxgraph/javascript/examples/portrefs.html
+	http://jgraph.github.io/mxgraph/javascript/examples/anchors.html
+4、还原：http://jgraph.github.io/mxgraph/javascript/examples/wires.html
+5、图层显示隐藏： http://jgraph.github.io/mxgraph/javascript/examples/lod.html
+6、右键：http://jgraph.github.io/mxgraph/javascript/examples/showregion.html 
+7、还原重做：http://jgraph.github.io/mxgraph/javascript/examples/htmllabel.html
