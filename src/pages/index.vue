@@ -21,7 +21,7 @@
 <script>
 import Tool from './tool'
 import Sidebar from './sidebar'
-import mxgraph from './../utils/mxgraph'
+import mxgraph from '@/utils/mxgraph'
 import editor from '@/utils/editor'
 import OutLine from '@/utils/outLine'
 
@@ -51,14 +51,14 @@ export default {
     // 单击事件
     graph.addListener(mxEvent.CLICK, (sender, evt) => {
       var cell = evt.getProperty('cell') // 元件
-      console.log(cell)
+      // console.log(cell)
       if (cell) { }
     })
 
     // 双击事件
     graph.addListener(mxEvent.DOUBLE_CLICK, (sender, evt) => {
       var cell = evt.getProperty('cell') // 元件
-      console.log(cell)
+      // console.log(cell)
       if (cell) { }
     })
   },

@@ -47,6 +47,24 @@
 
     <el-tooltip class="item"
                 effect="dark"
+                content="复制"
+                placement="top">
+      <el-button @click="handleCopy"
+                 type="text"
+                 icon="iconfont iconfuzhi"></el-button>
+    </el-tooltip>
+
+    <el-tooltip class="item"
+                effect="dark"
+                content="粘贴"
+                placement="top">
+      <el-button @click="handleParse"
+                 type="text"
+                 icon="iconfont iconniantie"></el-button>
+    </el-tooltip>
+
+    <el-tooltip class="item"
+                effect="dark"
                 content="获取XML"
                 placement="top">
       <el-button @click="handleGetXml"
@@ -93,6 +111,12 @@ export default {
     },
     hanleDelete () {
       Tool.delete()
+    },
+    handleCopy () {
+      Tool.copy()
+    },
+    handleParse () {
+      Tool.parse()
     }
   }
 }

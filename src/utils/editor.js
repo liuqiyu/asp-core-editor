@@ -10,7 +10,6 @@ const {
   mxRubberband,
   mxEvent,
   mxClient,
-  mxUndoManager,
   mxCell,
   mxGeometry
 } = mxgraph
@@ -19,13 +18,11 @@ let MxGraph = mxGraph
 let MxImage = mxImage
 let MxRectangle = mxRectangle
 let MxRubberband = mxRubberband
-let MxUndoManager = mxUndoManager
 let MxCell = mxCell
 let MxGeometry = mxGeometry
 
 class Editor {
   static graph = null
-  static undoManager = null
 
   static init (container) {
     if (!mxClient.isBrowserSupported()) {
@@ -90,17 +87,8 @@ class Editor {
       /* eslint-disable no-new */
       new MxRubberband(this.graph)
 
-      this.undoManager = new MxUndoManager()
-
-      // this.graph.getModel().addListener(mxEvent.UNDO, this._listener)
-      // this.graph.getView().addListener(mxEvent.UNDO, this._listener)
-
       return this.graph
     }
-  }
-
-  _listener (sender, evt) {
-    this.undoManager.undoableEditHappened(evt.getProperty('edit'))
   }
 
   static addToolbarItem (ele) {
@@ -118,53 +106,18 @@ class Editor {
     }
 
     const _dropSuccessCb = (graph, evt, target, x, y) => {
-      // const cell = new MxCell('什么层', new MxGeometry(0, 0, 120, 40))
-      // cell.vertex = true
-      console.log(ele.getAttribute('src'))
-      // const cell = new MxCell('鼠标双击输入1', new MxGeometry(0, 0, 100, 135), `node;image=${ele.getAttribute('src')}`)
+      const src = 'http://10.12.70.60:8280/zutai/stencils/editor/simulationDiya/byq_S.svg'
 
-      console.log(`node;image=${ele.getAttribute('src')}`)
-
-      const cell = new MxCell(
+      const nodeRootVertex = new MxCell(
         '鼠标双击输入1',
         new MxGeometry(0, 0, 100, 135),
-        `node;image=${ele.getAttribute('src')}`
+        `node;image=${src}`
       )
-      cell.vertex = true
+      nodeRootVertex.vertex = true
 
-      const title = ele.getAttribute('alt')
-      const titleVertex = this.graph.insertVertex(
-        cell,
-        null,
-        title,
-        0.1,
-        0.65,
-        80,
-        16,
-        'constituent=1;whiteSpace=wrap;strokeColor=none;fillColor=none;fontColor=#e6a23c',
-        true
-      )
-      titleVertex.setConnectable(false)
-
-      const normalTypeVertex = this.graph.insertVertex(
-        cell,
-        null,
-        null,
-        0.05,
-        0.05,
-        19,
-        14,
-        `normalType;constituent=1;fillColor=none;node:image=${ele.getAttribute(
-          'src'
-        )}`,
-        true
-      )
-
-      normalTypeVertex.setConnectable(false)
-
-      const cells = graph.importCells([cell], x, y, target)
+      const cells = graph.importCells([nodeRootVertex], x, y, target)
       if (cells != null && cells.length > 0) {
-        this.graph.setSelectionCells(cells)
+        graph.setSelectionCells(cells)
       }
     }
 
