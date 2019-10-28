@@ -116,7 +116,7 @@ export default {
       Tool.copy()
     },
     handleParse () {
-      Tool.parse()
+      Tool.paste()
     }
   }
 }

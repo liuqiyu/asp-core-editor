@@ -3,7 +3,8 @@ import Tool from './tool'
 import MxEvents from './mxEvents'
 
 const {
-  mxGraph,
+  mxEditor,
+  // mxGraph,
   mxImage,
   mxRectangle,
   mxUtils,
@@ -14,7 +15,8 @@ const {
   mxGeometry
 } = mxgraph
 
-let MxGraph = mxGraph
+let MxEditor = mxEditor
+// let MxGraph = mxGraph
 let MxImage = mxImage
 let MxRectangle = mxRectangle
 let MxRubberband = mxRubberband
@@ -22,6 +24,7 @@ let MxCell = mxCell
 let MxGeometry = mxGeometry
 
 class Editor {
+  static editor = null
   static graph = null
 
   static init (container) {
@@ -29,10 +32,12 @@ class Editor {
       // 判断是否支持mxgraph
       mxUtils.error('Browser is not supported!', 200, false)
     } else {
-      this.graph = new MxGraph(container)
-
+      this.editor = new MxEditor()
+      this.graph = this.editor.graph
+      this.editor.setGraphContainer(container)
+      console.log(this.editor)
       // 初始化 tool
-      Tool.init(this.graph)
+      Tool.init(this.editor, this.graph)
       MxEvents.init()
 
       // 设置

@@ -15,12 +15,14 @@ let MxUndoManager = mxUndoManager
 let MxGraphModel = mxGraphModel
 
 class Tool {
+  static editor = null
   static graph = null
   static undoManager = null
   static textInput = null
 
   // Tool 初始化
-  static init (graph) {
+  static init (editor, graph) {
+    this.editor = editor
     this.graph = graph
     // Undo/Redo
     this.undoManager = new MxUndoManager()
@@ -28,7 +30,7 @@ class Tool {
     graph.getModel().addListener(mxEvent.UNDO, this._listener)
     graph.getView().addListener(mxEvent.UNDO, this._listener)
 
-    this._initCopyParse()
+    this._initCopyPaste()
   }
   static _listener (sender, evt) {
     Tool.undoManager.undoableEditHappened(evt.getProperty('edit'))
@@ -81,15 +83,18 @@ class Tool {
   // 复制
   static copy () {
     console.log('复制')
+    console.log(this.editor)
+    this.editor.execute('copy')
   }
 
   // 粘贴
-  static parse () {
+  static paste () {
     console.log('粘贴')
+    this.editor.execute('paste')
   }
 
   // 复制剪切粘贴
-  static _initCopyParse () {
+  static _initCopyPaste () {
     mxClipboard.cellsToString = (cells) => {
       var codec = new MxCodec()
       var model = new MxGraphModel()
