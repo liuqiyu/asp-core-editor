@@ -6,7 +6,7 @@ const {
   mxEditor,
   // mxGraph,
   mxImage,
-  mxRectangle,
+  // mxRectangle,
   mxUtils,
   mxRubberband,
   mxEvent,
@@ -18,7 +18,7 @@ const {
 let MxEditor = mxEditor
 // let MxGraph = mxGraph
 let MxImage = mxImage
-let MxRectangle = mxRectangle
+// let MxRectangle = mxRectangle
 let MxRubberband = mxRubberband
 let MxCell = mxCell
 let MxGeometry = mxGeometry
@@ -47,10 +47,10 @@ class Editor {
       this.graph.centerZoom = false
       this.graph.panningHandler.useLeftButtonForPanning = false // 指定是否应为鼠标左键激活平移。将此设置为true可能与mxRubberband冲突。默认为false。
 
-      this.graph.maximumGraphBounds = new MxRectangle(0, 0, 600, 600)
+      // this.graph.maximumGraphBounds = new MxRectangle(0, 0, 1720, 929)
 
-      // Resizes the container but never make it bigger than the background
-      this.graph.minimumContainerSize = new MxRectangle(0, 0, 600, 600)
+      // // Resizes the container but never make it bigger than the background
+      // this.graph.minimumContainerSize = new MxRectangle(0, 0, 1720, 929)
       // this.graph.setResizeContainer(true)
 
       // this.graph.gridSize = 20
@@ -116,7 +116,7 @@ class Editor {
       const nodeRootVertex = new MxCell(
         '鼠标双击输入1',
         new MxGeometry(0, 0, 100, 135),
-        `node;image=${src}`
+        `symbol;image=${src}`
       )
       nodeRootVertex.vertex = true
 

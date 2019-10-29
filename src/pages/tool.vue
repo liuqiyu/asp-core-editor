@@ -2,7 +2,7 @@
   <div class="graph-tool">
     <el-tooltip class="item"
                 effect="dark"
-                content="方大"
+                content="放大"
                 placement="top">
       <el-button @click="zoomIn"
                  type="text"

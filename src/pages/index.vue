@@ -100,8 +100,9 @@ export default {
       height: 100%;
       background: url("~@/images/grid.gif");
       #graph-container {
+        position: absolute;
         width: 100%;
-        // height: 100%;
+        height: 100%;
         cursor: default;
         touch-action: none;
         overflow: hidden;
