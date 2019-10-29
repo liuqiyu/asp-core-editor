@@ -10,9 +10,9 @@ const {
   mxUtils,
   mxRubberband,
   mxEvent,
-  mxClient,
-  mxCell,
-  mxGeometry
+  mxClient
+  // mxCell,
+  // mxGeometry
 } = mxgraph
 
 let MxEditor = mxEditor
@@ -20,8 +20,8 @@ let MxEditor = mxEditor
 let MxImage = mxImage
 // let MxRectangle = mxRectangle
 let MxRubberband = mxRubberband
-let MxCell = mxCell
-let MxGeometry = mxGeometry
+// let MxCell = mxCell
+// let MxGeometry = mxGeometry
 
 class Editor {
   static editor = null
@@ -97,6 +97,10 @@ class Editor {
   }
 
   static addToolbarItem (ele) {
+    const src = ele.getAttribute('src')
+    const width = ele.offsetHeight
+    const height = ele.offsetWidth
+
     const _dropGraph = evt => {
       const x = mxEvent.getClientX(evt)
       const y = mxEvent.getClientY(evt)
@@ -110,23 +114,28 @@ class Editor {
       return null
     }
 
-    const _dropSuccessCb = (graph, evt, target, x, y) => {
-      const src = 'http://10.12.70.60:8280/zutai/stencils/editor/simulationDiya/byq_S.svg'
+    const _dropSuccessCb = (graph, evt, cell, x, y) => {
+      if (graph.canImportCell(cell)) {
+        var parent = graph.getDefaultParent()
+        var vertex = null
 
-      const nodeRootVertex = new MxCell(
-        '鼠标双击输入1',
-        new MxGeometry(0, 0, 100, 135),
-        `symbol;image=${src}`
-      )
-      nodeRootVertex.vertex = true
+        graph.getModel().beginUpdate()
+        try {
+          vertex = graph.insertVertex(parent, null, '', x, y, width, height, 'shape=image;image=' + src + ';')
+        } finally {
+          graph.getModel().endUpdate()
+        }
 
-      const cells = graph.importCells([nodeRootVertex], x, y, target)
-      if (cells != null && cells.length > 0) {
-        graph.setSelectionCells(cells)
+        graph.setSelectionCell(vertex)
       }
     }
 
-    mxUtils.makeDraggable(ele, _dropGraph, _dropSuccessCb)
+    const dragElt = document.createElement('img')
+    dragElt.setAttribute('src', ele.getAttribute('src'))
+    dragElt.setAttribute('style', `width:${width}px;height:${height}px;`)
+
+    mxUtils.makeDraggable(ele, _dropGraph, _dropSuccessCb, dragElt,
+      null, null, null, true)
   }
 }
 

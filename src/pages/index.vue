@@ -72,17 +72,6 @@ export default {
   width: 100%;
   height: 100%;
   display: flex;
-  #graph-sidebar {
-    flex: none;
-    width: 200px;
-    height: 100%;
-    background: #f1f1f1;
-    border-right: 1px solid #e1e1e1;
-    .drap {
-      width: 50px;
-      height: 50px;
-    }
-  }
   #graph-map {
     display: flex;
     flex-direction: column;
