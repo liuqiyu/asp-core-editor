@@ -7,13 +7,16 @@
                         :name="index"
                         :key="index">
         <div class="collapse-wrapper">
-          <div class="collapse-item"
+          <div class="collapse-item drap"
+               :data-width="cell.width"
+               :data-height="cell.height"
+               :data-src="cell.src"
                v-for="(cell, key) in item.children"
                :key="key">
             <img ref="ele"
                  :src="cell.src"
                  :alt="cell.name"
-                 class="drap">
+                 class="img">
             <p class="name">{{cell.name}}</p>
           </div>
         </div>
@@ -25,10 +28,10 @@
 <script>
 import editor from '@/utils/editor'
 export default {
+  name: 'Sidebar',
   mounted () {
     const ele = document.querySelectorAll('.drap')
     ele.forEach(item => {
-      console.log(item)
       editor.addToolbarItem(item)
     })
   },
@@ -87,7 +90,7 @@ export default {
           title: '元件2',
           children: [
             {
-              name: '你好3',
+              name: '你好1',
               src: require('./../images/mark.svg'),
               width: 48,
               height: 48,
@@ -108,7 +111,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .graph-sidebar {
   flex: none;
   height: 100%;
@@ -153,6 +156,11 @@ export default {
         margin-top: 3px;
         font-size: 12px;
       }
+    }
+  }
+  ::v-deep .el-collapse-item {
+    .el-collapse-item__header {
+      text-indent: 14px;
     }
   }
 }

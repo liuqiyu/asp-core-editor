@@ -86,6 +86,7 @@
 <script>
 import Tool from '@/utils/tool'
 export default {
+  name: 'Tool',
   data () {
     return {
     }

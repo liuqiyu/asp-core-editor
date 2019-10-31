@@ -1,5 +1,6 @@
 import mxgraph from '@/utils/mxgraph'
 import Tool from './tool'
+import Format from './format'
 import MxEvents from './mxEvents'
 
 const {
@@ -35,9 +36,23 @@ class Editor {
       this.editor = new MxEditor()
       this.graph = this.editor.graph
       this.editor.setGraphContainer(container)
-      console.log(this.editor)
+
+      // pan 拖动
+      // this.graph.panningHandler.isForcePanningEvent = (me) => {
+      //   this.graph.container.style.cursor = 'move'
+      //   return true
+      // }
+
+      // 键盘快捷键
+      const config = mxUtils.load('' +
+          'static/keyhandler-commons.xml')
+        .getDocumentElement()
+      this.editor.configure(config)
+      console.log(config)
+
       // 初始化 tool
       Tool.init(this.editor, this.graph)
+      Format.init(this.editor, this.graph)
       MxEvents.init()
 
       // 设置
@@ -63,7 +78,7 @@ class Editor {
       this.graph.getModel().beginUpdate()
       try {
         // 创建空的画布
-        this.graph.insertVertex(parent, null)
+        // this.graph.insertVertex(parent, null)
         var v1 = this.graph.insertVertex(
           parent,
           null,
@@ -77,8 +92,8 @@ class Editor {
         // 设置背景
         this.graph.setBackgroundImage(
           new MxImage(
-            'http://10.12.70.60:8280/zutai/stencils/editor/simulationDiya/byq_S.svg',
-            600,
+            '' + 'static/bg.svg',
+            800,
             600
           )
         )
@@ -96,10 +111,12 @@ class Editor {
     }
   }
 
+  // 元件初始化
   static addToolbarItem (ele) {
-    const src = ele.getAttribute('src')
-    const width = ele.offsetHeight
-    const height = ele.offsetWidth
+    const dataset = ele.dataset
+    const src = dataset.src
+    const width = dataset.width
+    const height = dataset.height
 
     const _dropGraph = evt => {
       const x = mxEvent.getClientX(evt)
@@ -131,7 +148,7 @@ class Editor {
     }
 
     const dragElt = document.createElement('img')
-    dragElt.setAttribute('src', ele.getAttribute('src'))
+    dragElt.setAttribute('src', src)
     dragElt.setAttribute('style', `width:${width}px;height:${height}px;`)
 
     mxUtils.makeDraggable(ele, _dropGraph, _dropSuccessCb, dragElt,

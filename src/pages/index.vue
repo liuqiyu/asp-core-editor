@@ -15,12 +15,14 @@
         </div>
       </div>
     </div>
+    <Format id="graph-sidebar"></Format>
   </div>
 </template>
 
 <script>
-import Tool from './tool'
-import Sidebar from './sidebar'
+import Tool from './Tool'
+import Format from './Format'
+import Sidebar from './Sidebar'
 import mxgraph from '@/utils/mxgraph'
 import editor from '@/utils/editor'
 import OutLine from '@/utils/outLine'
@@ -39,7 +41,8 @@ export default {
   },
   components: {
     Tool,
-    Sidebar
+    Sidebar,
+    Format
   },
   mounted () {
     let container = document.getElementById('graph-container')
@@ -67,7 +70,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 #graph-wrapper {
   width: 100%;
   height: 100%;
