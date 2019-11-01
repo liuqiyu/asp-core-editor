@@ -38,10 +38,10 @@ class Editor {
       this.editor.setGraphContainer(container)
 
       // pan 拖动
-      // this.graph.panningHandler.isForcePanningEvent = (me) => {
-      //   this.graph.container.style.cursor = 'move'
-      //   return true
-      // }
+      this.graph.panningHandler.isForcePanningEvent = (me) => {
+        this.graph.container.style.cursor = 'move'
+        return true
+      }
 
       // 键盘快捷键
       const config = mxUtils.load('' +
@@ -92,9 +92,9 @@ class Editor {
         // 设置背景
         this.graph.setBackgroundImage(
           new MxImage(
-            '' + 'static/bg.svg',
-            800,
-            600
+            '' + 'static/level-1.svg',
+            1024,
+            769
           )
         )
         // this.graph.view.validateBackgroundImage()
