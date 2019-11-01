@@ -123,4 +123,10 @@ export default {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.graph-tool {
+  display: flex;
+  align-items: center;
+  padding-left: 12px;
+}
+</style>
