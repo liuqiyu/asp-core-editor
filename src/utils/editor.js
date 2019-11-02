@@ -38,14 +38,14 @@ class Editor {
       this.editor.setGraphContainer(container)
 
       // pan 拖动
-      this.graph.panningHandler.isForcePanningEvent = (me) => {
-        this.graph.container.style.cursor = 'move'
-        return true
-      }
+      // this.graph.panningHandler.isForcePanningEvent = me => {
+      //   this.graph.container.style.cursor = 'move'
+      //   return true
+      // }
 
       // 键盘快捷键
-      const config = mxUtils.load('' +
-          'static/keyhandler-commons.xml')
+      const config = mxUtils
+        .load('' + 'static/keyhandler-commons.xml')
         .getDocumentElement()
       this.editor.configure(config)
       console.log(config)
@@ -56,11 +56,11 @@ class Editor {
       MxEvents.init()
 
       // 设置
-      this.graph.setEnabled(true) // 是否可以交互
-      this.graph.setPanning(true) // 指定是否应启用平移
-      this.graph.setTooltips(true) // 指定是否应启用工具提示
-      this.graph.centerZoom = false
-      this.graph.panningHandler.useLeftButtonForPanning = false // 指定是否应为鼠标左键激活平移。将此设置为true可能与mxRubberband冲突。默认为false。
+      // this.graph.setEnabled(true) // 是否可以交互
+      // this.graph.setPanning(true) // 指定是否应启用平移
+      // this.graph.setTooltips(true) // 指定是否应启用工具提示
+      // this.graph.centerZoom = false
+      // this.graph.panningHandler.useLeftButtonForPanning = false // 指定是否应为鼠标左键激活平移。将此设置为true可能与mxRubberband冲突。默认为false。
 
       // this.graph.maximumGraphBounds = new MxRectangle(0, 0, 1720, 929)
 
@@ -70,9 +70,9 @@ class Editor {
 
       // this.graph.gridSize = 20
 
-      this.graph.isCellVisible = cell => {
-        return cell.lod == null || cell.lod / 2 < this.graph.view.scale
-      }
+      // this.graph.isCellVisible = cell => {
+      //   return cell.lod == null || cell.lod / 2 < this.graph.view.scale
+      // }
 
       var parent = this.graph.getDefaultParent()
       this.graph.getModel().beginUpdate()
@@ -91,11 +91,7 @@ class Editor {
         v1.lod = 3
         // 设置背景
         this.graph.setBackgroundImage(
-          new MxImage(
-            '' + 'static/level-1.svg',
-            1024,
-            769
-          )
+          new MxImage('' + 'static/level-1.svg', 1024, 769)
         )
         // this.graph.view.validateBackgroundImage()
       } finally {
@@ -138,7 +134,17 @@ class Editor {
 
         graph.getModel().beginUpdate()
         try {
-          vertex = graph.insertVertex(parent, null, '', x, y, width, height, 'shape=image;image=' + src + ';')
+          // vertex = graph.insertVertex(
+          //   parent,
+          //   null,
+          //   '',
+          //   x,
+          //   y,
+          //   width,
+          //   height
+          //   // 'shape=image;image=' + src + ';'
+          // )
+          vertex = graph.insertVertex(parent, null, 'World', 200, 150, 80, 30)
         } finally {
           graph.getModel().endUpdate()
         }
@@ -151,8 +157,16 @@ class Editor {
     dragElt.setAttribute('src', src)
     dragElt.setAttribute('style', `width:${width}px;height:${height}px;`)
 
-    mxUtils.makeDraggable(ele, _dropGraph, _dropSuccessCb, dragElt,
-      null, null, null, true)
+    mxUtils.makeDraggable(
+      ele,
+      _dropGraph,
+      _dropSuccessCb,
+      dragElt,
+      null,
+      null,
+      null,
+      true
+    )
   }
 }
 
