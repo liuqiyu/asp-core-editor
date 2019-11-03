@@ -38,10 +38,10 @@ class Editor {
       this.editor.setGraphContainer(container)
 
       // pan 拖动
-      // this.graph.panningHandler.isForcePanningEvent = me => {
-      //   this.graph.container.style.cursor = 'move'
-      //   return true
-      // }
+      this.graph.panningHandler.isForcePanningEvent = me => {
+        this.graph.container.style.cursor = 'move'
+        return true
+      }
 
       // 键盘快捷键
       const config = mxUtils
