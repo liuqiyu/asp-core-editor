@@ -11,9 +11,9 @@ const {
   mxUtils,
   mxRubberband,
   mxEvent,
-  mxClient
-  // mxCell,
-  // mxGeometry
+  mxClient,
+  mxCell,
+  mxGeometry
 } = mxgraph
 
 let MxEditor = mxEditor
@@ -21,8 +21,8 @@ let MxEditor = mxEditor
 let MxImage = mxImage
 // let MxRectangle = mxRectangle
 let MxRubberband = mxRubberband
-// let MxCell = mxCell
-// let MxGeometry = mxGeometry
+let MxCell = mxCell
+let MxGeometry = mxGeometry
 
 class Editor {
   static editor = null
@@ -37,11 +37,14 @@ class Editor {
       this.graph = this.editor.graph
       this.editor.setGraphContainer(container)
 
+      this.graph.setConnectable(true) // 指定图是否应允许新连接
+      this.graph.setMultigraph(false) // 指定图是否应允许同一对顶点之间存在多个连接
+
       // pan 拖动
-      this.graph.panningHandler.isForcePanningEvent = me => {
-        this.graph.container.style.cursor = 'move'
-        return true
-      }
+      // this.graph.panningHandler.isForcePanningEvent = me => {
+      //   this.graph.container.style.cursor = 'move'
+      //   return true
+      // }
 
       // 键盘快捷键
       const config = mxUtils
@@ -129,7 +132,7 @@ class Editor {
 
     const _dropSuccessCb = (graph, evt, cell, x, y) => {
       if (graph.canImportCell(cell)) {
-        var parent = graph.getDefaultParent()
+        // var parent = graph.getDefaultParent()
         var vertex = null
 
         graph.getModel().beginUpdate()
@@ -144,7 +147,10 @@ class Editor {
           //   height
           //   // 'shape=image;image=' + src + ';'
           // )
-          vertex = graph.insertVertex(parent, null, 'World', 200, 150, 80, 30)
+          vertex = new MxCell('Test', new MxGeometry(0, 0, 120, 40))
+          vertex.vertex = true
+          graph.importCells([vertex], x, y, cell)
+          // vertex = graph.insertVertex(parent, null, 'World', 200, 150, 80, 30)
         } finally {
           graph.getModel().endUpdate()
         }
