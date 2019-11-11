@@ -66,12 +66,15 @@ class Tool {
 
   // 打包XML文件
   static getXml () {
-    let encoder = new MxCodec()
-    let xx = encoder.encode(this.graph.getModel())
-    // 保存到getXml参数中
-    xx.setAttribute('backgroundImage', this.graph.backgroundImage.src)
-    const getXml = mxUtils.getXml(xx)
-    console.log(getXml)
+    // let encoder = new MxCodec()
+    // let xx = encoder.encode(this.graph.getModel())
+    // // 保存到getXml参数中
+    // xx.setAttribute('backgroundImage', this.graph.backgroundImage.src)
+    // const getXml = mxUtils.getXml(xx)
+    // console.log(getXml)
+    var encoder = new mxCodec()
+    var node = encoder.encode(this.graph.getModel())
+    mxUtils.popup(mxUtils.getPrettyXml(node), true)
   }
 
   // 打包XML文件

@@ -5,24 +5,17 @@ import MxEvents from './mxEvents'
 
 const {
   mxEditor,
-  // mxGraph,
-  mxImage,
-  // mxRectangle,
+  // mxImage,
   mxUtils,
   mxRubberband,
   mxEvent,
   mxClient,
   mxCell,
-  mxGeometry
+  mxGeometry,
+  mxGraphHandler,
+  mxConstants,
+  mxEdgeHandler
 } = mxgraph
-
-let MxEditor = mxEditor
-// let MxGraph = mxGraph
-let MxImage = mxImage
-// let MxRectangle = mxRectangle
-let MxRubberband = mxRubberband
-let MxCell = mxCell
-let MxGeometry = mxGeometry
 
 class Editor {
   static editor = null
@@ -33,7 +26,22 @@ class Editor {
       // 判断是否支持mxgraph
       mxUtils.error('Browser is not supported!', 200, false)
     } else {
-      this.editor = new MxEditor()
+      // 功能：指南
+      // 启用指南
+      mxGraphHandler.prototype.guidesEnabled = true
+      // Alt禁用参考线
+      mxGraphHandler.prototype.useGuidesForEvent = function (me) {
+        return !mxEvent.isAltDown(me.getEvent())
+      }
+      // 将参考线定义为红色（默认）
+      mxConstants.GUIDE_COLOR = '#46BAFE'
+      // 将参考线定义为1像素（默认值）
+      mxConstants.GUIDE_STROKEWIDTH = 1
+      // 启用将航路点捕捉到终端
+      mxEdgeHandler.prototype.snapToTerminals = true
+
+      // 初始化
+      this.editor = new mxEditor()
       this.graph = this.editor.graph
       this.editor.setGraphContainer(container)
 
@@ -47,9 +55,7 @@ class Editor {
       // }
 
       // 键盘快捷键
-      const config = mxUtils
-        .load('' + 'static/keyhandler-commons.xml')
-        .getDocumentElement()
+      const config = mxUtils.load('static/keyhandler-commons.xml').getDocumentElement()
       this.editor.configure(config)
       console.log(config)
 
@@ -65,7 +71,7 @@ class Editor {
       // this.graph.centerZoom = false
       // this.graph.panningHandler.useLeftButtonForPanning = false // 指定是否应为鼠标左键激活平移。将此设置为true可能与mxRubberband冲突。默认为false。
 
-      // this.graph.maximumGraphBounds = new MxRectangle(0, 0, 1720, 929)
+      // this.graph.maximumGraphBounds = new mxRectangle(0, 0, 1720, 929)
 
       // // Resizes the container but never make it bigger than the background
       // this.graph.minimumContainerSize = new MxRectangle(0, 0, 1720, 929)
@@ -93,9 +99,9 @@ class Editor {
         )
         v1.lod = 3
         // 设置背景
-        this.graph.setBackgroundImage(
-          new MxImage('' + 'static/level-1.svg', 1024, 769)
-        )
+        // this.graph.setBackgroundImage(
+        //   new mxImage('' + 'static/level-1.svg', 1024, 769)
+        // )
         // this.graph.view.validateBackgroundImage()
       } finally {
         // Updates the display
@@ -104,10 +110,20 @@ class Editor {
 
       // 鼠标拖拽选中
       /* eslint-disable no-new */
-      new MxRubberband(this.graph)
+      new mxRubberband(this.graph)
+
+      this.graph.getSelectionModel().addListener(mxEvent.CHANGE, (sender, evt) => {
+        this.selectionChanged()
+      })
+
+      this.selectionChanged()
 
       return this.graph
     }
+  }
+
+  static getGraph () {
+    return this.graph
   }
 
   // 元件初始化
@@ -147,7 +163,7 @@ class Editor {
           //   height
           //   // 'shape=image;image=' + src + ';'
           // )
-          vertex = new MxCell('Test', new MxGeometry(0, 0, 120, 40))
+          vertex = new mxCell('Test', new mxGeometry(0, 0, 120, 40))
           vertex.vertex = true
           graph.importCells([vertex], x, y, cell)
           // vertex = graph.insertVertex(parent, null, 'World', 200, 150, 80, 30)
@@ -173,6 +189,14 @@ class Editor {
       null,
       true
     )
+  }
+
+  // 元件选中
+  static selectionChanged () {
+    var cell = this.graph.getSelectionCell()
+    if (cell) {
+      Format.initFormatField(cell)
+    }
   }
 }
 

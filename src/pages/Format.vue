@@ -3,6 +3,13 @@
     <header class="title">设置</header>
     <div class="format-wrapper">
       <div class="format-item">
+        <div class="format-label">名称</div>
+        <div class="format-content">
+          <el-input v-model="format.value"
+                    placeholder="请输入名称"></el-input>
+        </div>
+      </div>
+      <div class="format-item">
         <div class="format-label">字体颜色</div>
         <div class="format-content">
           <el-color-picker v-model="format.fontColor"
@@ -55,12 +62,14 @@
 </template>
 
 <script>
+import editor from '@/utils/editor'
 import format from '@/utils/format'
 export default {
   name: 'Format',
   data () {
     return {
       format: {
+        value: '',
         fontColor: '',
         labelBackgroundColor: '',
         imageBackground: '',
@@ -69,6 +78,9 @@ export default {
         height: ''
       }
     }
+  },
+  mounted () {
+    console.log(editor.getGraph())
   },
   methods: {
     change (keyword) {

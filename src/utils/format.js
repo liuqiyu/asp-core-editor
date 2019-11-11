@@ -1,8 +1,10 @@
-// import mxgraph from '@/utils/mxgraph'
-
-// const {
-// } = mxgraph
-
+/*
+ * @Description:
+ * @Author: liuqiyu
+ * @Date: 2019-11-11 14:27:27
+ * @LastEditors: liuqiyu
+ * @LastEditTime: 2019-11-11 17:38:27
+ */
 class Format {
   static editor = null
   static graph = null
@@ -26,6 +28,10 @@ class Format {
     console.log(this.graph)
     this.graph.setCellStyles(keyword, data[keyword], this.graph.getSelectionCells())
     // this.graph.selectVertices('width', '1000', this.graph.getSelectionCells())
+  }
+
+  static initFormatField (cell) {
+    console.log(cell)
   }
 }
 
