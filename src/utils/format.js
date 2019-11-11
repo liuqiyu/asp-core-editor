@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-11-11 17:38:27
+ * @LastEditTime: 2019-11-11 17:46:49
  */
 class Format {
   static editor = null

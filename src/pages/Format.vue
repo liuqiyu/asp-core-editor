@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import editor from '@/utils/editor'
+// import editor from '@/utils/editor'
 import format from '@/utils/format'
 export default {
   name: 'Format',
@@ -80,9 +80,16 @@ export default {
     }
   },
   mounted () {
-    console.log(editor.getGraph())
   },
   methods: {
+    selectionChanged (graph) {
+      var cell = graph.getSelectionCell()
+      if (cell) {
+        console.log(cell)
+        // Format.initFormatField(cell)
+        this.format.value = cell.value
+      }
+    },
     change (keyword) {
       format.update(keyword, this.format)
     }

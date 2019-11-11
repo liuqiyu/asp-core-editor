@@ -15,7 +15,8 @@
         </div>
       </div>
     </div>
-    <Format id="graph-sidebar"></Format>
+    <Format id="graph-sidebar"
+            ref="format"></Format>
   </div>
 </template>
 
@@ -49,7 +50,12 @@ export default {
     let outlineContainer = this.$refs.outlineContainer
 
     const graph = editor.init(container) // 初始化
-    OutLine.init(graph, outlineContainer) // 缩略框
+    OutLine.init(graph, outlineContainer) //
+
+    // 选中元件
+    graph.getSelectionModel().addListener(mxEvent.CHANGE, (sender, evt) => {
+      this.$refs.format.selectionChanged(graph)
+    })
 
     // 单击事件
     graph.addListener(mxEvent.CLICK, (sender, evt) => {
