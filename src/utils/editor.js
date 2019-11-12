@@ -11,13 +11,13 @@ const {
   mxRubberband,
   mxEvent,
   mxClient,
-  // mxCell,
-  // mxGeometry,
+  mxCell,
+  mxGeometry,
   mxGraphHandler,
   mxConstants,
-  mxEdgeHandler,
-  mxPerimeter,
-  mxEdgeStyle
+  mxEdgeHandler
+  // mxPerimeter,
+  // mxEdgeStyle
 } = mxgraph
 
 class Editor {
@@ -85,30 +85,6 @@ class Editor {
       // this.graph.isCellVisible = cell => {
       //   return cell.lod == null || cell.lod / 2 < this.graph.view.scale
       // }
-      var style = []
-      style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_RECTANGLE
-      style[mxConstants.STYLE_PERIMETER] = mxPerimeter.RectanglePerimeter
-      style[mxConstants.STYLE_STROKECOLOR] = 'gray'
-      style[mxConstants.STYLE_ROUNDED] = true
-      style[mxConstants.STYLE_FILLCOLOR] = '#EEEEEE'
-      style[mxConstants.STYLE_GRADIENTCOLOR] = 'white'
-      style[mxConstants.STYLE_FONTCOLOR] = '#774400'
-      style[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_CENTER
-      style[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_MIDDLE
-      style[mxConstants.STYLE_FONTSIZE] = '28'
-      style[mxConstants.STYLE_FONTSTYLE] = 1
-      this.graph.getStylesheet().putDefaultVertexStyle(style)
-
-      // Creates the default style for edges
-      style = []
-      style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_CONNECTOR
-      style[mxConstants.STYLE_STROKECOLOR] = '#6482B9'
-      style[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_CENTER
-      style[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_MIDDLE
-      style[mxConstants.STYLE_EDGE] = mxEdgeStyle.ElbowConnector
-      style[mxConstants.STYLE_ENDARROW] = mxConstants.ARROW_CLASSIC
-      style[mxConstants.STYLE_FONTSIZE] = '120'
-      this.graph.getStylesheet().putDefaultEdgeStyle(style)
 
       var parent = this.graph.getDefaultParent()
       this.graph.getModel().beginUpdate()
@@ -159,7 +135,7 @@ class Editor {
     const src = dataset.src
     const width = dataset.width
     const height = dataset.height
-    const style = dataset.style
+    // const style = dataset.style
 
     const _dropGraph = evt => {
       const x = mxEvent.getClientX(evt)
@@ -174,33 +150,42 @@ class Editor {
       return null
     }
 
-    const _dropSuccessCb = (graph, evt, cell, x, y) => {
-      if (graph.canImportCell(cell)) {
-        var parent = graph.getDefaultParent()
-        var vertex = null
+    const _dropSuccessCb = (graph, evt, target, x, y) => {
+      var cell = new mxCell('Test', new mxGeometry(0, 0, 120, 40))
+      cell.vertex = true
+      var cells = graph.importCells([cell], x, y, target)
 
-        graph.getModel().beginUpdate()
-        try {
-          vertex = graph.insertVertex(
-            parent,
-            null,
-            '123',
-            x,
-            y,
-            width,
-            height,
-            style
-          )
-          // vertex = new mxCell('Test', new mxGeometry(0, 0, 120, 40))
-          vertex.vertex = true
-          // graph.importCells([vertex], x, y, cell)
-          // vertex = graph.insertVertex(parent, null, 'World', 200, 150, 80, 30)
-        } finally {
-          graph.getModel().endUpdate()
-        }
-
-        // graph.setSelectionCell(vertex)
+      if (cells != null && cells.length > 0) {
+        graph.scrollCellToVisible(cells[0])
+        graph.setSelectionCells(cells)
       }
+
+      // if (graph.canImportCell(cell)) {
+      //   var parent = graph.getDefaultParent()
+      //   var vertex = null
+
+      //   graph.getModel().beginUpdate()
+      //   try {
+      //     vertex = graph.insertVertex(
+      //       parent,
+      //       null,
+      //       '123',
+      //       x,
+      //       y,
+      //       width,
+      //       height,
+      //       style
+      //     )
+      //     // vertex = new mxCell('Test', new mxGeometry(0, 0, 120, 40))
+      //     // vertex.vertex = true
+      //     // graph.importCells([vertex], x, y, cell)
+      //     // vertex = graph.insertVertex(parent, null, 'World', 200, 150, 80, 30)
+      //   } finally {
+      //     graph.getModel().endUpdate()
+      //   }
+
+      //   graph.setSelectionCell(vertex)
+      // }
     }
 
     const dragElt = document.createElement('img')

@@ -44,7 +44,7 @@ export default {
           title: '元件1',
           children: [
             {
-              name: '矩形',
+              name: '标记',
               src: require('./../images/mark-red.svg'),
               width: 48,
               height: 48,
@@ -57,7 +57,7 @@ export default {
               width: 120,
               height: 60,
               type: 'image',
-              style: 'rounded=1;whiteSpace=wrap;html=1;'
+              style: 'rounded=0;whiteSpace=wrap;html=1;strokeColor=rgba(255,0,0,0.32);fillColor=rgba(250,0,0,0.34);'
             },
             {
               name: 'Text',

@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-11-12 16:59:44
+ * @LastEditTime: 2019-11-12 17:11:59
  */
 import mxgraph from '@/utils/mxgraph'
 
@@ -25,30 +25,30 @@ class Tool {
   }
   // 撤销
   static undo () {
-    this.editor.execute('undo')
+    Tool.editor.execute('undo')
   }
 
   // 重做
   static redo () {
-    this.editor.execute('redo')
+    Tool.editor.execute('redo')
   }
 
   // 放大
   static zoomIn () {
     // console.log(this.graph.view.scale)
-    this.editor.execute('zoomIn')
+    Tool.editor.execute('zoomIn')
   }
 
   // 缩小
   static zoomOut () {
     // console.log(this.graph.view.scale)
-    this.editor.execute('zoomOut')
+    Tool.editor.execute('zoomOut')
   }
 
   // 1:1还原
   static zoomActual () {
     // console.log(this.graph.view.scale)
-    this.graph.zoomActual()
+    Tool.graph.zoomActual()
   }
 
   // 打包XML文件
@@ -69,17 +69,17 @@ class Tool {
     // var cells = Tool.graph.getDeletableCells(Tool.graph.getSelectionCells())
     // console.log(cells)
     // Tool.graph.removeCells(cells)
-    this.editor.execute('delete')
+    Tool.editor.execute('delete')
   }
 
   // 复制
   static copy () {
-    this.editor.execute('copy')
+    Tool.editor.execute('copy')
   }
 
   // 粘贴
   static paste () {
-    this.editor.execute('paste')
+    Tool.editor.execute('paste')
   }
 }
 
