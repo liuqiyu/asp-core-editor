@@ -86,7 +86,7 @@
 <script>
 import Tool from '@/utils/tool'
 export default {
-  name: 'Tool',
+  name: 'AspTool',
   data () {
     return {
     }

@@ -1,6 +1,7 @@
 import mxgraph from '@/utils/mxgraph'
 import Tool from './tool'
 import Format from './format'
+import PopupMenu from './popupMenu'
 import MxEvents from './mxEvents'
 
 const {
@@ -10,8 +11,8 @@ const {
   mxRubberband,
   mxEvent,
   mxClient,
-  mxCell,
-  mxGeometry,
+  // mxCell,
+  // mxGeometry,
   mxGraphHandler,
   mxConstants,
   mxEdgeHandler,
@@ -59,11 +60,11 @@ class Editor {
       // 键盘快捷键
       const config = mxUtils.load('static/keyhandler-commons.xml').getDocumentElement()
       this.editor.configure(config)
-      console.log(config)
 
       // 初始化 tool
       Tool.init(this.editor, this.graph)
       Format.init(this.editor, this.graph)
+      PopupMenu.init(this.editor, this.graph, container)
       MxEvents.init()
 
       // 设置
@@ -158,6 +159,7 @@ class Editor {
     const src = dataset.src
     const width = dataset.width
     const height = dataset.height
+    const style = dataset.style
 
     const _dropGraph = evt => {
       const x = mxEvent.getClientX(evt)
@@ -174,30 +176,30 @@ class Editor {
 
     const _dropSuccessCb = (graph, evt, cell, x, y) => {
       if (graph.canImportCell(cell)) {
-        // var parent = graph.getDefaultParent()
+        var parent = graph.getDefaultParent()
         var vertex = null
 
         graph.getModel().beginUpdate()
         try {
-          // vertex = graph.insertVertex(
-          //   parent,
-          //   null,
-          //   '',
-          //   x,
-          //   y,
-          //   width,
-          //   height
-          //   // 'shape=image;image=' + src + ';'
-          // )
-          vertex = new mxCell('Test', new mxGeometry(0, 0, 120, 40))
+          vertex = graph.insertVertex(
+            parent,
+            null,
+            '123',
+            x,
+            y,
+            width,
+            height,
+            style
+          )
+          // vertex = new mxCell('Test', new mxGeometry(0, 0, 120, 40))
           vertex.vertex = true
-          graph.importCells([vertex], x, y, cell)
+          // graph.importCells([vertex], x, y, cell)
           // vertex = graph.insertVertex(parent, null, 'World', 200, 150, 80, 30)
         } finally {
           graph.getModel().endUpdate()
         }
 
-        graph.setSelectionCell(vertex)
+        // graph.setSelectionCell(vertex)
       }
     }
 

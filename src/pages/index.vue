@@ -3,8 +3,8 @@
     <Sidebar id="graph-sidebar">
     </Sidebar>
     <div id="graph-map">
-      <Tool :graph="graph"
-            id="graph-tool"></Tool>
+      <AspTool :graph="graph"
+               id="graph-tool"></AspTool>
 
       <div id="graph-content">
         <div id="graph-container">
@@ -21,12 +21,13 @@
 </template>
 
 <script>
-import Tool from './Tool'
+import AspTool from './AspTool'
 import Format from './Format'
 import Sidebar from './Sidebar'
 import mxgraph from '@/utils/mxgraph'
 import editor from '@/utils/editor'
 import OutLine from '@/utils/outLine'
+import Tool from '@/utils/tool'
 
 const { mxEvent } = mxgraph
 
@@ -41,7 +42,7 @@ export default {
     }
   },
   components: {
-    Tool,
+    AspTool,
     Sidebar,
     Format
   },
@@ -70,6 +71,22 @@ export default {
       // console.log(cell)
       if (cell) { }
     })
+
+    // 安装菜单 => 右键
+    graph.popupMenuHandler.factoryMethod = (menu, cell, evt) => {
+      menu.addItem('删除', null, () => {
+        Tool.delete()
+      })
+      menu.addItem('复制', null, () => {
+        Tool.copy()
+      })
+      menu.addItem('粘贴', null, () => {
+        Tool.paste()
+      })
+      menu.addItem('绑定', null, () => {
+        alert('绑定')
+      })
+    }
   },
   methods: {
   }

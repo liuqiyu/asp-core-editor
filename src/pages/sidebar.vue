@@ -11,6 +11,7 @@
                :data-width="cell.width"
                :data-height="cell.height"
                :data-src="cell.src"
+               :data-style="cell.style"
                v-for="(cell, key) in item.children"
                :key="key">
             <img ref="ele"
@@ -43,46 +44,36 @@ export default {
           title: '元件1',
           children: [
             {
-              name: '你好',
+              name: '矩形',
               src: require('./../images/mark-red.svg'),
               width: 48,
               height: 48,
-              type: 'image'
+              type: 'image',
+              style: `shape=image;image=${require('./../images/mark-red.svg')}`
             },
             {
-              name: '你好1',
-              src: require('./../images/mark.svg'),
-              width: 48,
-              height: 48,
-              type: 'image'
+              name: 'rectangle',
+              src: require('./../images/sidebar/rectangle.svg'),
+              width: 120,
+              height: 60,
+              type: 'image',
+              style: 'rounded=1;whiteSpace=wrap;html=1;'
             },
             {
-              name: '你好',
-              src: require('./../images/mark-red.svg'),
-              width: 48,
-              height: 48,
-              type: 'image'
+              name: 'Text',
+              src: require('./../images/sidebar/text.svg'),
+              width: 120,
+              height: 60,
+              type: 'Text',
+              style: 'text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;'
             },
             {
-              name: '你好1',
-              src: require('./../images/mark.svg'),
-              width: 48,
-              height: 48,
-              type: 'image'
-            },
-            {
-              name: '你好',
-              src: require('./../images/mark-red.svg'),
-              width: 48,
-              height: 48,
-              type: 'image'
-            },
-            {
-              name: '你好1',
-              src: require('./../images/mark.svg'),
-              width: 48,
-              height: 48,
-              type: 'image'
+              name: 'Ellipse',
+              src: require('./../images/sidebar/ellipse.svg'),
+              width: 120,
+              height: 80,
+              type: 'Ellipse',
+              style: 'ellipse;whiteSpace=wrap;html=1;'
             }
           ]
         },
@@ -92,20 +83,32 @@ export default {
             {
               name: '你好1',
               src: require('./../images/mark.svg'),
-              width: 48,
-              height: 48,
-              type: 'image'
-            },
-            {
-              name: '你好4',
-              src: require('./../images/mark.svg'),
-              width: 48,
-              height: 48,
-              type: 'image'
+              width: 120,
+              height: 60,
+              type: 'image',
+              style: {
+                rounded: 0,
+                whiteSpace: 'wrap',
+                html: 1
+              }
             }
           ]
         }
       ]
+    }
+  },
+  methods: {
+    // 对象转化为字符串
+    setString (style) {
+      if (!style) {
+        return ''
+      }
+      let str = ''
+      Object.keys(style).forEach(item => {
+        console.log(item)
+        str += `${item}=${style[item]};`
+      })
+      return str
     }
   }
 }
