@@ -12,6 +12,7 @@
                :data-height="cell.height"
                :data-src="cell.src"
                :data-style="cell.style"
+               :data-value="cell.name"
                v-for="(cell, key) in item.children"
                :key="key">
             <img ref="ele"

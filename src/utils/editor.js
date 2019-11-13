@@ -15,7 +15,8 @@ const {
   mxGeometry,
   mxGraphHandler,
   mxConstants,
-  mxEdgeHandler
+  mxEdgeHandler,
+  mxCodec
   // mxPerimeter,
   // mxEdgeStyle
 } = mxgraph
@@ -60,6 +61,12 @@ class Editor {
       // 键盘快捷键
       const config = mxUtils.load('static/keyhandler-commons.xml').getDocumentElement()
       this.editor.configure(config)
+
+      const node = mxUtils.load('static/default.xml').getDocumentElement()
+      if (node != null) {
+        var dec = new mxCodec(node.ownerDocument)
+        dec.decode(node, this.graph.getStylesheet())
+      }
 
       // 初始化 tool
       Tool.init(this.editor, this.graph)
@@ -133,9 +140,10 @@ class Editor {
   static addToolbarItem (ele) {
     const dataset = ele.dataset
     const src = dataset.src
-    const width = dataset.width
-    const height = dataset.height
-    // const style = dataset.style
+    const width = Number(dataset.width)
+    const height = Number(dataset.height)
+    const style = dataset.style
+    const value = dataset.value
 
     const _dropGraph = evt => {
       const x = mxEvent.getClientX(evt)
@@ -151,7 +159,7 @@ class Editor {
     }
 
     const _dropSuccessCb = (graph, evt, target, x, y) => {
-      var cell = new mxCell('Test', new mxGeometry(0, 0, 120, 40))
+      var cell = new mxCell(value, new mxGeometry(0, 0, width, height), style)
       cell.vertex = true
       var cells = graph.importCells([cell], x, y, target)
 
@@ -159,33 +167,6 @@ class Editor {
         graph.scrollCellToVisible(cells[0])
         graph.setSelectionCells(cells)
       }
-
-      // if (graph.canImportCell(cell)) {
-      //   var parent = graph.getDefaultParent()
-      //   var vertex = null
-
-      //   graph.getModel().beginUpdate()
-      //   try {
-      //     vertex = graph.insertVertex(
-      //       parent,
-      //       null,
-      //       '123',
-      //       x,
-      //       y,
-      //       width,
-      //       height,
-      //       style
-      //     )
-      //     // vertex = new mxCell('Test', new mxGeometry(0, 0, 120, 40))
-      //     // vertex.vertex = true
-      //     // graph.importCells([vertex], x, y, cell)
-      //     // vertex = graph.insertVertex(parent, null, 'World', 200, 150, 80, 30)
-      //   } finally {
-      //     graph.getModel().endUpdate()
-      //   }
-
-      //   graph.setSelectionCell(vertex)
-      // }
     }
 
     const dragElt = document.createElement('img')

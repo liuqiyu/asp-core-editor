@@ -74,18 +74,18 @@ export default {
 
     // 安装菜单 => 右键
     graph.popupMenuHandler.factoryMethod = (menu, cell, evt) => {
-      menu.addItem('删除', null, () => {
-        Tool.delete()
-      })
-      menu.addItem('复制', null, () => {
-        Tool.copy()
-      })
-      menu.addItem('粘贴', null, () => {
-        Tool.paste()
-      })
-      menu.addItem('绑定', null, () => {
-        alert('绑定')
-      })
+      console.log(cell)
+      if (cell) {
+        menu.addItem('删除', null, () => {
+          Tool.delete()
+        })
+        menu.addItem('绑定', null, () => {
+          alert('绑定')
+        })
+        menu.addItem('绑定子图层', null, () => {
+          alert('绑定')
+        })
+      }
     }
   },
   methods: {
