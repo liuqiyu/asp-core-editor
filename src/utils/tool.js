@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-11-12 17:11:59
+ * @LastEditTime: 2019-11-13 15:26:29
  */
 import mxgraph from '@/utils/mxgraph'
 
@@ -49,6 +49,14 @@ class Tool {
   static zoomActual () {
     // console.log(this.graph.view.scale)
     Tool.graph.zoomActual()
+  }
+
+  static pan (status) {
+    // pan 拖动
+    Tool.graph.panningHandler.isForcePanningEvent = me => {
+      Tool.graph.container.style.cursor = status ? 'move' : null
+      return status
+    }
   }
 
   // 打包XML文件

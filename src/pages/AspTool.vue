@@ -47,6 +47,16 @@
 
     <el-tooltip class="item"
                 effect="dark"
+                content="拖动"
+                placement="top">
+      <el-button @click="handlePan"
+                 type="text"
+                 :class="this.panStatus ? 'finger-select': null "
+                 icon="iconfont icontuodong1"></el-button>
+    </el-tooltip>
+
+    <el-tooltip class="item"
+                effect="dark"
                 content="复制"
                 placement="top">
       <el-button @click="handleCopy"
@@ -89,6 +99,7 @@ export default {
   name: 'AspTool',
   data () {
     return {
+      panStatus: false
     }
   },
   methods: {
@@ -106,6 +117,11 @@ export default {
     },
     handleRedo () {
       Tool.redo()
+    },
+    // 拖动
+    handlePan () {
+      this.panStatus = !this.panStatus
+      Tool.pan(this.panStatus)
     },
     handleGetXml () {
       Tool.getXml()
@@ -128,5 +144,8 @@ export default {
   display: flex;
   align-items: center;
   padding-left: 12px;
+  .finger-select {
+    opacity: 0.5;
+  }
 }
 </style>

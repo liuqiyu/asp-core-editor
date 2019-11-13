@@ -16,7 +16,9 @@ const {
   mxGraphHandler,
   mxConstants,
   mxEdgeHandler,
-  mxCodec
+  mxCodec,
+  mxConnectionConstraint,
+  mxPoint
   // mxPerimeter,
   // mxEdgeStyle
 } = mxgraph
@@ -52,12 +54,6 @@ class Editor {
       this.graph.setConnectable(true) // 指定图是否应允许新连接
       this.graph.setMultigraph(false) // 指定图是否应允许同一对顶点之间存在多个连接
 
-      // pan 拖动
-      // this.graph.panningHandler.isForcePanningEvent = me => {
-      //   this.graph.container.style.cursor = 'move'
-      //   return true
-      // }
-
       // 键盘快捷键
       const config = mxUtils.load('static/keyhandler-commons.xml').getDocumentElement()
       this.editor.configure(config)
@@ -92,6 +88,22 @@ class Editor {
       // this.graph.isCellVisible = cell => {
       //   return cell.lod == null || cell.lod / 2 < this.graph.view.scale
       // }
+
+      this.graph.getAllConnectionConstraints = function (terminal) {
+        if (terminal != null && this.model.isVertex(terminal.cell)) {
+          return [new mxConnectionConstraint(new mxPoint(0, 0), true),
+            new mxConnectionConstraint(new mxPoint(0.5, 0), true),
+            new mxConnectionConstraint(new mxPoint(1, 0), true),
+            new mxConnectionConstraint(new mxPoint(0, 0.5), true),
+            new mxConnectionConstraint(new mxPoint(1, 0.5), true),
+            new mxConnectionConstraint(new mxPoint(0, 1), true),
+            new mxConnectionConstraint(new mxPoint(0.5, 1), true),
+            new mxConnectionConstraint(new mxPoint(1, 1), true)
+          ]
+        }
+
+        return null
+      }
 
       var parent = this.graph.getDefaultParent()
       this.graph.getModel().beginUpdate()
