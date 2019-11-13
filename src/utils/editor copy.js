@@ -6,7 +6,7 @@ import MxEvents from './mxEvents'
 
 const {
   mxEditor,
-  mxImage,
+  // mxImage,
   mxUtils,
   mxRubberband,
   mxEvent,
@@ -29,7 +29,6 @@ class Editor {
   static graph = null
 
   static init (container) {
-    var self = this
     if (!mxClient.isBrowserSupported()) {
       // 判断是否支持mxgraph
       mxUtils.error('Browser is not supported!', 200, false)
@@ -53,8 +52,8 @@ class Editor {
       this.graph = this.editor.graph
       this.editor.setGraphContainer(container)
 
-      // this.graph.setConnectable(true) // 指定图是否应允许新连接
-      this.graph.setMultigraph(true) // 指定图是否应允许同一对顶点之间存在多个连接
+      this.graph.setConnectable(true) // 指定图是否应允许新连接
+      this.graph.setMultigraph(false) // 指定图是否应允许同一对顶点之间存在多个连接
 
       // 键盘快捷键
       const config = mxUtils.load('static/keyhandler-commons.xml').getDocumentElement()
@@ -71,6 +70,25 @@ class Editor {
       Format.init(this.editor, this.graph)
       PopupMenu.init(this.editor, this.graph, container)
       MxEvents.init()
+
+      // 设置
+      // this.graph.setEnabled(true) // 是否可以交互
+      // this.graph.setPanning(true) // 指定是否应启用平移
+      // this.graph.setTooltips(true) // 指定是否应启用工具提示
+      // this.graph.centerZoom = false
+      // this.graph.panningHandler.useLeftButtonForPanning = false // 指定是否应为鼠标左键激活平移。将此设置为true可能与mxRubberband冲突。默认为false。
+
+      // this.graph.maximumGraphBounds = new mxRectangle(0, 0, 1720, 929)
+
+      // // Resizes the container but never make it bigger than the background
+      // this.graph.minimumContainerSize = new MxRectangle(0, 0, 1720, 929)
+      // this.graph.setResizeContainer(true)
+
+      // this.graph.gridSize = 20
+
+      // this.graph.isCellVisible = cell => {
+      //   return cell.lod == null || cell.lod / 2 < this.graph.view.scale
+      // }
 
       // hover 锚点
       this.graph.getAllConnectionConstraints = function (terminal) {
@@ -90,9 +108,9 @@ class Editor {
       }
 
       // 连线类型
-      // Connect preview
-      this.graph.connectionHandler.createEdgeState = function (me) {
-        var edge = self.graph.createEdge(null, null, null, null, null, 'edgeStyle=orthogonalEdgeStyle')
+      this.graph.connectionHandler.createEdgeState = (me) => {
+        var edge = this.graph.createEdge(null, null, null, null, null, 'edgeStyle=orthogonalEdgeStyle')
+
         return new mxCellState(this.graph.view, edge, this.graph.getCellStyle(edge))
       }
 
@@ -112,10 +130,10 @@ class Editor {
         )
         v1.lod = 3
         // 设置背景
-        this.graph.setBackgroundImage(
-          new mxImage('' + 'static/level-1.svg', 1024, 769)
-        )
-        this.graph.view.validateBackgroundImage()
+        // this.graph.setBackgroundImage(
+        //   new mxImage('' + 'static/level-1.svg', 1024, 769)
+        // )
+        // this.graph.view.validateBackgroundImage()
       } finally {
         // Updates the display
         this.graph.getModel().endUpdate()
@@ -124,6 +142,13 @@ class Editor {
       // 鼠标拖拽选中
       /* eslint-disable no-new */
       new mxRubberband(this.graph)
+
+      // this.graph.getSelectionModel().addListener(mxEvent.CHANGE, (sender, evt) => {
+      //   this.selectionChanged()
+      // })
+
+      // this.selectionChanged()
+
       return this.graph
     }
   }

@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-11-13 15:26:29
+ * @LastEditTime: 2019-11-13 18:13:08
  */
 import mxgraph from '@/utils/mxgraph'
 
@@ -69,6 +69,7 @@ class Tool {
     // console.log(getXml)
     var encoder = new mxCodec()
     var node = encoder.encode(this.graph.getModel())
+    node.setAttribute('backgroundImage', this.graph.backgroundImage.src)
     mxUtils.popup(mxUtils.getPrettyXml(node), true)
   }
 
