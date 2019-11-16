@@ -67,9 +67,9 @@ export default {
         console.log(cell)
         graph.getModel().beginUpdate()
         try {
-          graph.setCellStyles('fillColor', 'red', graph.getSelectionCells())
+          // graph.setCellStyles('fillColor', 'red', graph.getSelectionCells())
           // graph.getModel().setStyle(cell, 'fillColor=red')
-          graph.getModel().setValue(cell, 3333333333333333)
+          // graph.getModel().setValue(cell, 3333333333333333)
         } finally {
           graph.getModel().endUpdate()
         }

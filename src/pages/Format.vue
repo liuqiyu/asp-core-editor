@@ -28,16 +28,16 @@
       <div class="format-item">
         <div class="format-label">背景颜色</div>
         <div class="format-content">
-          <el-color-picker v-model="format.imageBackground"
-                           @change="change('imageBackground')"
+          <el-color-picker v-model="format.fillColor"
+                           @change="change('fillColor')"
                            show-alpha></el-color-picker>
         </div>
       </div>
       <div class="format-item">
         <div class="format-label">边框颜色</div>
         <div class="format-content">
-          <el-color-picker v-model="format.borderColor"
-                           @change="change('borderColor')"
+          <el-color-picker v-model="format.strokeColor"
+                           @change="change('strokeColor')"
                            show-alpha></el-color-picker>
         </div>
       </div>
@@ -72,7 +72,7 @@ export default {
         value: '',
         fontColor: '',
         labelBackgroundColor: '',
-        imageBackground: '',
+        fillColor: '',
         borderColor: '',
         width: '',
         height: ''
@@ -85,9 +85,9 @@ export default {
     selectionChanged (graph) {
       var cell = graph.getSelectionCell()
       if (cell) {
-        console.log(cell)
-        // Format.initFormatField(cell)
+        const ss = format.getSelectionState()
         this.format.value = cell.value
+        this.format = Object.assign({}, this.format, ss)
       }
     },
     change (keyword) {

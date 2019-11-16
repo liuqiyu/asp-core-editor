@@ -57,7 +57,9 @@ class Editor {
       this.graph.setMultigraph(true) // 指定图是否应允许同一对顶点之间存在多个连接
 
       // 键盘快捷键
-      const config = mxUtils.load('static/keyhandler-commons.xml').getDocumentElement()
+      const config = mxUtils
+        .load('static/keyhandler-commons.xml')
+        .getDocumentElement()
       this.editor.configure(config)
 
       const node = mxUtils.load('static/default.xml').getDocumentElement()
@@ -75,7 +77,8 @@ class Editor {
       // hover 锚点
       this.graph.getAllConnectionConstraints = function (terminal) {
         if (terminal != null && this.model.isVertex(terminal.cell)) {
-          return [new mxConnectionConstraint(new mxPoint(0, 0), true),
+          return [
+            new mxConnectionConstraint(new mxPoint(0, 0), true),
             new mxConnectionConstraint(new mxPoint(0.5, 0), true),
             new mxConnectionConstraint(new mxPoint(1, 0), true),
             new mxConnectionConstraint(new mxPoint(0, 0.5), true),
@@ -92,8 +95,19 @@ class Editor {
       // 连线类型
       // Connect preview
       this.graph.connectionHandler.createEdgeState = function (me) {
-        var edge = self.graph.createEdge(null, null, null, null, null, 'edgeStyle=orthogonalEdgeStyle')
-        return new mxCellState(this.graph.view, edge, this.graph.getCellStyle(edge))
+        var edge = self.graph.createEdge(
+          null,
+          null,
+          null,
+          null,
+          null,
+          'edgeStyle=orthogonalEdgeStyle'
+        )
+        return new mxCellState(
+          this.graph.view,
+          edge,
+          this.graph.getCellStyle(edge)
+        )
       }
 
       var parent = this.graph.getDefaultParent()
