@@ -18,10 +18,14 @@ class Format {
   }
 
   static update (keyword, data) {
-    const cells = this.editor.graph.getSelectionCells()
+    const cells = this.graph.getSelectionCells()
     cells.forEach(cell => {
       this._updateSelectionCell(cell, cells, keyword, data)
     })
+  }
+  static update1 (keyword, data) {
+    const cells = this.graph.getSelectionCells()
+    this.graph.setCellStyles(keyword, data[keyword], cells)
   }
   static _updateSelectionCell (cell, cells, keyword, data) {
     console.log(cell)
@@ -40,28 +44,16 @@ class Format {
     console.log(cell)
   }
 
-  // static setCellStyles (keyword, style) {}
-
+  // 返回style 对象
   static getSelectionState () {
     var cells = this.graph.getSelectionCells()
     var shape = null
-    console.log(cells)
 
     for (var i = 0; i < cells.length; i++) {
       var state = this.graph.view.getState(cells[i])
       console.log(state)
 
       if (state !== null) {
-        // var tmp = mxUtils.getValue(state.style, mxConstants.STYLE_SHAPE, null)
-        // console.log(tmp)
-
-        // if (tmp != null) {
-        //   if (shape == null) {
-        //     shape = tmp
-        //   } else if (shape !== tmp) {
-        //     return null
-        //   }
-        // }
         shape = state.style
       }
     }

@@ -66,7 +66,7 @@ export default {
               width: 120,
               height: 60,
               type: 'image',
-              style: 'rounded=0;whiteSpace=wrap;html=1;strokeColor=red;fillColor=red;'
+              style: 'rounded=0;whiteSpace=wrap;html=1;strokeColor=rgba(255,0,0,0.32);fillColor=rgba(255,0,0,0.32);'
             },
             {
               name: 'Text',
@@ -74,7 +74,7 @@ export default {
               width: 120,
               height: 60,
               type: 'Text',
-              style: 'text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;'
+              style: 'text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;'
             },
             {
               name: 'Ellipse',

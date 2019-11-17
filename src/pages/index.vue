@@ -59,22 +59,20 @@ export default {
     })
 
     // 单击事件
-    graph.addListener(mxEvent.CLICK, (sender, evt) => {
-      var cell = evt.getProperty('cell') // 元件
-      // console.log(cell)
-      if (cell) {
-        console.log(123)
-        console.log(cell)
-        graph.getModel().beginUpdate()
-        try {
-          // graph.setCellStyles('fillColor', 'red', graph.getSelectionCells())
-          // graph.getModel().setStyle(cell, 'fillColor=red')
-          // graph.getModel().setValue(cell, 3333333333333333)
-        } finally {
-          graph.getModel().endUpdate()
-        }
-      }
-    })
+    // graph.addListener(mxEvent.CLICK, (sender, evt) => {
+    //   var cell = evt.getProperty('cell') // 元件
+    //   // console.log(cell)
+    //   if (cell) {
+    //     graph.getModel().beginUpdate()
+    //     try {
+    //       // graph.setCellStyles('fillColor', 'red', graph.getSelectionCells())
+    //       // graph.getModel().setStyle(cell, 'fillColor=red')
+    //       // graph.getModel().setValue(cell, 3333333333333333)
+    //     } finally {
+    //       graph.getModel().endUpdate()
+    //     }
+    //   }
+    // })
 
     // 双击事件
     graph.addListener(mxEvent.DOUBLE_CLICK, (sender, evt) => {
