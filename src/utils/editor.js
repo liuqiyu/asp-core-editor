@@ -1,12 +1,13 @@
 import mxgraph from '@/utils/mxgraph'
 import Tool from './tool'
 import Format from './format'
+import Actions from './actions'
 import PopupMenu from './popupMenu'
 import MxEvents from './mxEvents'
 
 const {
   mxEditor,
-  mxImage,
+  // mxImage,
   mxUtils,
   mxRubberband,
   mxEvent,
@@ -68,9 +69,10 @@ class Editor {
         dec.decode(node, this.graph.getStylesheet())
       }
 
-      // 初始化 tool
+      // 初始化
       Tool.init(this.editor, this.graph)
       Format.init(this.editor, this.graph)
+      Actions.init(this.editor, this.graph)
       PopupMenu.init(this.editor, this.graph, container)
       MxEvents.init()
 
@@ -126,9 +128,9 @@ class Editor {
         )
         v1.lod = 3
         // 设置背景
-        this.graph.setBackgroundImage(
-          new mxImage('' + 'static/level-1.svg', 1024, 769)
-        )
+        // this.graph.setBackgroundImage(
+        //   new mxImage('' + 'static/level-1.svg', 1024, 769)
+        // )
         this.graph.view.validateBackgroundImage()
       } finally {
         // Updates the display
@@ -201,6 +203,73 @@ class Editor {
     if (cell) {
       Format.initFormatField(cell)
     }
+  }
+
+  // 等距分布
+  static distributeCells (horizontal, cells) {
+    if (cells == null) {
+      cells = this.graph.getSelectionCells()
+    }
+
+    if (cells != null && cells.length > 1) {
+      var vertices = []
+      var max = null
+      var min = null
+
+      for (var i = 0; i < cells.length; i++) {
+        if (this.graph.getModel().isVertex(cells[i])) {
+          var state = this.graph.view.getState(cells[i])
+
+          if (state != null) {
+            var tmp = (horizontal) ? state.getCenterX() : state.getCenterY()
+            max = (max != null) ? Math.max(max, tmp) : tmp
+            min = (min != null) ? Math.min(min, tmp) : tmp
+
+            vertices.push(state)
+          }
+        }
+      }
+
+      if (vertices.length > 2) {
+        vertices.sort(function (a, b) {
+          return (horizontal) ? a.x - b.x : a.y - b.y
+        })
+
+        var t = this.graph.view.translate
+        var s = this.graph.view.scale
+
+        min = min / s - ((horizontal) ? t.x : t.y)
+        max = max / s - ((horizontal) ? t.x : t.y)
+
+        this.graph.getModel().beginUpdate()
+        try {
+          var dt = (max - min) / (vertices.length - 1)
+          var t0 = min
+
+          for (let i = 1; i < vertices.length - 1; i++) {
+            var pstate = this.graph.view.getState(this.graph.model.getParent(vertices[i].cell))
+            var geo = this.graph.getCellGeometry(vertices[i].cell)
+            t0 += dt
+
+            if (geo != null && pstate != null) {
+              geo = geo.clone()
+
+              if (horizontal) {
+                geo.x = Math.round(t0 - geo.width / 2) - pstate.origin.x
+              } else {
+                geo.y = Math.round(t0 - geo.height / 2) - pstate.origin.y
+              }
+
+              this.graph.getModel().setGeometry(vertices[i].cell, geo)
+            }
+          }
+        } finally {
+          this.graph.getModel().endUpdate()
+        }
+      }
+    }
+
+    return cells
   }
 }
 

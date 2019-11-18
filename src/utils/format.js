@@ -1,12 +1,16 @@
 /*
- * @Description:
+ * @Description: format
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-11-11 17:46:49
+ * @LastEditTime: 2019-11-18 18:31:24
  */
-// import mxgraph from '@/utils/mxgraph'
-// const { mxUtils, mxConstants } = mxgraph
+import mxgraph from '@/utils/mxgraph'
+import editor from '@/utils/editor'
+const {
+  // mxUtils,
+  mxConstants
+} = mxgraph
 class Format {
   static editor = null
   static graph = null
@@ -17,27 +21,74 @@ class Format {
     this.graph = graph
   }
 
-  static update (keyword, data) {
-    const cells = this.graph.getSelectionCells()
-    cells.forEach(cell => {
-      this._updateSelectionCell(cell, cells, keyword, data)
-    })
+  // update style
+  static updateStyleHandler (keyword, data) {
+    // const cells = this.graph.getSelectionCells()
+    this.graph.getModel().beginUpdate()
+    try {
+      this.graph.setCellStyles(
+        keyword,
+        data[keyword],
+        this.graph.getSelectionCells()
+      )
+    } finally {
+      this.graph.getModel().endUpdate()
+    }
   }
-  static update1 (keyword, data) {
-    const cells = this.graph.getSelectionCells()
-    this.graph.setCellStyles(keyword, data[keyword], cells)
+
+  // update fontStyle
+  static toggleFontStyle (style) {
+    let fontStyle
+    switch (style) {
+      case 'bold':
+        fontStyle = mxConstants.FONT_BOLD
+        break
+      case 'italic':
+        fontStyle = mxConstants.FONT_ITALIC
+        break
+      case 'underline':
+        fontStyle = mxConstants.FONT_UNDERLINE
+        break
+      default:
+        break
+    }
+    this.graph.getModel().beginUpdate()
+    try {
+      this.graph.toggleCellStyleFlags(mxConstants.STYLE_FONTSTYLE, fontStyle)
+    } finally {
+      this.graph.getModel().endUpdate()
+    }
   }
-  static _updateSelectionCell (cell, cells, keyword, data) {
-    console.log(cell)
-    console.log(cells)
-    // const state = this.graph.view.getState(cell)
-    console.log(this.graph)
-    this.graph.setCellStyles(
-      keyword,
-      data[keyword],
-      this.graph.getSelectionCells()
-    )
-    // this.graph.selectVertices('width', '1000', this.graph.getSelectionCells())
+
+  // update Geometry  width height x y
+  static updateGeometryHandler (value, func) {
+    const cells = this.graph.getSelectionCells()
+    this.graph.getModel().beginUpdate()
+    try {
+      cells.forEach((cell) => {
+        var geo = this.graph.getCellGeometry(cell)
+        geo = geo.clone()
+        func(geo, value)
+        this.graph.getModel().setGeometry(cell, geo)
+      })
+    } finally {
+      this.graph.getModel().endUpdate()
+    }
+  }
+
+  static FlipCells (style) {
+    console.log(style)
+    this.graph.toggleCellStyles(style, false)
+  }
+
+  // 对齐
+  static align (align) {
+    this.graph.alignCells(align)
+  }
+
+  // 等距分布
+  static distributeCells (boolean) {
+    editor.distributeCells(boolean)
   }
 
   static initFormatField (cell) {

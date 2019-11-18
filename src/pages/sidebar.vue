@@ -58,7 +58,7 @@ export default {
               width: 120,
               height: 60,
               type: 'image',
-              style: 'rounded=0;whiteSpace=wrap;html=1;strokeColor=rgba(255,0,0,0.32);fillColor=rgba(250,0,0,0.34);'
+              style: 'rounded=1;whiteSpace=wrap;html=1;strokeColor=rgba(255,0,0,0.32);fillColor=rgba(250,0,0,0.34);arcSize=34;'
             },
             {
               name: 'rectangle',
