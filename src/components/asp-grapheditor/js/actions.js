@@ -5,7 +5,7 @@
  * @LastEditors: liuqiyu
  * @LastEditTime: 2019-11-18 18:11:45
  */
-import mxgraph from '@/utils/mxgraph'
+import mxgraph from './mxgraph'
 const {
   mxResources,
   mxEventSource,

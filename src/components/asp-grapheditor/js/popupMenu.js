@@ -3,9 +3,9 @@
  * @Author: liuqiyu
  * @Date: 2019-11-12 16:09:52
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-11-12 16:30:06
+ * @LastEditTime: 2019-11-19 20:29:57
  */
-import mxgraph from '@/utils/mxgraph'
+import mxgraph from './mxgraph'
 const {
   mxUtils,
   mxClient,

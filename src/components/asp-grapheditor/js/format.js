@@ -3,10 +3,10 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-11-18 18:31:24
+ * @LastEditTime: 2019-11-19 20:29:21
  */
-import mxgraph from '@/utils/mxgraph'
-import editor from '@/utils/editor'
+import mxgraph from './mxgraph'
+import editor from './editor'
 const {
   // mxUtils,
   mxConstants

@@ -94,7 +94,7 @@
 </template>
 
 <script>
-import Tool from '@/utils/tool'
+import Tool from './../js/toolbar'
 export default {
   name: 'AspTool',
   data () {

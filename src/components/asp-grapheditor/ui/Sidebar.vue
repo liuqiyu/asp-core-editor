@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import editor from '@/utils/editor'
+import editor from './../js/editor'
 export default {
   name: 'Sidebar',
   mounted () {

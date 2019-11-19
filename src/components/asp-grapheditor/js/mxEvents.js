@@ -1,7 +1,16 @@
-import mxgraph from '@/utils/mxgraph'
-import Tool from './tool'
+/*
+ * @Description:
+ * @Author: liuqiyu
+ * @Date: 2019-11-11 14:27:27
+ * @LastEditors: liuqiyu
+ * @LastEditTime: 2019-11-19 20:33:23
+ */
+import mxgraph from './mxgraph'
+import Tool from './toolbar'
 
-const { mxEvent } = mxgraph
+const {
+  mxEvent
+} = mxgraph
 
 // let MxOutline = mxOutline
 

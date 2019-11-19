@@ -1,4 +1,4 @@
-import mxgraph from '@/utils/mxgraph'
+import mxgraph from './mxgraph'
 
 const {
   mxOutline

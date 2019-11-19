@@ -1,5 +1,5 @@
-import mxgraph from '@/utils/mxgraph'
-import Tool from './tool'
+import mxgraph from './mxgraph'
+import Toolbar from './toolbar'
 import Format from './format'
 import Actions from './actions'
 import PopupMenu from './popupMenu'
@@ -70,7 +70,7 @@ class Editor {
       }
 
       // 初始化
-      Tool.init(this.editor, this.graph)
+      Toolbar.init(this.editor, this.graph)
       Format.init(this.editor, this.graph)
       Actions.init(this.editor, this.graph)
       PopupMenu.init(this.editor, this.graph, container)
