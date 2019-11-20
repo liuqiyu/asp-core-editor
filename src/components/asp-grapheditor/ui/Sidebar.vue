@@ -32,6 +32,7 @@ import editor from './../js/editor'
 export default {
   name: 'Sidebar',
   mounted () {
+    console.log(editor.addToolbarItem)
     const ele = document.querySelectorAll('.drap')
     ele.forEach(item => {
       editor.addToolbarItem(item)

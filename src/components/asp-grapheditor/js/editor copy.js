@@ -25,7 +25,7 @@ const {
   // mxEdgeStyle
 } = mxgraph
 
-function Editor () {
+function Editor() {
   this.editor = null
   this.graph = null
 }
@@ -145,132 +145,147 @@ Editor.prototype.init = function (container) {
   }
 }
 
+
 Editor.prototype.getGraph = function () {
   return this.graph
 }
 
-// 元件初始化
-Editor.prototype.addToolbarItem = function (ele) {
-  const dataset = ele.dataset
-  const src = dataset.src
-  const width = Number(dataset.width)
-  const height = Number(dataset.height)
-  const style = dataset.style
-  const value = dataset.value
 
-  const _dropGraph = evt => {
-    const x = mxEvent.getClientX(evt)
-    const y = mxEvent.getClientY(evt)
-    // 获取 x,y 所在的元素
-    const elt = document.elementFromPoint(x, y)
-    // 如果鼠标落在graph容器
-    if (mxUtils.isAncestorNode(this.graph.container, elt)) {
-      return this.graph
+class Editor {
+  static editor = null
+  static graph = null
+
+  static init(container) {
+
+  }
+
+  static getGraph() {
+    return this.graph
+  }
+
+  // 元件初始化
+  static addToolbarItem(ele) {
+    const dataset = ele.dataset
+    const src = dataset.src
+    const width = Number(dataset.width)
+    const height = Number(dataset.height)
+    const style = dataset.style
+    const value = dataset.value
+
+    const _dropGraph = evt => {
+      const x = mxEvent.getClientX(evt)
+      const y = mxEvent.getClientY(evt)
+      // 获取 x,y 所在的元素
+      const elt = document.elementFromPoint(x, y)
+      // 如果鼠标落在graph容器
+      if (mxUtils.isAncestorNode(this.graph.container, elt)) {
+        return this.graph
+      }
+      // 鼠标落在其他地方
+      return null
     }
-    // 鼠标落在其他地方
-    return null
-  }
 
-  const _dropSuccessCb = (graph, evt, target, x, y) => {
-    var cell = new mxCell(value, new mxGeometry(0, 0, width, height), style)
-    cell.vertex = true
-    var cells = graph.importCells([cell], x, y, target)
+    const _dropSuccessCb = (graph, evt, target, x, y) => {
+      var cell = new mxCell(value, new mxGeometry(0, 0, width, height), style)
+      cell.vertex = true
+      var cells = graph.importCells([cell], x, y, target)
 
-    if (cells != null && cells.length > 0) {
-      graph.scrollCellToVisible(cells[0])
-      graph.setSelectionCells(cells)
-    }
-  }
-
-  const dragElt = document.createElement('img')
-  dragElt.setAttribute('src', src)
-  dragElt.setAttribute('style', `width:${width}px;height:${height}px;`)
-
-  mxUtils.makeDraggable(
-    ele,
-    _dropGraph,
-    _dropSuccessCb,
-    dragElt,
-    null,
-    null,
-    null,
-    true
-  )
-}
-
-// 元件选中
-Editor.prototype.addToolbarItem = function () {
-  var cell = this.graph.getSelectionCell()
-  if (cell) {
-    Format.initFormatField(cell)
-  }
-}
-
-// 等距分布
-Editor.prototype.distributeCells = function (horizontal, cells) {
-  if (cells == null) {
-    cells = this.graph.getSelectionCells()
-  }
-
-  if (cells != null && cells.length > 1) {
-    var vertices = []
-    var max = null
-    var min = null
-
-    for (var i = 0; i < cells.length; i++) {
-      if (this.graph.getModel().isVertex(cells[i])) {
-        var state = this.graph.view.getState(cells[i])
-
-        if (state != null) {
-          var tmp = (horizontal) ? state.getCenterX() : state.getCenterY()
-          max = (max != null) ? Math.max(max, tmp) : tmp
-          min = (min != null) ? Math.min(min, tmp) : tmp
-
-          vertices.push(state)
-        }
+      if (cells != null && cells.length > 0) {
+        graph.scrollCellToVisible(cells[0])
+        graph.setSelectionCells(cells)
       }
     }
 
-    if (vertices.length > 2) {
-      vertices.sort(function (a, b) {
-        return (horizontal) ? a.x - b.x : a.y - b.y
-      })
+    const dragElt = document.createElement('img')
+    dragElt.setAttribute('src', src)
+    dragElt.setAttribute('style', `width:${width}px;height:${height}px;`)
 
-      var t = this.graph.view.translate
-      var s = this.graph.view.scale
+    mxUtils.makeDraggable(
+      ele,
+      _dropGraph,
+      _dropSuccessCb,
+      dragElt,
+      null,
+      null,
+      null,
+      true
+    )
+  }
 
-      min = min / s - ((horizontal) ? t.x : t.y)
-      max = max / s - ((horizontal) ? t.x : t.y)
+  // 元件选中
+  static selectionChanged() {
+    var cell = this.graph.getSelectionCell()
+    if (cell) {
+      Format.initFormatField(cell)
+    }
+  }
 
-      this.graph.getModel().beginUpdate()
-      try {
-        var dt = (max - min) / (vertices.length - 1)
-        var t0 = min
+  // 等距分布
+  static distributeCells(horizontal, cells) {
+    if (cells == null) {
+      cells = this.graph.getSelectionCells()
+    }
 
-        for (let i = 1; i < vertices.length - 1; i++) {
-          var pstate = this.graph.view.getState(this.graph.model.getParent(vertices[i].cell))
-          var geo = this.graph.getCellGeometry(vertices[i].cell)
-          t0 += dt
+    if (cells != null && cells.length > 1) {
+      var vertices = []
+      var max = null
+      var min = null
 
-          if (geo != null && pstate != null) {
-            geo = geo.clone()
+      for (var i = 0; i < cells.length; i++) {
+        if (this.graph.getModel().isVertex(cells[i])) {
+          var state = this.graph.view.getState(cells[i])
 
-            if (horizontal) {
-              geo.x = Math.round(t0 - geo.width / 2) - pstate.origin.x
-            } else {
-              geo.y = Math.round(t0 - geo.height / 2) - pstate.origin.y
-            }
+          if (state != null) {
+            var tmp = (horizontal) ? state.getCenterX() : state.getCenterY()
+            max = (max != null) ? Math.max(max, tmp) : tmp
+            min = (min != null) ? Math.min(min, tmp) : tmp
 
-            this.graph.getModel().setGeometry(vertices[i].cell, geo)
+            vertices.push(state)
           }
         }
-      } finally {
-        this.graph.getModel().endUpdate()
+      }
+
+      if (vertices.length > 2) {
+        vertices.sort(function (a, b) {
+          return (horizontal) ? a.x - b.x : a.y - b.y
+        })
+
+        var t = this.graph.view.translate
+        var s = this.graph.view.scale
+
+        min = min / s - ((horizontal) ? t.x : t.y)
+        max = max / s - ((horizontal) ? t.x : t.y)
+
+        this.graph.getModel().beginUpdate()
+        try {
+          var dt = (max - min) / (vertices.length - 1)
+          var t0 = min
+
+          for (let i = 1; i < vertices.length - 1; i++) {
+            var pstate = this.graph.view.getState(this.graph.model.getParent(vertices[i].cell))
+            var geo = this.graph.getCellGeometry(vertices[i].cell)
+            t0 += dt
+
+            if (geo != null && pstate != null) {
+              geo = geo.clone()
+
+              if (horizontal) {
+                geo.x = Math.round(t0 - geo.width / 2) - pstate.origin.x
+              } else {
+                geo.y = Math.round(t0 - geo.height / 2) - pstate.origin.y
+              }
+
+              this.graph.getModel().setGeometry(vertices[i].cell, geo)
+            }
+          }
+        } finally {
+          this.graph.getModel().endUpdate()
+        }
       }
     }
-  }
 
-  return cells
+    return cells
+  }
 }
 
 export default Editor
