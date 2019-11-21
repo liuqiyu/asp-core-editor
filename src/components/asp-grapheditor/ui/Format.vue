@@ -7,7 +7,7 @@
         <div class="format-content">
           <el-input v-model="format.value"
                     placeholder="请输入名称"
-                    @change="handleChangeValue()"></el-input>
+                    @change="handleChangeValue"></el-input>
         </div>
       </div>
       <div class="format-item">
@@ -187,11 +187,12 @@
 
 <script>
 // import editor from '@/utils/editor'
-import format from './../../js/format'
+import format from './../js/format'
 export default {
   name: 'Format',
   data () {
     return {
+      cells: null,
       fontStyleCheckbox: [],
       format: {
         value: '',
@@ -210,17 +211,18 @@ export default {
     }
   },
   mounted () {
+    this.cells = []
   },
   methods: {
     // 选中
     selectionChanged (graph) {
-      var cell = graph.getSelectionCell()
-      // var cells = graph.getSelectionCells()
-      if (cell) {
-        const geometry = cell.geometry
+      var cells = graph.getSelectionCells()
+      this.cells = cells
+      if (cells) {
+        const geometry = cells[0].geometry
         const ss = format.getSelectionState()
-        this.selectionChangedFormat(cell, geometry, ss)
-        this.selectionChangedGeometry(cell, geometry, ss)
+        this.selectionChangedFormat(cells[0], geometry, ss)
+        this.selectionChangedGeometry(cells[0], geometry, ss)
       }
     },
     // style,value
@@ -241,8 +243,9 @@ export default {
       format.toggleFontStyle(style)
     },
     // update value
-    handleChangeValue () {
-      format.updateValueHandler(this.format.value)
+    handleChangeValue (e) {
+      console.log(e)
+      format.updateValueHandler(e)
     },
     // geometry
     selectionChangedGeometry (cell, geometry, ss) {

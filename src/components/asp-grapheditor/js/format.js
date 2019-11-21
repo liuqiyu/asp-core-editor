@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-11-21 15:16:27
+ * @LastEditTime: 2019-11-21 18:09:00
  */
 import mxgraph from './mxgraph'
 import editor from './editor'
@@ -62,8 +62,11 @@ class Format {
 
   // update value
   static updateValueHandler (value) {
+    // 多选修改
     var cells = this.graph.getSelectionCells()
-    this.graph.cellLabelChanged(cells[0], value)
+    cells.forEach(cell => {
+      this.graph.cellLabelChanged(cell, value)
+    })
   }
 
   // update Geometry  width height x y
