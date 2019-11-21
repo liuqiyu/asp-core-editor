@@ -3,14 +3,18 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-11-21 15:16:27
+ * @LastEditTime: 2019-11-21 13:55:19
  */
 import mxgraph from './mxgraph'
-import editor from './editor'
+// import {
+//   editor
+// } from './editor'
 const {
   // mxUtils,
   mxConstants
 } = mxgraph
+
+// export updateStyleHandler
 class Format {
   static editor = null
   static graph = null
@@ -60,12 +64,6 @@ class Format {
     }
   }
 
-  // update value
-  static updateValueHandler (value) {
-    var cells = this.graph.getSelectionCells()
-    this.graph.cellLabelChanged(cells[0], value)
-  }
-
   // update Geometry  width height x y
   static updateGeometryHandler (value, func) {
     const cells = this.graph.getSelectionCells()
@@ -83,6 +81,7 @@ class Format {
   }
 
   static FlipCells (style) {
+    console.log(style)
     this.graph.toggleCellStyles(style, false)
   }
 
@@ -93,7 +92,7 @@ class Format {
 
   // 等距分布
   static distributeCells (boolean) {
-    editor.distributeCells(boolean)
+    // editor.distributeCells(boolean)
   }
 
   static initFormatField (cell) {
@@ -107,7 +106,7 @@ class Format {
 
     for (var i = 0; i < cells.length; i++) {
       var state = this.graph.view.getState(cells[i])
-      // console.log(state)
+      console.log(state)
 
       if (state !== null) {
         shape = state.style

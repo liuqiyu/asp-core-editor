@@ -6,7 +6,8 @@
         <div class="format-label">名称</div>
         <div class="format-content">
           <el-input v-model="format.value"
-                    placeholder="请输入名称"></el-input>
+                    placeholder="请输入名称"
+                    @change="handleChangeValue()"></el-input>
         </div>
       </div>
       <div class="format-item">
@@ -214,9 +215,7 @@ export default {
     // 选中
     selectionChanged (graph) {
       var cell = graph.getSelectionCell()
-      var cells = graph.getSelectionCells()
-      console.log(cell)
-      console.log(cells)
+      // var cells = graph.getSelectionCells()
       if (cell) {
         const geometry = cell.geometry
         const ss = format.getSelectionState()
@@ -239,8 +238,11 @@ export default {
     },
     // fontStyle
     handleToggleFontStyle (style) {
-      console.log(style)
       format.toggleFontStyle(style)
+    },
+    // update value
+    handleChangeValue () {
+      format.updateValueHandler(this.format.value)
     },
     // geometry
     selectionChangedGeometry (cell, geometry, ss) {

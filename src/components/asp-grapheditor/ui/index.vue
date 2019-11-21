@@ -16,7 +16,8 @@
         </div>
       </div>
     </div>
-    <Format id="graph-sidebar"
+    <Format v-if="showFormat"
+            id="graph-sidebar"
             ref="format"></Format>
   </div>
 </template>
@@ -39,7 +40,8 @@ Object.assign(mxEvent, {
 export default {
   data () {
     return {
-      graph: null
+      graph: null,
+      showFormat: false
     }
   },
   components: {
@@ -50,29 +52,27 @@ export default {
   mounted () {
     let container = document.getElementById('graph-container')
     let outlineContainer = this.$refs.outlineContainer
-
     const graph = editor.init(container) // 初始化
+    console.log(graph)
     OutLine.init(graph, outlineContainer) //
 
     // 选中元件
-    graph.getSelectionModel().addListener(mxEvent.CHANGE, (sender, evt) => {
-      this.$refs.format.selectionChanged(graph)
+    graph.getSelectionModel().addListener(mxEvent.CHANGE, async (sender, evt) => {
+      var cell = graph.getSelectionCell()
+      if (cell) {
+        this.showFormat = true
+        await this.$nextTick()
+        this.$refs.format.selectionChanged(graph)
+      } else {
+        this.showFormat = false
+      }
     })
 
     // 单击事件
     // graph.addListener(mxEvent.CLICK, (sender, evt) => {
     //   var cell = evt.getProperty('cell') // 元件
     //   // console.log(cell)
-    //   if (cell) {
-    //     graph.getModel().beginUpdate()
-    //     try {
-    //       // graph.setCellStyles('fillColor', 'red', graph.getSelectionCells())
-    //       // graph.getModel().setStyle(cell, 'fillColor=red')
-    //       // graph.getModel().setValue(cell, 3333333333333333)
-    //     } finally {
-    //       graph.getModel().endUpdate()
-    //     }
-    //   }
+
     // })
 
     // 双击事件
