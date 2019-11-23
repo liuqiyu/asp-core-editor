@@ -26,8 +26,8 @@ const {
 } = mxgraph
 
 class Editor {
-  static editor = null
-  static graph = null
+  static editor = null;
+  static graph = null;
 
   static init (container) {
     var self = this
@@ -90,7 +90,6 @@ class Editor {
             new mxConnectionConstraint(new mxPoint(1, 1), true)
           ]
         }
-
         return null
       }
 
@@ -221,9 +220,9 @@ class Editor {
           var state = this.graph.view.getState(cells[i])
 
           if (state != null) {
-            var tmp = (horizontal) ? state.getCenterX() : state.getCenterY()
-            max = (max != null) ? Math.max(max, tmp) : tmp
-            min = (min != null) ? Math.min(min, tmp) : tmp
+            var tmp = horizontal ? state.getCenterX() : state.getCenterY()
+            max = max != null ? Math.max(max, tmp) : tmp
+            min = min != null ? Math.min(min, tmp) : tmp
 
             vertices.push(state)
           }
@@ -232,14 +231,14 @@ class Editor {
 
       if (vertices.length > 2) {
         vertices.sort(function (a, b) {
-          return (horizontal) ? a.x - b.x : a.y - b.y
+          return horizontal ? a.x - b.x : a.y - b.y
         })
 
         var t = this.graph.view.translate
         var s = this.graph.view.scale
 
-        min = min / s - ((horizontal) ? t.x : t.y)
-        max = max / s - ((horizontal) ? t.x : t.y)
+        min = min / s - (horizontal ? t.x : t.y)
+        max = max / s - (horizontal ? t.x : t.y)
 
         this.graph.getModel().beginUpdate()
         try {
@@ -247,7 +246,9 @@ class Editor {
           var t0 = min
 
           for (let i = 1; i < vertices.length - 1; i++) {
-            var pstate = this.graph.view.getState(this.graph.model.getParent(vertices[i].cell))
+            var pstate = this.graph.view.getState(
+              this.graph.model.getParent(vertices[i].cell)
+            )
             var geo = this.graph.getCellGeometry(vertices[i].cell)
             t0 += dt
 

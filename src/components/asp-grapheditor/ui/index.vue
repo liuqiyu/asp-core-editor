@@ -27,7 +27,7 @@ import Toolbar from './Toolbar'
 import Format from './Format'
 import Sidebar from './Sidebar'
 import mxgraph from './../js/mxgraph'
-import editor from './../js/editor'
+import editor from './../js'
 import OutLine from './../js/outLine'
 import Tool from './../js/toolbar'
 
