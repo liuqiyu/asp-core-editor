@@ -12,13 +12,18 @@
 </template>
 
 <script>
-import mains from "./pages/index";
+import mains from './pages/index'
 export default {
   components: {
     mains
   },
-  mounted() {}
-};
+  mounted () {
+    var abc = function (a) {
+      console.log(1234)
+    }
+    console.log(abc)
+  }
+}
 </script>
 
 <style lang="scss">

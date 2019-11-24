@@ -12,8 +12,8 @@ const {
   mxConstants
 } = mxgraph
 class Format {
-  static editor = null
-  static graph = null
+  static editor = null;
+  static graph = null;
 
   // Tool 初始化
   static init (editor, graph) {
@@ -74,7 +74,7 @@ class Format {
     const cells = this.graph.getSelectionCells()
     this.graph.getModel().beginUpdate()
     try {
-      cells.forEach((cell) => {
+      cells.forEach(cell => {
         var geo = this.graph.getCellGeometry(cell)
         geo = geo.clone()
         func(geo, value)
