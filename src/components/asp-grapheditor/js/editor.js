@@ -4,6 +4,7 @@ import Format from './format'
 import Actions from './actions'
 import PopupMenu from './popupMenu'
 import MxEvents from './mxEvents'
+// import HoverIcons from './HoverIcons'
 
 const {
   mxEditor,
@@ -20,7 +21,8 @@ const {
   mxCodec,
   mxConnectionConstraint,
   mxPoint,
-  mxCellState
+  mxCellState,
+  mxConnectionHandler
   // mxPerimeter,
   // mxEdgeStyle
 } = mxgraph
@@ -28,9 +30,17 @@ const {
 class Editor {
   static editor = null;
   static graph = null;
+  static hoverIcons = null;
+  static defaultEdgeStyle = {
+    'edgeStyle': 'orthogonalEdgeStyle',
+    'rounded': '0',
+    'jettySize': 'auto',
+    'orthogonalLoop': '1'
+  }
+  static currentEdgeStyle = mxUtils.clone(this.defaultEdgeStyle)
 
   static init (container) {
-    var self = this
+    // var _this = this
     if (!mxClient.isBrowserSupported()) {
       // 判断是否支持mxgraph
       mxUtils.error('Browser is not supported!', 200, false)
@@ -54,7 +64,7 @@ class Editor {
       this.graph = this.editor.graph
       this.editor.setGraphContainer(container)
 
-      // this.graph.setConnectable(true) // 指定图是否应允许新连接
+      this.graph.setConnectable(true) // 指定图是否应允许新连接
       this.graph.setMultigraph(true) // 指定图是否应允许同一对顶点之间存在多个连接
 
       // 键盘快捷键
@@ -75,6 +85,9 @@ class Editor {
       Actions.init(this.editor, this.graph)
       PopupMenu.init(this.editor, this.graph, container)
       MxEvents.init()
+      // this.hoverIcons = new HoverIcons(this.graph)
+
+      // console.log(this.hoverIcons)
 
       // hover 锚点
       this.graph.getAllConnectionConstraints = function (terminal) {
@@ -95,20 +108,31 @@ class Editor {
 
       // 连线类型
       // Connect preview
-      this.graph.connectionHandler.createEdgeState = function (me) {
-        var edge = self.graph.createEdge(
-          null,
-          null,
-          null,
-          null,
-          null,
-          'edgeStyle=orthogonalEdgeStyle'
-        )
-        return new mxCellState(
-          this.graph.view,
-          edge,
-          this.graph.getCellStyle(edge)
-        )
+      // this.graph.connectionHandler.createEdgeState = function (me) {
+      //   var edge = self.graph.createEdge(
+      //     null,
+      //     null,
+      //     null,
+      //     null,
+      //     null,
+      //     'edgeStyle=orthogonalEdgeStyle'
+      //   )
+      //   return new mxCellState(
+      //     this.graph.view,
+      //     edge,
+      //     this.graph.getCellStyle(edge)
+      //   )
+      // }
+      // 使用当前边样式进行连接预览
+      mxConnectionHandler.prototype.createEdgeState = (me) => {
+        var style = this.createCurrentEdgeStyle()
+        var edge = this.graph.createEdge(null, null, null, null, null, style)
+        var state = new mxCellState(this.graph.view, edge, this.graph.getCellStyle(edge))
+
+        for (var key in this.graph.currentEdgeStyle) {
+          state.style[key] = this.graph.currentEdgeStyle[key]
+        }
+        return state
       }
 
       var parent = this.graph.getDefaultParent()
@@ -141,6 +165,47 @@ class Editor {
       new mxRubberband(this.graph)
       return this.graph
     }
+  }
+
+  static createCurrentEdgeStyle () {
+    var style = 'edgeStyle=' + (this.currentEdgeStyle['edgeStyle'] || 'none') + ';'
+
+    if (this.currentEdgeStyle['shape'] != null) {
+      style += 'shape=' + this.currentEdgeStyle['shape'] + ';'
+    }
+
+    if (this.currentEdgeStyle['curved'] != null) {
+      style += 'curved=' + this.currentEdgeStyle['curved'] + ';'
+    }
+
+    if (this.currentEdgeStyle['rounded'] != null) {
+      style += 'rounded=' + this.currentEdgeStyle['rounded'] + ';'
+    }
+
+    if (this.currentEdgeStyle['comic'] != null) {
+      style += 'comic=' + this.currentEdgeStyle['comic'] + ';'
+    }
+
+    if (this.currentEdgeStyle['jumpStyle'] != null) {
+      style += 'jumpStyle=' + this.currentEdgeStyle['jumpStyle'] + ';'
+    }
+
+    if (this.currentEdgeStyle['jumpSize'] != null) {
+      style += 'jumpSize=' + this.currentEdgeStyle['jumpSize'] + ';'
+    }
+
+    // Special logic for custom property of elbowEdgeStyle
+    if (this.currentEdgeStyle['edgeStyle'] === 'elbowEdgeStyle' && this.currentEdgeStyle['elbow'] !== null) {
+      style += 'elbow=' + this.currentEdgeStyle['elbow'] + ';'
+    }
+
+    if (this.currentEdgeStyle['html'] !== null) {
+      style += 'html=' + this.currentEdgeStyle['html'] + ';'
+    } else {
+      style += 'html=1;'
+    }
+
+    return style
   }
 
   static getGraph () {
