@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-11-25 18:26:57
+ * @LastEditTime: 2019-11-25 18:48:42
  */
 import mxgraph from './mxgraph'
 import editor from './editor'
@@ -35,6 +35,7 @@ class Format {
     }
   }
 
+  // update edge type style
   static updateEdgeTypeStyleHandler (keyword, data) {
     const keys = [mxConstants.STYLE_ROUNDED, mxConstants.STYLE_CURVED]
 
