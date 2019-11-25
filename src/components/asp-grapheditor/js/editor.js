@@ -66,6 +66,7 @@ class Editor {
 
       this.graph.setConnectable(true) // 指定图是否应允许新连接
       this.graph.setMultigraph(true) // 指定图是否应允许同一对顶点之间存在多个连接
+      this.graph.setGridEnabled(false)
 
       // 键盘快捷键
       const config = mxUtils
@@ -219,7 +220,8 @@ class Editor {
     const width = Number(dataset.width)
     const height = Number(dataset.height)
     const style = dataset.style
-    const value = dataset.value
+    const value = dataset.value || ''
+    const type = dataset.type
 
     const _dropGraph = evt => {
       const x = mxEvent.getClientX(evt)
@@ -235,8 +237,24 @@ class Editor {
     }
 
     const _dropSuccessCb = (graph, evt, target, x, y) => {
-      var cell = new mxCell(value, new mxGeometry(0, 0, width, height), style)
-      cell.vertex = true
+      var cell = null
+      if (type === 'edge') {
+        cell = new mxCell('', new mxGeometry(0, 0, width, height), style)
+        cell.geometry.setTerminalPoint(new mxPoint(0, height), true)
+        cell.geometry.setTerminalPoint(new mxPoint(width, 0), false)
+        cell.geometry.relative = true
+        cell.edge = true
+      } else if (type === 'curve') {
+        cell = new mxCell('', new mxGeometry(0, 0, 50, 50), 'curved=1;endArrow=classic;html=1;')
+        cell.geometry.setTerminalPoint(new mxPoint(0, 50), true)
+        cell.geometry.setTerminalPoint(new mxPoint(50, 0), false)
+        cell.geometry.points = [new mxPoint(50, 50), new mxPoint(0, 0)]
+        cell.geometry.relative = true
+        cell.edge = true
+      } else {
+        cell = new mxCell(value, new mxGeometry(0, 0, width, height), style)
+        cell.vertex = true
+      }
       var cells = graph.importCells([cell], x, y, target)
 
       if (cells != null && cells.length > 0) {

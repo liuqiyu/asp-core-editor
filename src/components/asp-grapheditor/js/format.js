@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-11-21 18:09:00
+ * @LastEditTime: 2019-11-25 18:26:57
  */
 import mxgraph from './mxgraph'
 import editor from './editor'
@@ -23,16 +23,31 @@ class Format {
 
   // update style
   static updateStyleHandler (keyword, data) {
-    // const cells = this.graph.getSelectionCells()
     this.graph.getModel().beginUpdate()
     try {
       this.graph.setCellStyles(
         keyword,
-        data[keyword],
+        data,
         this.graph.getSelectionCells()
       )
     } finally {
       this.graph.getModel().endUpdate()
+    }
+  }
+
+  static updateEdgeTypeStyleHandler (keyword, data) {
+    const keys = [mxConstants.STYLE_ROUNDED, mxConstants.STYLE_CURVED]
+
+    var values = ['0', null]
+
+    if (keyword === 'rounded') {
+      values = ['1', null]
+    } else if (keyword === 'curved') {
+      values = [null, '1']
+    }
+
+    for (var i = 0; i < keys.length; i++) {
+      this.graph.setCellStyles(keys[i], values[i], this.graph.getSelectionCells())
     }
   }
 
@@ -65,7 +80,7 @@ class Format {
     // 多选修改
     var cells = this.graph.getSelectionCells()
     cells.forEach(cell => {
-      this.graph.cellLabelChanged(cell, value)
+      this.graph.cellLabelChanged(cell, value || '')
     })
   }
 

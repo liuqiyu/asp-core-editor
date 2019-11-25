@@ -13,6 +13,7 @@
                :data-src="cell.src"
                :data-style="cell.style"
                :data-value="cell.name"
+               :data-type="cell.type"
                v-for="(cell, key) in item.children"
                :key="key">
             <img ref="ele"
@@ -83,6 +84,22 @@ export default {
               height: 80,
               type: 'Ellipse',
               style: 'ellipse;whiteSpace=wrap;html=1;'
+            },
+            {
+              name: 'Line',
+              src: require('./../images/sidebar/line.svg'),
+              width: 50,
+              height: 50,
+              type: 'edge',
+              style: 'endArrow=none;html=1;'
+            },
+            {
+              name: 'curve',
+              src: require('./../images/sidebar/line.svg'),
+              width: 50,
+              height: 50,
+              type: 'curve',
+              style: 'endArrow=none;html=1;'
             }
           ]
         },

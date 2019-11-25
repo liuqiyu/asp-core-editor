@@ -1,184 +1,28 @@
 <template>
   <div class="graph-format">
-    <header class="title">文本</header>
+    <header class="title">编辑器</header>
     <div class="format-wrapper">
       <div class="format-item">
-        <div class="format-label">名称</div>
+        <div class="format-label">背景</div>
         <div class="format-content">
-          <el-input v-model="format.value"
-                    placeholder="请输入名称"
-                    @change="handleChangeValue"></el-input>
-        </div>
-      </div>
-      <div class="format-item">
-        <div class="format-label">背景颜色</div>
-        <div class="format-content">
-          <el-color-picker v-model="format.fillColor"
-                           @change="handleChangeStyle('fillColor')"
+          <el-color-picker v-model="format.background"
+                           @change="handleChangeStyle('background')"
                            show-alpha></el-color-picker>
         </div>
       </div>
-      <div class="format-item">
-        <div class="format-label">边框颜色</div>
-        <div class="format-content">
-          <el-color-picker v-model="format.strokeColor"
-                           @change="handleChangeStyle('strokeColor')"
-                           show-alpha></el-color-picker>
-        </div>
-      </div>
-      <div class="format-item">
-        <div class="format-label">大小</div>
-        <div class="format-content">
-          <el-input-number style="width: 65px"
-                           class="mini-input-number"
-                           v-model="geometry.width"
-                           placeholder="宽"
-                           controls-position="right"
-                           @change="handleChangeGeometry('width')"
-                           :min="1"></el-input-number>
-          <span class="character">
-            *
-          </span>
-          <el-input-number style="width: 65px"
-                           class="mini-input-number"
-                           v-model="geometry.height"
-                           placeholder="高"
-                           controls-position="right"
-                           @change="handleChangeGeometry('height')"
-                           :min="1"></el-input-number>
-        </div>
-      </div>
-      <div class="format-item">
-        <div class="format-label">位置</div>
-        <div class="format-content">
-          <el-input-number style="width: 65px"
-                           class="mini-input-number"
-                           v-model="geometry.x"
-                           placeholder="X"
-                           controls-position="right"
-                           @change="handleChangeGeometry('x')"
-                           :min="1"></el-input-number>
-          <span class="character">
-            *
-          </span>
-          <el-input-number style="width: 65px"
-                           class="mini-input-number"
-                           v-model="geometry.y"
-                           placeholder="Y"
-                           controls-position="right"
-                           @change="handleChangeGeometry('y')"
-                           :min="1"></el-input-number>
-        </div>
-      </div>
-      <el-divider content-position="left"></el-divider>
       <!-- 字体 -->
       <div class="format-item">
-        <div class="format-label">字体</div>
+        <div class="format-label">网格</div>
         <div class="format-content font">
           <el-input-number class="mini-input-number"
-                           v-model="format.fontSize"
+                           v-model="format.gridSize"
                            controls-position="right"
-                           @change="handleChangeStyle('fontSize')"
+                           @change="handleChangeStyle('gridSize')"
                            :min="1"
                            :max="100"></el-input-number>
-          <el-checkbox-group style="margin-left: 5px;"
-                             class="mini-checkbox-group"
-                             v-model="fontStyleCheckbox"
-                             @change="handleChangeStyle('fontStyleCheckbox')">
-            <el-checkbox-button label="bold"
-                                key="bold"
-                                @click.native.prevent="handleToggleFontStyle('bold')">
-              <span class="iconfont iconjiacu"></span></el-checkbox-button>
-            <el-checkbox-button label="italic"
-                                key="italic"
-                                @click.native.prevent="handleToggleFontStyle('italic')">
-              <span class="iconfont iconxieti"></span></el-checkbox-button>
-            <el-checkbox-button label="underline"
-                                key="underline"
-                                @click.native.prevent="handleToggleFontStyle('underline')">
-              <span class="iconfont iconUnderline"></span></el-checkbox-button>
-          </el-checkbox-group>
-        </div>
-      </div>
-      <div class="format-item">
-        <div class="format-label">字体颜色</div>
-        <div class="format-content">
-          <el-color-picker v-model="format.fontColor"
-                           @change="handleChangeStyle('fontColor')"
+          <el-color-picker v-model="format.background"
+                           @change="handleChangeStyle('background')"
                            show-alpha></el-color-picker>
-        </div>
-      </div>
-      <div class="format-item">
-        <div class="format-label">字体背景</div>
-        <div class="format-content">
-          <el-color-picker v-model="format.labelBackgroundColor"
-                           @change="handleChangeStyle('labelBackgroundColor')"
-                           show-alpha></el-color-picker>
-        </div>
-      </div>
-      <!-- 翻转 -->
-      <el-divider content-position="left"></el-divider>
-      <div class="format-item">
-        <div class="format-label">翻转</div>
-        <div class="format-content">
-          <el-button-group class="mini-button-group">
-            <el-button type="primary"
-                       icon="iconfont iconshuipingduiqi"
-                       title="水平"
-                       @click="handleFlipCells('flipH')"></el-button>
-            <el-button type="primary"
-                       icon="iconfont iconchuizhiduiqi"
-                       title="垂直"
-                       @click="handleFlipCells('flipV')"></el-button>
-          </el-button-group>
-        </div>
-      </div>
-      <!-- 对齐 -->
-      <el-divider content-position="left"></el-divider>
-      <div class="format-item">
-        <div class="format-label">对齐</div>
-        <div class="format-content">
-          <el-button-group class="mini-button-group">
-            <el-button type="primary"
-                       icon="iconfont iconjuzuo"
-                       title="左"
-                       @click="handleAlign('left')"></el-button>
-            <el-button type="primary"
-                       icon="iconfont iconjuzhong"
-                       title="居中"
-                       @click="handleAlign('center')"></el-button>
-            <el-button type="primary"
-                       icon="iconfont iconT-juyou"
-                       title="右"
-                       @click="handleAlign('right')"></el-button>
-            <el-button type="primary"
-                       icon="iconfont iconalign-top"
-                       title="顶"
-                       @click="handleAlign('top')"></el-button>
-            <el-button type="primary"
-                       icon="iconfont iconchuizhijuzhong"
-                       title="垂直居中"
-                       @click="handleAlign('middle')"></el-button>
-            <el-button type="primary"
-                       icon="iconfont iconalign-bottom"
-                       title="底"
-                       @click="handleAlign('bottom')"></el-button>
-          </el-button-group>
-        </div>
-      </div>
-      <div class="format-item">
-        <div class="format-label">等距分布</div>
-        <div class="format-content">
-          <el-button-group class="mini-button-group">
-            <el-button type="primary"
-                       icon="iconfont iconshuipingduiqi"
-                       title="水平"
-                       @click="handleDistributeCells(true)"></el-button>
-            <el-button type="primary"
-                       icon="iconfont iconchuizhiduiqi"
-                       title="垂直"
-                       @click="handleDistributeCells(false)"></el-button>
-          </el-button-group>
         </div>
       </div>
     </div>
@@ -195,18 +39,8 @@ export default {
       cells: null,
       fontStyleCheckbox: [],
       format: {
-        value: '',
-        fontColor: '',
-        fontSize: '',
-        labelBackgroundColor: '',
-        fillColor: '',
-        strokeColor: ''
-      },
-      geometry: {
-        x: '',
-        y: '',
-        width: '',
-        height: ''
+        background: '',
+        gridSize: ''
       }
     }
   },

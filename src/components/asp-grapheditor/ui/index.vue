@@ -16,15 +16,17 @@
         </div>
       </div>
     </div>
-    <Format v-if="showFormat"
-            id="graph-sidebar"
-            ref="format"></Format>
+    <div id="graph-sidebar">
+      <components :is="currentFormat"
+                  ref="format"></components>
+    </div>
   </div>
 </template>
 
 <script>
 import Toolbar from './Toolbar'
 import Format from './Format'
+import FormatShape from './FormatShape'
 import Sidebar from './Sidebar'
 import mxgraph from './../js/mxgraph'
 import editor from './../js'
@@ -41,30 +43,31 @@ export default {
   data () {
     return {
       graph: null,
-      showFormat: false
+      currentFormat: 'Format'
     }
   },
   components: {
     Toolbar,
     Sidebar,
-    Format
+    Format,
+    FormatShape
   },
   mounted () {
     let container = document.getElementById('graph-container')
     let outlineContainer = this.$refs.outlineContainer
     const graph = editor.init(container) // 初始化
-    console.log(graph)
     OutLine.init(graph, outlineContainer) //
 
     // 选中元件
     graph.getSelectionModel().addListener(mxEvent.CHANGE, async (sender, evt) => {
       var cell = graph.getSelectionCell()
+      console.log(cell)
       if (cell) {
-        this.showFormat = true
+        this.currentFormat = 'FormatShape'
         await this.$nextTick()
         this.$refs.format.selectionChanged(graph)
       } else {
-        this.showFormat = false
+        this.currentFormat = 'Format'
       }
     })
 
