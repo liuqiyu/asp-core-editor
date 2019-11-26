@@ -186,15 +186,41 @@
       <div class="format-item">
         <div class="format-label">线条类型</div>
         <div class="format-content">
-          <el-select v-model="format.lineType"
-                     placeholder="线条类型"
-                     @change="handleLineTypeChange">
-            <el-option v-for="item in lineType"
+          <el-select v-model="format.edgeType"
+                     placeholder=""
+                     @change="handleEdgeTypeChange">
+            <el-option v-for="item in edgeType"
                        :key="item.value"
                        :label="item.label"
                        :value="item.value">
             </el-option>
           </el-select>
+          <el-color-picker style="margin-left: 12px"
+                           v-model="format.strokeColor"
+                           @change="handleChangeStyle('strokeColor')"
+                           show-alpha></el-color-picker>
+        </div>
+      </div>
+      <div class="format-item">
+        <div class="format-label">线条样式</div>
+        <div class="format-content">
+          <el-select style="width: 85px;"
+                     v-model="format.edgeStyle"
+                     placeholder=""
+                     @change="handleEdgeStyleChange">
+            <el-option v-for="item in edgeStyle"
+                       :key="item.value"
+                       :label="item.label"
+                       :value="item.value">
+            </el-option>
+          </el-select>
+          <el-input-number style="width: 65px; margin-left: 12px;"
+                           class="mini-input-number"
+                           v-model="format.strokeWidth"
+                           placeholder="宽"
+                           controls-position="right"
+                           @change="handleChangeStyle('strokeWidth')"
+                           :min="1"></el-input-number>
         </div>
       </div>
     </div>
@@ -218,7 +244,9 @@ export default {
         fillColor: '',
         strokeColor: '',
 
-        lineType: ''
+        edgeType: '',
+        edgeStyle: '',
+        strokeWidth: ''
       },
       edge: {
         strokeColor: ''
@@ -229,7 +257,7 @@ export default {
         width: '',
         height: ''
       },
-      lineType: [
+      edgeType: [
         {
           label: '尖线',
           value: 'sharp'
@@ -242,6 +270,16 @@ export default {
           label: '曲线',
           value: 'curved'
         }
+      ],
+      edgeStyle: [
+        {
+          label: '实线',
+          value: 'solid'
+        },
+        {
+          label: '虚线',
+          value: 'dashed'
+        }
       ]
     }
   },
@@ -249,19 +287,14 @@ export default {
     this.cells = []
   },
   methods: {
-    handleLineTypeChange (e) {
+    // 条线类型
+    handleEdgeTypeChange (e) {
+      format.updateEdgeTypeHandler(e)
+    },
+    // 线条样式
+    handleEdgeStyleChange (e) {
       console.log(e)
-      switch (e) {
-        case 'sharp':
-          format.updateEdgeTypeStyleHandler('sharp')
-          break
-        case 'rounded':
-          format.updateEdgeTypeStyleHandler('rounded')
-          break
-        case 'curved':
-          format.updateEdgeTypeStyleHandler('curved')
-          break
-      }
+      format.updateEdgeStyleHandler(e)
     },
     // 选中
     selectionChanged (graph) {
@@ -281,6 +314,7 @@ export default {
       this.$set(this.format, 'labelBackgroundColor', ss.labelBackgroundColor || '')
       this.$set(this.format, 'fillColor', ss.fillColor || '')
       this.$set(this.format, 'strokeColor', ss.strokeColor || '')
+      this.$set(this.format, 'strokeWidth', ss.strokeWidth || '')
       this.$set(this.format, 'fontSize', ss.fontSize || 12)
       this.$set(this.format, 'value', cell.value || '')
     },

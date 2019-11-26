@@ -59,3 +59,9 @@
  delete | [ad21bfc](https://github.com/liuqiyu/vue-mxgraph/commit/ad21bfc)
  mxcell | [09a7d1a](https://github.com/liuqiyu/vue-mxgraph/commit/09a7d1a)
 
+
+### chore
+|范围|描述|commitId|
+--|--|--
+ package.json | 配置vue-cli-plugin-commitlint | [44a16b4](https://github.com/liuqiyu/vue-mxgraph/commit/44a16b4)
+
