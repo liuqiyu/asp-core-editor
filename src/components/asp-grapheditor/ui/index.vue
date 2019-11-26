@@ -12,7 +12,7 @@
         </div>
         <div id="outlineContainer"
              ref="outlineContainer"
-             style="z-index:1;position:absolute;overflow:hidden;top:0px;right:0px;width:220px;height:160px;background:transparent;border: 3px solid black;">
+             style="z-index:1;position:absolute;overflow:hidden;top:0px;right:0px;width:220px;height:160px;background:#fff;border: 3px solid black;">
         </div>
       </div>
     </div>

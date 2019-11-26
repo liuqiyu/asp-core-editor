@@ -35,9 +35,6 @@
  使用editor | [01ea4d6](https://github.com/liuqiyu/vue-mxgraph/commit/01ea4d6)
  初始化方式 | [20df97d](https://github.com/liuqiyu/vue-mxgraph/commit/20df97d)
  功能 | [26f9a0b](https://github.com/liuqiyu/vue-mxgraph/commit/26f9a0b)
- 组件化 | [ad2b00a](https://github.com/liuqiyu/vue-mxgraph/commit/ad2b00a)
- all | 新增修改线条样式功能 | [663edc8](https://github.com/liuqiyu/vue-mxgraph/commit/663edc8)
- editor.js | 优化选中vertex edge 样式 | [7b3f8bd](https://github.com/liuqiyu/vue-mxgraph/commit/7b3f8bd)
  右键菜单 | [9fbb106](https://github.com/liuqiyu/vue-mxgraph/commit/9fbb106)
  完善功能 | [195266e](https://github.com/liuqiyu/vue-mxgraph/commit/195266e)
  左侧元件栏 | [4287f40](https://github.com/liuqiyu/vue-mxgraph/commit/4287f40)
@@ -45,8 +42,12 @@
  拆分模块 | [228ebe0](https://github.com/liuqiyu/vue-mxgraph/commit/228ebe0)
  更新右侧详情属性渲染 | [c0bb076](https://github.com/liuqiyu/vue-mxgraph/commit/c0bb076)
  标准线 | [3e7e0d9](https://github.com/liuqiyu/vue-mxgraph/commit/3e7e0d9)
+ all | 新增修改线条样式功能 | [663edc8](https://github.com/liuqiyu/vue-mxgraph/commit/663edc8)
  线条类型 | [b0730c0](https://github.com/liuqiyu/vue-mxgraph/commit/b0730c0)
+ 组件化 | [ad2b00a](https://github.com/liuqiyu/vue-mxgraph/commit/ad2b00a)
  翻转 对齐 等距对齐 字体样式 | [0ad2d61](https://github.com/liuqiyu/vue-mxgraph/commit/0ad2d61)
+ editor.js | 优化选中vertex edge 样式 | [7b3f8bd](https://github.com/liuqiyu/vue-mxgraph/commit/7b3f8bd)
+ editor.js | 线条添加航点 | [f2b1c10](https://github.com/liuqiyu/vue-mxgraph/commit/f2b1c10)
 
 
 ### 🎨 代码样式
