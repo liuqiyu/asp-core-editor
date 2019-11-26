@@ -4,6 +4,7 @@ import Format from './format'
 import Actions from './actions'
 import PopupMenu from './popupMenu'
 import MxEvents from './mxEvents'
+import Graph from './graph'
 // import HoverIcons from './HoverIcons'
 
 const {
@@ -22,7 +23,8 @@ const {
   mxConnectionConstraint,
   mxPoint,
   mxCellState,
-  mxConnectionHandler
+  mxConnectionHandler,
+  mxVertexHandler
   // mxPerimeter,
   // mxEdgeStyle
 } = mxgraph
@@ -67,6 +69,15 @@ class Editor {
       this.graph.setConnectable(true) // 指定图是否应允许新连接
       this.graph.setMultigraph(true) // 指定图是否应允许同一对顶点之间存在多个连接
       this.graph.setGridEnabled(false)
+
+      mxVertexHandler.prototype.handleImage = Graph.createSvgImage(18, 18, '<circle cx="9" cy="9" r="5" stroke="#fff" fill="#007dfc" stroke-width="1"/>')
+      // mxVertexHandler.prototype.handleImage = HoverIcons.prototype.mainHandle // 元件
+      // mxVertexHandler.prototype.secondaryHandleImage = HoverIcons.prototype.secondaryHandle
+      mxEdgeHandler.prototype.handleImage = Graph.createSvgImage(18, 18, '<circle cx="9" cy="9" r="5" stroke="#fff" fill="#007dfc" stroke-width="1"/>')
+      // mxEdgeHandler.prototype.terminalHandleImage = HoverIcons.prototype.terminalHandle
+      // mxEdgeHandler.prototype.fixedHandleImage = HoverIcons.prototype.fixedHandle
+      // mxEdgeHandler.prototype.labelHandleImage = HoverIcons.prototype.secondaryHandle
+      // mxOutline.prototype.sizerImage = HoverIcons.prototype.mainHandle
 
       // 键盘快捷键
       const config = mxUtils
