@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-11-25 18:48:42
+ * @LastEditTime: 2019-11-26 10:50:37
  */
 import mxgraph from './mxgraph'
 import editor from './editor'
@@ -35,11 +35,10 @@ class Format {
     }
   }
 
-  // update edge type style
+  // 修改线条类型样式
   static updateEdgeTypeStyleHandler (keyword, data) {
     const keys = [mxConstants.STYLE_ROUNDED, mxConstants.STYLE_CURVED]
-
-    var values = ['0', null]
+    let values = ['0', null]
 
     if (keyword === 'rounded') {
       values = ['1', null]
