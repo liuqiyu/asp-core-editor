@@ -37,6 +37,7 @@
  功能 | [26f9a0b](https://github.com/liuqiyu/vue-mxgraph/commit/26f9a0b)
  组件化 | [ad2b00a](https://github.com/liuqiyu/vue-mxgraph/commit/ad2b00a)
  all | 新增修改线条样式功能 | [663edc8](https://github.com/liuqiyu/vue-mxgraph/commit/663edc8)
+ editor.js | 优化选中vertex edge 样式 | [7b3f8bd](https://github.com/liuqiyu/vue-mxgraph/commit/7b3f8bd)
  右键菜单 | [9fbb106](https://github.com/liuqiyu/vue-mxgraph/commit/9fbb106)
  完善功能 | [195266e](https://github.com/liuqiyu/vue-mxgraph/commit/195266e)
  左侧元件栏 | [4287f40](https://github.com/liuqiyu/vue-mxgraph/commit/4287f40)

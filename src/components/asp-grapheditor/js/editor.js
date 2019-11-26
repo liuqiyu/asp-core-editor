@@ -72,12 +72,14 @@ class Editor {
 
       mxVertexHandler.prototype.handleImage = Graph.createSvgImage(18, 18, '<circle cx="9" cy="9" r="5" stroke="#fff" fill="#007dfc" stroke-width="1"/>')
       // mxVertexHandler.prototype.handleImage = HoverIcons.prototype.mainHandle // 元件
-      // mxVertexHandler.prototype.secondaryHandleImage = HoverIcons.prototype.secondaryHandle
+      // mxVertexHandler.prototype.secondaryHandleImage = HoverIcons.prototype.secondaryHandle // 圆角
       mxEdgeHandler.prototype.handleImage = Graph.createSvgImage(18, 18, '<circle cx="9" cy="9" r="5" stroke="#fff" fill="#007dfc" stroke-width="1"/>')
       // mxEdgeHandler.prototype.terminalHandleImage = HoverIcons.prototype.terminalHandle
       // mxEdgeHandler.prototype.fixedHandleImage = HoverIcons.prototype.fixedHandle
       // mxEdgeHandler.prototype.labelHandleImage = HoverIcons.prototype.secondaryHandle
       // mxOutline.prototype.sizerImage = HoverIcons.prototype.mainHandle
+
+      mxEdgeHandler.prototype.virtualBendsEnabled = true
 
       // 键盘快捷键
       const config = mxUtils
