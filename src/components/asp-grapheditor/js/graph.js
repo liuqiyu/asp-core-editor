@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-25 09:43:50
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-11-27 17:20:50
+ * @LastEditTime: 2019-11-27 17:25:48
  */
 
 import Base64 from './../utils/base64'
@@ -267,6 +267,7 @@ export default Graph;
     return !mxEvent.isShiftDown(me.getEvent())
   }
 
+  // 翻转
   var vertexHandlerCreateSizerShape = mxVertexHandler.prototype.createSizerShape
   mxVertexHandler.prototype.createSizerShape = function (bounds, index, fillColor) {
     this.handleImage = (index === mxEvent.ROTATION_HANDLE) ? HoverIcons.prototype.rotationHandle : (index === mxEvent.LABEL_HANDLE) ? this.secondaryHandleImage : this.handleImage
