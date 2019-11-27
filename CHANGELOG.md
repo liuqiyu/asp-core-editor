@@ -1,4 +1,4 @@
-# 0.1.0 (2019-11-26)
+# 0.1.0 (2019-11-27)
 
 |范围|描述|commitId|
 --|--|--
@@ -54,6 +54,7 @@
 |范围|描述|commitId|
 --|--|--
  tool | [580958d](https://github.com/liuqiyu/vue-mxgraph/commit/580958d)
+ 缩略框背景 | 缩略框背景 | [18d1fd1](https://github.com/liuqiyu/vue-mxgraph/commit/18d1fd1)
 
 
 ### 🚀 性能优化

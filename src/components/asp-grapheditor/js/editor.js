@@ -5,7 +5,6 @@ import Actions from './actions'
 import PopupMenu from './popupMenu'
 import MxEvents from './mxEvents'
 import Graph from './graph'
-// import HoverIcons from './HoverIcons'
 
 const {
   mxEditor,
@@ -16,15 +15,13 @@ const {
   mxClient,
   mxCell,
   mxGeometry,
-  mxGraphHandler,
-  mxConstants,
-  mxEdgeHandler,
+  // mxGraphHandler,
+  // mxConstants,
+  // mxEdgeHandler,
   mxCodec,
   mxConnectionConstraint,
-  mxPoint,
-  mxCellState,
-  mxConnectionHandler,
-  mxVertexHandler
+  mxPoint
+  // mxVertexHandler
   // mxPerimeter,
   // mxEdgeStyle
 } = mxgraph
@@ -32,14 +29,7 @@ const {
 class Editor {
   static editor = null;
   static graph = null;
-  static hoverIcons = null;
-  static defaultEdgeStyle = {
-    'edgeStyle': 'orthogonalEdgeStyle',
-    'rounded': '0',
-    'jettySize': 'auto',
-    'orthogonalLoop': '1'
-  }
-  static currentEdgeStyle = mxUtils.clone(this.defaultEdgeStyle)
+  static graphInit = null;
 
   static init (container) {
     // var _this = this
@@ -49,17 +39,17 @@ class Editor {
     } else {
       // 功能：指南
       // 启用指南
-      mxGraphHandler.prototype.guidesEnabled = true
+      // mxGraphHandler.prototype.guidesEnabled = true
       // Alt禁用参考线
-      mxGraphHandler.prototype.useGuidesForEvent = function (me) {
-        return !mxEvent.isAltDown(me.getEvent())
-      }
-      // 将参考线定义为红色（默认）
-      mxConstants.GUIDE_COLOR = '#46BAFE'
-      // 将参考线定义为1像素（默认值）
-      mxConstants.GUIDE_STROKEWIDTH = 1
-      // 启用将航路点捕捉到终端
-      mxEdgeHandler.prototype.snapToTerminals = true
+      // mxGraphHandler.prototype.useGuidesForEvent = function (me) {
+      //   return !mxEvent.isAltDown(me.getEvent())
+      // }
+      // // 将参考线定义为红色（默认）
+      // mxConstants.GUIDE_COLOR = '#46BAFE'
+      // // 将参考线定义为1像素（默认值）
+      // mxConstants.GUIDE_STROKEWIDTH = 1
+      // // 启用将航路点捕捉到终端
+      // mxEdgeHandler.prototype.snapToTerminals = true
 
       // 初始化
       this.editor = new mxEditor()
@@ -69,17 +59,6 @@ class Editor {
       this.graph.setConnectable(true) // 指定图是否应允许新连接
       this.graph.setMultigraph(true) // 指定图是否应允许同一对顶点之间存在多个连接
       this.graph.setGridEnabled(false)
-
-      mxVertexHandler.prototype.handleImage = Graph.createSvgImage(18, 18, '<circle cx="9" cy="9" r="5" stroke="#fff" fill="#007dfc" stroke-width="1"/>')
-      // mxVertexHandler.prototype.handleImage = HoverIcons.prototype.mainHandle // 元件
-      // mxVertexHandler.prototype.secondaryHandleImage = HoverIcons.prototype.secondaryHandle // 圆角
-      mxEdgeHandler.prototype.handleImage = Graph.createSvgImage(18, 18, '<circle cx="9" cy="9" r="5" stroke="#fff" fill="#007dfc" stroke-width="1"/>')
-      // mxEdgeHandler.prototype.terminalHandleImage = HoverIcons.prototype.terminalHandle
-      // mxEdgeHandler.prototype.fixedHandleImage = HoverIcons.prototype.fixedHandle
-      // mxEdgeHandler.prototype.labelHandleImage = HoverIcons.prototype.secondaryHandle
-      // mxOutline.prototype.sizerImage = HoverIcons.prototype.mainHandle
-
-      mxEdgeHandler.prototype.virtualBendsEnabled = true
 
       // 键盘快捷键
       const config = mxUtils
@@ -99,9 +78,8 @@ class Editor {
       Actions.init(this.editor, this.graph)
       PopupMenu.init(this.editor, this.graph, container)
       MxEvents.init()
-      // this.hoverIcons = new HoverIcons(this.graph)
-
-      // console.log(this.hoverIcons)
+      this.graphInit = new Graph(this.graph)
+      console.log(this.graphInit)
 
       // hover 锚点
       this.graph.getAllConnectionConstraints = function (terminal) {
@@ -118,35 +96,6 @@ class Editor {
           ]
         }
         return null
-      }
-
-      // 连线类型
-      // Connect preview
-      // this.graph.connectionHandler.createEdgeState = function (me) {
-      //   var edge = self.graph.createEdge(
-      //     null,
-      //     null,
-      //     null,
-      //     null,
-      //     null,
-      //     'edgeStyle=orthogonalEdgeStyle'
-      //   )
-      //   return new mxCellState(
-      //     this.graph.view,
-      //     edge,
-      //     this.graph.getCellStyle(edge)
-      //   )
-      // }
-      // 使用当前边样式进行连接预览
-      mxConnectionHandler.prototype.createEdgeState = (me) => {
-        var style = this.createCurrentEdgeStyle()
-        var edge = this.graph.createEdge(null, null, null, null, null, style)
-        var state = new mxCellState(this.graph.view, edge, this.graph.getCellStyle(edge))
-
-        for (var key in this.graph.currentEdgeStyle) {
-          state.style[key] = this.graph.currentEdgeStyle[key]
-        }
-        return state
       }
 
       var parent = this.graph.getDefaultParent()
@@ -179,47 +128,6 @@ class Editor {
       new mxRubberband(this.graph)
       return this.graph
     }
-  }
-
-  static createCurrentEdgeStyle () {
-    var style = 'edgeStyle=' + (this.currentEdgeStyle['edgeStyle'] || 'none') + ';'
-
-    if (this.currentEdgeStyle['shape'] != null) {
-      style += 'shape=' + this.currentEdgeStyle['shape'] + ';'
-    }
-
-    if (this.currentEdgeStyle['curved'] != null) {
-      style += 'curved=' + this.currentEdgeStyle['curved'] + ';'
-    }
-
-    if (this.currentEdgeStyle['rounded'] != null) {
-      style += 'rounded=' + this.currentEdgeStyle['rounded'] + ';'
-    }
-
-    if (this.currentEdgeStyle['comic'] != null) {
-      style += 'comic=' + this.currentEdgeStyle['comic'] + ';'
-    }
-
-    if (this.currentEdgeStyle['jumpStyle'] != null) {
-      style += 'jumpStyle=' + this.currentEdgeStyle['jumpStyle'] + ';'
-    }
-
-    if (this.currentEdgeStyle['jumpSize'] != null) {
-      style += 'jumpSize=' + this.currentEdgeStyle['jumpSize'] + ';'
-    }
-
-    // Special logic for custom property of elbowEdgeStyle
-    if (this.currentEdgeStyle['edgeStyle'] === 'elbowEdgeStyle' && this.currentEdgeStyle['elbow'] !== null) {
-      style += 'elbow=' + this.currentEdgeStyle['elbow'] + ';'
-    }
-
-    if (this.currentEdgeStyle['html'] !== null) {
-      style += 'html=' + this.currentEdgeStyle['html'] + ';'
-    } else {
-      style += 'html=1;'
-    }
-
-    return style
   }
 
   static getGraph () {
