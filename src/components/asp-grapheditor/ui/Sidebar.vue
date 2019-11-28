@@ -43,16 +43,8 @@ export default {
       activeNames: [0],
       sideList: [
         {
-          title: '元件1',
+          title: '基础元件',
           children: [
-            {
-              name: '标记',
-              src: require('./../images/mark-red.svg'),
-              width: 48,
-              height: 48,
-              type: 'image',
-              style: `shape=image;image=${require('./../images/mark-red.svg')}`
-            },
             {
               name: 'rectangle',
               src: require('./../images/sidebar/rectangle.svg'),
