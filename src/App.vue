@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-10-21 16:21:03
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-11-06 14:01:36
+ * @LastEditTime: 2019-11-28 15:24:53
  -->
 <template>
   <div id="app">
@@ -18,10 +18,6 @@ export default {
     mains
   },
   mounted () {
-    var abc = function (a) {
-      console.log(1234)
-    }
-    console.log(abc)
   }
 }
 </script>
