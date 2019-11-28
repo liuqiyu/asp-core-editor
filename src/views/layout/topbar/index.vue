@@ -1,10 +1,17 @@
+<!--
+ * @Description:
+ * @Author: liuqiyu
+ * @Date: 2019-11-28 15:43:13
+ * @LastEditors: liuqiyu
+ * @LastEditTime: 2019-11-28 16:06:38
+ -->
 <template>
   <div class="top-bar">
     <div class="logo">
-      <img src="@/assets/images/logo.png"
-           alt="">
+      <div class="iconfont icon-NMStubiao-"
+           style="font-size: 22px; margin-right: 14px"></div>
       <h1 class="title">
-        Vue Admin Pro
+        拓扑编辑器
       </h1>
     </div>
     <right-bar></right-bar>

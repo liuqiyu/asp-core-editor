@@ -1,3 +1,10 @@
+/*
+ * @Description: components
+ * @Author: liuqiyu
+ * @Date: 2019-11-28 15:43:12
+ * @LastEditors: liuqiyu
+ * @LastEditTime: 2019-11-28 16:13:46
+ */
 import Vue from 'vue'
 import {
   version
@@ -18,11 +25,12 @@ import YusContentCell from './yus-content-cell'
 import YusActionBar from './yus-action-bar'
 import YusThemePicker from './yus-theme-picker'
 import YusButton from './yus-button'
+import YusGrapheditor from './yus-grapheditor/ui'
 
 const components = [YusQueryTable, YusToolBar, YusQueyForm,
   YusTableList, YusDialog, YusDetailsPage,
   YusContentPage, YusContentRow, YusContentCell,
-  YusActionBar, YusThemePicker, YusButton
+  YusActionBar, YusThemePicker, YusButton, YusGrapheditor
 ]
 
 const setPrototype = () => {

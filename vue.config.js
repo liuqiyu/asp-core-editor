@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-10-09 14:47:52
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-11-19 11:45:53
+ * @LastEditTime: 2019-11-28 16:24:38
  */
 const path = require('path')
 const webpack = require('webpack')
@@ -13,7 +13,7 @@ function resolve (dir) {
   return path.join(__dirname, dir)
 }
 
-const name = defaultSettings.title || 'vue Admin Pro' // page title
+const name = defaultSettings.title || '拓扑编辑器' // page title
 
 const port = 9420 // dev port
 

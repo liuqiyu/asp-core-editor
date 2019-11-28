@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-10-09 14:47:52
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-11-06 16:42:12
+ * @LastEditTime: 2019-11-28 16:00:25
  */
 import Vue from 'vue'
 import '@babel/polyfill'
@@ -18,9 +18,6 @@ import './style/index.scss'
 import http from './utils/http'
 import * as filters from '@/utils/filter'
 import './permission'
-import './mock/index'
-// import * as api from './api'
-// console.log(api)
 
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])

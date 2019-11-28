@@ -1,12 +1,10 @@
+/*
+ * @Description:
+ * @Author: liuqiyu
+ * @Date: 2019-11-28 15:43:12
+ * @LastEditors: liuqiyu
+ * @LastEditTime: 2019-11-28 15:52:08
+ */
 export default {
-  1: '图表',
-  2: '嵌套路由',
-  3: '表格',
-  4: '公用组件',
-  5: '工具',
-  6: 'Tabs',
-  7: 'Form',
-  8: 'clipboard',
-  9: '错误页面',
-  10: '系统管理'
+  1: 'editor'
 }
