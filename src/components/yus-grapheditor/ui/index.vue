@@ -116,7 +116,7 @@ export default {
   width: 100%;
   height: 100%;
   display: flex;
-  background: #fff;
+  background: #ffffff;
   border: 1px solid #dee8f8;
   #graph-map {
     display: flex;
