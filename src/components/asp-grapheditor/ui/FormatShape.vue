@@ -235,6 +235,7 @@ export default {
   data () {
     return {
       cells: null,
+      selectedType: '',
       fontStyleCheckbox: [],
       format: {
         value: '',
@@ -299,6 +300,7 @@ export default {
     // 选中
     selectionChanged (graph) {
       var cells = graph.getSelectionCells()
+      console.log(graph.model)
       console.log(cells)
       this.cells = cells
       if (cells) {

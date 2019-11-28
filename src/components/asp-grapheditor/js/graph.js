@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-25 09:43:50
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-11-27 17:25:48
+ * @LastEditTime: 2019-11-28 14:12:53
  */
 
 import Base64 from './../utils/base64'
@@ -19,12 +19,15 @@ const {
   mxGraphHandler,
   mxRubberband,
   mxGuide,
+  mxPoint,
   mxEvent,
   mxConnectionHandler,
   mxVertexHandler,
   mxCellHighlight,
+  mxGraphView,
   // mxCellEditor,
   mxConstraintHandler,
+  mxConnectionConstraint,
   // mxEllipse,
   mxPolyline,
   mxCellState
@@ -81,6 +84,33 @@ function Graph (graph) {
     }
 
     return style
+  }
+
+  if (typeof mxVertexHandler !== 'undefined') {
+    // 禁用内置连接启动
+    graph.connectionHandler.isValidSource = function (cell, me) {
+      return false
+    }
+  }
+
+  // hover 锚点
+  graph.getAllConnectionConstraints = function (terminal) {
+    if (terminal != null && this.model.isVertex(terminal.cell)) {
+      return [new mxConnectionConstraint(new mxPoint(0.25, 0), true),
+        new mxConnectionConstraint(new mxPoint(0.5, 0), true),
+        new mxConnectionConstraint(new mxPoint(0.75, 0), true),
+        new mxConnectionConstraint(new mxPoint(0, 0.25), true),
+        new mxConnectionConstraint(new mxPoint(0, 0.5), true),
+        new mxConnectionConstraint(new mxPoint(0, 0.75), true),
+        new mxConnectionConstraint(new mxPoint(1, 0.25), true),
+        new mxConnectionConstraint(new mxPoint(1, 0.5), true),
+        new mxConnectionConstraint(new mxPoint(1, 0.75), true),
+        new mxConnectionConstraint(new mxPoint(0.25, 1), true),
+        new mxConnectionConstraint(new mxPoint(0.5, 1), true),
+        new mxConnectionConstraint(new mxPoint(0.75, 1), true)
+      ]
+    }
+    return null
   }
 }
 
@@ -143,6 +173,69 @@ export default Graph;
   mxGuide.prototype.isEnabledForEvent = function (evt) {
     return !mxEvent.isAltDown(evt)
   }
+  // 选中元件锚点
+  var mxGraphViewUpdateFloatingTerminalPoint = mxGraphView.prototype.updateFloatingTerminalPoint
+
+  mxGraphView.prototype.updateFloatingTerminalPoint = function (edge, start, end, source) {
+    if (start != null && edge != null &&
+      (start.style['snapToPoint'] === '1' ||
+        edge.style['snapToPoint'] === '1')) {
+      start = this.getTerminalPort(edge, start, source)
+      var next = this.getNextPoint(edge, end, source)
+
+      var orth = this.graph.isOrthogonal(edge)
+      var alpha = mxUtils.toRadians(Number(start.style[mxConstants.STYLE_ROTATION] || '0'))
+      var center = new mxPoint(start.getCenterX(), start.getCenterY())
+
+      if (alpha !== 0) {
+        var cos = Math.cos(-alpha)
+        var sin = Math.sin(-alpha)
+        next = mxUtils.getRotatedPoint(next, cos, sin, center)
+      }
+
+      var border = parseFloat(edge.style[mxConstants.STYLE_PERIMETER_SPACING] || 0)
+      border += parseFloat(edge.style[(source) ? mxConstants.STYLE_SOURCE_PERIMETER_SPACING : mxConstants.STYLE_TARGET_PERIMETER_SPACING] || 0)
+      var pt = this.getPerimeterPoint(start, next, alpha === 0 && orth, border)
+
+      if (alpha !== 0) {
+        cos = Math.cos(alpha)
+        sin = Math.sin(alpha)
+        pt = mxUtils.getRotatedPoint(pt, cos, sin, center)
+      }
+
+      edge.setAbsoluteTerminalPoint(this.snapToAnchorPoint(edge, start, end, source, pt), source)
+    } else {
+      mxGraphViewUpdateFloatingTerminalPoint.apply(this, arguments)
+    }
+  }
+  mxGraphView.prototype.snapToAnchorPoint = function (edge, start, end, source, pt) {
+    if (start !== null && edge !== null) {
+      var constraints = this.graph.getAllConnectionConstraints(start)
+      var nearest = null
+      var dist = null
+
+      if (constraints !== null) {
+        for (var i = 0; i < constraints.length; i++) {
+          var cp = this.graph.getConnectionPoint(start, constraints[i])
+
+          if (cp != null) {
+            var tmp = (cp.x - pt.x) * (cp.x - pt.x) + (cp.y - pt.y) * (cp.y - pt.y)
+
+            if (dist === null || tmp < dist) {
+              nearest = cp
+              dist = tmp
+            }
+          }
+        }
+      }
+
+      if (nearest != null) {
+        pt = nearest
+      }
+    }
+
+    return pt
+  }
 
   // Extends connection handler to enable ctrl+drag for cloning source cell
   // since copyOnConnect is now disabled by default
@@ -170,14 +263,11 @@ export default Graph;
   mxConnectionHandler.prototype.livePreview = true
   mxConnectionHandler.prototype.cursor = 'crosshair'
 
-  // Uses current edge style for connect preview 使用当前边样式进行连接预览
+  //  使用当前边样式进行连接预览
   mxConnectionHandler.prototype.createEdgeState = function (me) {
     let style = this.graph.createCurrentEdgeStyle()
     let edge = this.graph.createEdge(null, null, null, null, null, style)
     let state = new mxCellState(this.graph.view, edge, this.graph.getCellStyle(edge))
-    console.log(style)
-    console.log(edge)
-    console.log(state)
 
     for (var key in this.graph.currentEdgeStyle) {
       state.style[key] = this.graph.currentEdgeStyle[key]
@@ -185,7 +275,7 @@ export default Graph;
     return state
   }
 
-  // Overrides dashed state with current edge style 使用当前边样式替代虚线状态
+  //  使用当前边样式替代虚线状态
   var connectionHandlerCreateShape = mxConnectionHandler.prototype.createShape
   mxConnectionHandler.prototype.createShape = function () {
     var shape = connectionHandlerCreateShape.apply(this, arguments)
@@ -195,12 +285,12 @@ export default Graph;
     return shape
   }
 
-  // Overrides live preview to keep current style 覆盖实时预览以保持当前样式
+  // 覆盖实时预览以保持当前样式
   mxConnectionHandler.prototype.updatePreview = function (valid) {
     // do not change color of preview
   }
 
-  // Overrides connection handler to ignore edges instead of not allowing connections 重写连接处理程序以忽略边，而不是不允许连接
+  //  重写连接处理程序以忽略边，而不是不允许连接
   var mxConnectionHandlerCreateMarker = mxConnectionHandler.prototype.createMarker
   mxConnectionHandler.prototype.createMarker = function () {
     var marker = mxConnectionHandlerCreateMarker.apply(this, arguments)
@@ -218,10 +308,10 @@ export default Graph;
   }
 
   /**
-   * Function: isCellLocked 功能：解除锁定
+   * 功能：解除锁定
    *
-   * Returns true if the given cell does not allow new connections to be created. 如果给定单元格不允许创建新连接，则返回true。
-   * This implementation returns false. 此实现返回false。
+   * 如果给定单元格不允许创建新连接，则返回true。
+   * 此实现返回false。
    */
   mxConnectionHandler.prototype.isCellEnabled = function (cell) {
     return !this.graph.isCellLocked(cell)
@@ -235,15 +325,15 @@ export default Graph;
   mxEdgeHandler.prototype.labelHandleImage = HoverIcons.prototype.secondaryHandle
   // mxOutline.prototype.sizerImage = HoverIcons.prototype.mainHandle
 
-  // Adds rotation handle and live preview 添加旋转控制柄和实时预览
+  //  添加旋转控制柄和实时预览
   mxVertexHandler.prototype.rotationEnabled = true
   mxVertexHandler.prototype.manageSizers = true
   mxVertexHandler.prototype.livePreview = true
 
-  // Increases default rubberband opacity (default is 20) 增加默认的rubberband不透明度（默认值为20）
+  // 增加默认的rubberband不透明度（默认值为20）
   mxRubberband.prototype.defaultOpacity = 30
 
-  // Enables connections along the outline, virtual waypoints, parent highlight etc 启用沿轮廓、虚拟航路点、父高光等的连接
+  // 启用沿轮廓、虚拟航路点、父高光等的连接
   mxConnectionHandler.prototype.outlineConnect = true
   mxCellHighlight.prototype.keepOnTop = true
   mxVertexHandler.prototype.parentHighlightEnabled = true
@@ -257,12 +347,12 @@ export default Graph;
   mxEdgeHandler.prototype.manageLabelHandle = true
   mxEdgeHandler.prototype.outlineConnect = true
 
-  // Disables adding waypoints if shift is pressed 如果按下shift键，则禁用添加航路点
+  // 如果按下shift键，则禁用添加航路点
   mxEdgeHandler.prototype.isAddVirtualBendEvent = function (me) {
     return !mxEvent.isShiftDown(me.getEvent())
   }
 
-  // Disables custom handles if shift is pressed 如果按下shift键，则禁用自定义句柄
+  // 如果按下shift键，则禁用自定义句柄
   mxEdgeHandler.prototype.isCustomHandleEvent = function (me) {
     return !mxEvent.isShiftDown(me.getEvent())
   }

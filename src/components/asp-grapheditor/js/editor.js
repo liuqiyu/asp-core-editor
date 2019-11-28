@@ -15,11 +15,12 @@ const {
   mxClient,
   mxCell,
   mxGeometry,
+  // mxConstants,
+  // mxEdgeStyle,
   // mxGraphHandler,
   // mxConstants,
   // mxEdgeHandler,
   mxCodec,
-  mxConnectionConstraint,
   mxPoint
   // mxVertexHandler
   // mxPerimeter,
@@ -37,20 +38,6 @@ class Editor {
       // 判断是否支持mxgraph
       mxUtils.error('Browser is not supported!', 200, false)
     } else {
-      // 功能：指南
-      // 启用指南
-      // mxGraphHandler.prototype.guidesEnabled = true
-      // Alt禁用参考线
-      // mxGraphHandler.prototype.useGuidesForEvent = function (me) {
-      //   return !mxEvent.isAltDown(me.getEvent())
-      // }
-      // // 将参考线定义为红色（默认）
-      // mxConstants.GUIDE_COLOR = '#46BAFE'
-      // // 将参考线定义为1像素（默认值）
-      // mxConstants.GUIDE_STROKEWIDTH = 1
-      // // 启用将航路点捕捉到终端
-      // mxEdgeHandler.prototype.snapToTerminals = true
-
       // 初始化
       this.editor = new mxEditor()
       this.graph = this.editor.graph
@@ -81,47 +68,38 @@ class Editor {
       this.graphInit = new Graph(this.graph)
       console.log(this.graphInit)
 
-      // hover 锚点
-      this.graph.getAllConnectionConstraints = function (terminal) {
-        if (terminal != null && this.model.isVertex(terminal.cell)) {
-          return [
-            new mxConnectionConstraint(new mxPoint(0, 0), true),
-            new mxConnectionConstraint(new mxPoint(0.5, 0), true),
-            new mxConnectionConstraint(new mxPoint(1, 0), true),
-            new mxConnectionConstraint(new mxPoint(0, 0.5), true),
-            new mxConnectionConstraint(new mxPoint(1, 0.5), true),
-            new mxConnectionConstraint(new mxPoint(0, 1), true),
-            new mxConnectionConstraint(new mxPoint(0.5, 1), true),
-            new mxConnectionConstraint(new mxPoint(1, 1), true)
-          ]
-        }
-        return null
-      }
+      // 设置默认连线样式
+      // this.graph.getStylesheet().getDefaultEdgeStyle()['edgeStyle'] = 'orthogonalEdgeStyle'
+      // this.graph.getStylesheet().getDefaultEdgeStyle()['rounded'] = '0'
+      // this.graph.getStylesheet().getDefaultEdgeStyle()['jettySize'] = 'auto'
+      // this.graph.getStylesheet().getDefaultEdgeStyle()['orthogonalLoop'] = '1'
 
-      var parent = this.graph.getDefaultParent()
-      this.graph.getModel().beginUpdate()
-      try {
-        // 创建空的画布
-        // this.graph.insertVertex(parent, null)
-        var v1 = this.graph.insertVertex(
-          parent,
-          null,
-          'World',
-          200,
-          150,
-          80,
-          30
-        )
-        v1.lod = 3
-        // 设置背景
-        // this.graph.setBackgroundImage(
-        //   new mxImage('' + 'static/level-1.svg', 1024, 769)
-        // )
-        this.graph.view.validateBackgroundImage()
-      } finally {
-        // Updates the display
-        this.graph.getModel().endUpdate()
-      }
+      // this.graph.alternateEdgeStyle = this.graph.currentEdgeStyle
+
+      // var parent = this.graph.getDefaultParent()
+      // this.graph.getModel().beginUpdate()
+      // try {
+      //   // 创建空的画布
+      //   // this.graph.insertVertex(parent, null)
+      //   // var v1 = this.graph.insertVertex(
+      //   //   parent,
+      //   //   null,
+      //   //   'World',
+      //   //   200,
+      //   //   150,
+      //   //   80,
+      //   //   30
+      //   // )
+      //   // v1.lod = 3
+      //   // // 设置背景
+      //   // // this.graph.setBackgroundImage(
+      //   // //   new mxImage('' + 'static/level-1.svg', 1024, 769)
+      //   // // )
+      //   this.graph.view.validateBackgroundImage()
+      // } finally {
+      //   // Updates the display
+      //   this.graph.getModel().endUpdate()
+      // }
 
       // 鼠标拖拽选中
       /* eslint-disable no-new */
