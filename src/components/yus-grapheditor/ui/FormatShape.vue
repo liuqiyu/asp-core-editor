@@ -10,7 +10,8 @@
                     @change="handleChangeValue"></el-input>
         </div>
       </div>
-      <div class="format-item">
+      <div class="format-item"
+           v-if="['singleVertex', 'multipleVertex', 'multipleAll'].includes(selectedType)">
         <div class="format-label">背景颜色</div>
         <div class="format-content">
           <el-color-picker v-model="format.fillColor"
@@ -18,7 +19,8 @@
                            show-alpha></el-color-picker>
         </div>
       </div>
-      <div class="format-item">
+      <div class="format-item"
+           v-if="['singleVertex', 'multipleVertex', 'multipleAll'].includes(selectedType)">
         <div class="format-label">边框颜色</div>
         <div class="format-content">
           <el-color-picker v-model="format.strokeColor"
@@ -26,7 +28,8 @@
                            show-alpha></el-color-picker>
         </div>
       </div>
-      <div class="format-item">
+      <div class="format-item"
+           v-if="['singleVertex', 'multipleVertex', 'multipleAll'].includes(selectedType)">
         <div class="format-label">大小</div>
         <div class="format-content">
           <el-input-number style="width: 65px"
@@ -48,7 +51,8 @@
                            :min="1"></el-input-number>
         </div>
       </div>
-      <div class="format-item">
+      <div class="format-item"
+           v-if="['singleVertex', 'multipleVertex', 'multipleAll'].includes(selectedType)">
         <div class="format-label">位置</div>
         <div class="format-content">
           <el-input-number style="width: 65px"
@@ -70,7 +74,7 @@
                            :min="1"></el-input-number>
         </div>
       </div>
-      <el-divider content-position="left"></el-divider>
+      <el-divider content-position="left">字体</el-divider>
       <!-- 字体 -->
       <div class="format-item">
         <div class="format-label">字体</div>
@@ -117,8 +121,10 @@
         </div>
       </div>
       <!-- 翻转 -->
-      <el-divider content-position="left"></el-divider>
-      <div class="format-item">
+      <el-divider content-position="left"
+                  v-if="['singleVertex', 'multipleVertex'].includes(selectedType)"></el-divider>
+      <div class="format-item"
+           v-if="['singleVertex', 'multipleVertex'].includes(selectedType)">
         <div class="format-label">翻转</div>
         <div class="format-content">
           <el-button-group class="mini-button-group">
@@ -134,8 +140,10 @@
         </div>
       </div>
       <!-- 对齐 -->
-      <el-divider content-position="left"></el-divider>
-      <div class="format-item">
+      <el-divider content-position="left"
+                  v-if="['multipleVertex', 'multipleAll'].includes(selectedType)"></el-divider>
+      <div class="format-item"
+           v-if="['multipleVertex', 'multipleAll'].includes(selectedType)">
         <div class="format-label">对齐</div>
         <div class="format-content">
           <el-button-group class="mini-button-group">
@@ -166,7 +174,8 @@
           </el-button-group>
         </div>
       </div>
-      <div class="format-item">
+      <div class="format-item"
+           v-if="['multipleVertex', 'multipleAll'].includes(selectedType)">
         <div class="format-label">等距分布</div>
         <div class="format-content">
           <el-button-group class="mini-button-group">
@@ -182,8 +191,10 @@
         </div>
       </div>
       <!-- 线条 -->
-      <el-divider content-position="left">线条</el-divider>
-      <div class="format-item">
+      <el-divider content-position="left"
+                  v-if="['singleEdge', 'multipleEdge', 'multipleAll'].includes(selectedType)">线条</el-divider>
+      <div class="format-item"
+           v-if="['singleEdge', 'multipleEdge', 'multipleAll'].includes(selectedType)">
         <div class="format-label">线条类型</div>
         <div class="format-content">
           <el-select v-model="format.edgeType"
@@ -201,7 +212,8 @@
                            show-alpha></el-color-picker>
         </div>
       </div>
-      <div class="format-item">
+      <div class="format-item"
+           v-if="['singleEdge', 'multipleEdge', 'multipleAll'].includes(selectedType)">
         <div class="format-label">线条样式</div>
         <div class="format-content">
           <el-select style="width: 85px;"
@@ -230,6 +242,7 @@
 <script>
 // import editor from '@/utils/editor'
 import format from './../js/format'
+import { typeofElement } from './../js/utils'
 export default {
   name: 'Format',
   data () {
@@ -300,8 +313,7 @@ export default {
     // 选中
     selectionChanged (graph) {
       var cells = graph.getSelectionCells()
-      console.log(graph.model)
-      console.log(cells)
+      this.selectedType = typeofElement(cells)
       this.cells = cells
       if (cells) {
         const geometry = cells[0].geometry
@@ -430,6 +442,7 @@ export default {
   }
 }
 ::v-deep .el-divider {
-  margin: 12px 0;
+  margin: 16px 0;
+  background-color: #666;
 }
 </style>
