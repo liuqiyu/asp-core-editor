@@ -17,7 +17,7 @@ export default new Vuex.Store({
     settings
   },
   state: {
-    isCollapse: false
+    isCollapse: true
   },
   getters: {
     isCollapse: state => state.isCollapse,
@@ -27,7 +27,6 @@ export default new Vuex.Store({
   },
   mutations: {
     IS_COLLAPSE (state) {
-      document.querySelector('.yus-layout').classList.toggle('hideMenu')
       state.isCollapse = !state.isCollapse
     }
   },

@@ -62,7 +62,7 @@ export default {
     // 选中元件
     graph.getSelectionModel().addListener(mxEvent.CHANGE, async (sender, evt) => {
       var cell = graph.getSelectionCell()
-      console.log(cell)
+      // console.log(cell)
       if (cell) {
         this.currentFormat = 'FormatShape'
         await this.$nextTick()

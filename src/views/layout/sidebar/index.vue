@@ -60,14 +60,22 @@ export default {
       'IS_COLLAPSE'
     ]),
     menuTrigger () {
-      console.log(this.isCollapse)
       if (this.isCollapse) {
         this.collapseIcon = 'icon-daohangshouqi-'
       } else {
         this.collapseIcon = 'icon-daohangzhankai-'
       }
+      document.querySelector('.yus-layout').classList.toggle('hideMenu')
       this.IS_COLLAPSE()
     }
+  },
+  mounted () {
+    if (this.isCollapse) {
+      this.collapseIcon = 'icon-daohangzhankai-'
+    } else {
+      this.collapseIcon = 'icon-daohangshouqi-'
+    }
+    document.querySelector('.yus-layout').classList.toggle('hideMenu')
   }
 }
 </script>

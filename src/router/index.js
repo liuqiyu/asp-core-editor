@@ -47,12 +47,12 @@ export const layoutRoutes = [
     ]
   },
   {
-    path: '',
+    path: '/view',
     redirect: 'view',
     component: Layout,
     children: [
       {
-        path: 'view',
+        path: '',
         name: 'view',
         component: () => import('@/views/editor/view'),
         meta: {

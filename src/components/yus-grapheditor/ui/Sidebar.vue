@@ -47,11 +47,11 @@ export default {
           children: [
             {
               name: 'rectangle',
-              src: require('./../images/sidebar/rectangle.svg'),
+              src: require('./../images/sidebar/24gl-rectangle.svg'),
               width: 120,
               height: 60,
               type: 'image',
-              style: 'rounded=1;whiteSpace=wrap;html=1;strokeColor=rgba(255,0,0,0.32);fillColor=rgba(250,0,0,0.34);arcSize=34;'
+              style: 'rounded=0;whiteSpace=wrap;html=1;'
             },
             {
               name: 'rectangle',
@@ -59,15 +59,15 @@ export default {
               width: 120,
               height: 60,
               type: 'image',
-              style: 'rounded=0;whiteSpace=wrap;html=1;strokeColor=rgba(255,0,0,0.32);fillColor=rgba(255,0,0,0.32);'
+              style: 'rounded=1;whiteSpace=wrap;html=1;'
             },
             {
               name: 'Text',
               src: require('./../images/sidebar/text.svg'),
-              width: 120,
-              height: 60,
+              width: 40,
+              height: 20,
               type: 'Text',
-              style: 'text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;'
+              style: 'text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;'
             },
             {
               name: 'Ellipse',
@@ -87,7 +87,7 @@ export default {
             },
             {
               name: 'curve',
-              src: require('./../images/sidebar/line.svg'),
+              src: require('./../images/sidebar/curve.svg'),
               width: 50,
               height: 50,
               type: 'curve',

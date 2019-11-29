@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-10-09 14:47:52
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-11-28 16:24:38
+ * @LastEditTime: 2019-11-29 10:25:53
  */
 const path = require('path')
 const webpack = require('webpack')
@@ -53,12 +53,12 @@ module.exports = {
       }
     },
     // dll  为了节约编译的时间，这时间我们需要告诉 webpack 公共库文件已经编译好了，减少 webpack 对公共库的编译时间
-    plugins: [
-      new webpack.DllReferencePlugin({
-        context: process.cwd(),
-        manifest: require('./public/vendor/vendor-manifest.json')
-      })
-    ],
+    // plugins: [
+    //   new webpack.DllReferencePlugin({
+    //     context: process.cwd(),
+    //     manifest: require('./public/vendor/vendor-manifest.json')
+    //   })
+    // ],
     performance: {
       hints: 'warning',
       // 入口起点的最大体积 整数类型（以字节为单位）
