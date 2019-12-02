@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-02 14:34:44
+ * @LastEditTime: 2019-12-02 15:52:27
  */
 import mxgraph from './mxgraph'
 import editor from './editor'
@@ -36,65 +36,7 @@ class Format {
     }
   }
 
-  // 修改线条类型样式
-  static updateEdgeTypeHandler (keyword, data) {
-    const keys = [mxConstants.STYLE_ROUNDED, mxConstants.STYLE_CURVED]
-    let values = ['0', null]
-
-    if (keyword === 'rounded') {
-      values = ['1', null]
-    } else if (keyword === 'curved') {
-      values = [null, '1']
-    }
-
-    for (var i = 0; i < keys.length; i++) {
-      this.graph.setCellStyles(keys[i], values[i], this.graph.getSelectionCells())
-    }
-  }
-
-  // 修改线条样式 solid dashed
-  static updateEdgeStyleHandler1 (keyword) {
-    const keys = [mxConstants.STYLE_DASHED, mxConstants.STYLE_DASH_PATTERN]
-    let values = [null, null]
-
-    if (keyword === 'solid') {
-      values = [null, null]
-    } else if (keyword === 'dashed') {
-      values = ['1', null]
-    }
-    this.graph.getModel().beginUpdate()
-    try {
-      for (var i = 0; i < keys.length; i++) {
-        console.log(keys[i], values[i])
-        this.graph.setCellStyles(keys[i], values[i])
-      }
-    } finally {
-      this.graph.getModel().endUpdate()
-    }
-  }
-
-  // 修改线条样式 solid dashed
-  static updateEdgeStyleHandler (keyword) {
-    const keys = [mxConstants.STYLE_DASHED, mxConstants.STYLE_DASH_PATTERN]
-    let values = [null, null]
-
-    if (keyword === 'solid') {
-      values = [null, null]
-    } else if (keyword === 'dashed') {
-      values = ['1', null]
-    }
-    this.graph.getModel().beginUpdate()
-    try {
-      for (var i = 0; i < keys.length; i++) {
-        console.log(keys[i], values[i])
-        this.graph.setCellStyles(keys[i], values[i])
-      }
-    } finally {
-      this.graph.getModel().endUpdate()
-    }
-  }
-
-  // 修改线条样式 solid dashed
+  // 修改线条样式
   static edgeStyleChange (keys, values) {
     this.graph.getModel().beginUpdate()
     try {

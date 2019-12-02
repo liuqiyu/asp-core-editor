@@ -218,6 +218,7 @@
       <!-- -- -->
       <el-divider content-position="left"
                   v-if="['singleEdge', 'multipleEdge', 'multipleAll'].includes(selectedType)">线条</el-divider>
+      <!-- 线条类型 -->
       <div class="format-item"
            v-if="['singleEdge', 'multipleEdge', 'multipleAll'].includes(selectedType)">
         <div class="format-label">线条类型</div>
@@ -453,7 +454,14 @@ export default {
     // 线条样式
     handleEdgeStyleChange (e) {
       console.log(e)
-      format.updateEdgeStyleHandler(e)
+      switch (e) {
+        case 'solid':
+          format.edgeStyleChange([mxConstants.STYLE_DASHED, mxConstants.STYLE_DASH_PATTERN], [null, null])
+          break
+        case 'dashed':
+          format.edgeStyleChange([mxConstants.STYLE_DASHED, mxConstants.STYLE_DASH_PATTERN], ['1', null])
+          break
+      }
     },
     // 选中
     selectionChanged (graph) {
