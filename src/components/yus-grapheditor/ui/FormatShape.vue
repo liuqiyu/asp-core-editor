@@ -449,11 +449,20 @@ export default {
   methods: {
     // 条线类型
     handleEdgeTypeChange (e) {
-      format.updateEdgeTypeHandler(e)
+      switch (e) {
+        case 'sharp':
+          format.edgeStyleChange([mxConstants.STYLE_ROUNDED, mxConstants.STYLE_CURVED], ['0', null])
+          break
+        case 'rounded':
+          format.edgeStyleChange([mxConstants.STYLE_ROUNDED, mxConstants.STYLE_CURVED], ['1', null])
+          break
+        case 'curved':
+          format.edgeStyleChange([mxConstants.STYLE_ROUNDED, mxConstants.STYLE_CURVED], [null, '1'])
+          break
+      }
     },
     // 线条样式
     handleEdgeStyleChange (e) {
-      console.log(e)
       switch (e) {
         case 'solid':
           format.edgeStyleChange([mxConstants.STYLE_DASHED, mxConstants.STYLE_DASH_PATTERN], [null, null])
