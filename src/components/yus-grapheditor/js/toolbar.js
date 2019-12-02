@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-11-13 18:13:08
+ * @LastEditTime: 2019-12-02 16:20:56
  */
 import mxgraph from './mxgraph'
 
@@ -71,6 +71,15 @@ class Tool {
     var node = encoder.encode(this.graph.getModel())
     // node.setAttribute('backgroundImage', this.graph.backgroundImage.src)
     mxUtils.popup(mxUtils.getPrettyXml(node), true)
+  }
+
+  static save () {
+    let encoder = new mxCodec()
+    let xx = encoder.encode(this.graph.getModel())
+    // 保存到getXml参数中
+    // xx.setAttribute('backgroundImage', this.graph.backgroundImage.src || '')
+    const getXml = mxUtils.getXml(xx)
+    sessionStorage.setItem('xml', getXml)
   }
 
   // 删除

@@ -1,6 +1,7 @@
 <template>
   <div id="graph-wrapper">
-    <Sidebar id="graph-sidebar">
+    <Sidebar v-if="type === 'editor'"
+             id="graph-sidebar">
     </Sidebar>
     <div id="graph-map">
       <Toolbar :graph="graph"
@@ -10,13 +11,15 @@
       <div id="graph-content">
         <div id="graph-container">
         </div>
-        <div id="outlineContainer"
+        <div v-if="type === 'editor'"
+             id="outlineContainer"
              ref="outlineContainer"
              style="z-index:1;position:absolute;overflow:hidden;top:0px;right:0px;width:220px;height:160px;background:#fff;border: 3px solid black;">
         </div>
       </div>
     </div>
-    <div id="graph-sidebar">
+    <div id="graph-sidebar"
+         v-if="type === 'editor'">
       <components :is="currentFormat"
                   ref="format"></components>
     </div>
@@ -40,6 +43,12 @@ Object.assign(mxEvent, {
 })
 
 export default {
+  props: {
+    type: {
+      type: String,
+      default: () => 'editor'
+    }
+  },
   name: 'yus-grapheditor',
   data () {
     return {

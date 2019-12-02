@@ -43,6 +43,7 @@ class Editor {
       this.graph = this.editor.graph
       this.editor.setGraphContainer(container)
 
+      this.graph.setEnabled(false) // 编辑与运行状态
       this.graph.setConnectable(true) // 指定图是否应允许新连接
       this.graph.setMultigraph(true) // 指定图是否应允许同一对顶点之间存在多个连接
       this.graph.setGridEnabled(false)
@@ -100,6 +101,13 @@ class Editor {
       //   // Updates the display
       //   this.graph.getModel().endUpdate()
       // }
+
+      const xml = sessionStorage.getItem('xml')
+      if (xml) {
+        var doc = mxUtils.parseXml(xml)
+        var codec = new mxCodec(doc)
+        codec.decode(doc.documentElement, this.graph.getModel())
+      }
 
       // 鼠标拖拽选中
       /* eslint-disable no-new */

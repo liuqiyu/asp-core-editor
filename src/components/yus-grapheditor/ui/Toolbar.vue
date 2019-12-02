@@ -90,6 +90,15 @@
                  type="text"
                  icon="iconfont iconshanchu"></el-button>
     </el-tooltip>
+
+    <el-tooltip class="item"
+                effect="dark"
+                content="保存"
+                placement="top">
+      <el-button @click="handleSave"
+                 type="text"
+                 icon="iconfont iconshanchu"></el-button>
+    </el-tooltip>
   </div>
 </template>
 
@@ -134,6 +143,9 @@ export default {
     },
     handleParse () {
       Tool.paste()
+    },
+    handleSave () {
+      Tool.save()
     }
   }
 }
