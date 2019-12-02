@@ -43,7 +43,7 @@ class Editor {
       this.graph = this.editor.graph
       this.editor.setGraphContainer(container)
 
-      this.graph.setEnabled(false) // 编辑与运行状态
+      // this.graph.setEnabled(false) // 编辑与运行状态
       this.graph.setConnectable(true) // 指定图是否应允许新连接
       this.graph.setMultigraph(true) // 指定图是否应允许同一对顶点之间存在多个连接
       this.graph.setGridEnabled(false)

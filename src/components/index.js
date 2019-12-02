@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-28 15:43:12
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-11-28 16:40:33
+ * @LastEditTime: 2019-12-02 16:42:44
  */
 import Vue from 'vue'
 import {
@@ -13,25 +13,12 @@ import countTo from 'vue-count-to'
 import directives from '../directives'
 // import http from './../utils/http'
 // 全局组件
-import YusQueryTable from './yus-query-table'
-import YusToolBar from './yus-tool-bar'
-import YusQueyForm from './yus-query-form'
-import YusTableList from './yus-query-table/yus-table-list'
 import YusDialog from './yus-dialog'
-import YusDetailsPage from './yus-details-page'
 import YusContentPage from './yus-content-page'
-import YusContentRow from './yus-content-row'
-import YusContentCell from './yus-content-cell'
-import YusActionBar from './yus-action-bar'
-import YusThemePicker from './yus-theme-picker'
-import YusButton from './yus-button'
 import YusGrapheditor from './yus-grapheditor/ui'
+import YusThemePicker from './yus-theme-picker'
 
-const components = [YusQueryTable, YusToolBar, YusQueyForm,
-  YusTableList, YusDialog, YusDetailsPage,
-  YusContentPage, YusContentRow, YusContentCell,
-  YusActionBar, YusThemePicker, YusButton, YusGrapheditor
-]
+const components = [YusDialog, YusContentPage, YusGrapheditor, YusThemePicker]
 
 const setPrototype = () => {
   Vue.prototype.$bus = new Vue()

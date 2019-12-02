@@ -7,7 +7,7 @@
 
 <script>
 const version = require('element-ui/package.json').version // element-ui version from node_modules
-// console.log(version)
+console.log(version)
 const ORIGINAL_THEME = '#409EFF' // default color
 export default {
   name: 'yus-theme-picker',
@@ -34,7 +34,7 @@ export default {
       if (typeof val !== 'string') return
       const themeCluster = this.getThemeCluster(val.replace('#', ''))
       const originalCluster = this.getThemeCluster(oldVal.replace('#', ''))
-      // console.log(themeCluster, originalCluster)
+      console.log(themeCluster, originalCluster)
       const $message = this.$message({
         message: '  Compiling the theme',
         customClass: 'theme-message',

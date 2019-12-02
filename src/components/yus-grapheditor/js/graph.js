@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-25 09:43:50
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-11-28 15:16:48
+ * @LastEditTime: 2019-12-02 18:06:50
  */
 
 import Base64 from './../utils/base64'
@@ -259,7 +259,7 @@ export default Graph;
     return guide
   }
 
-  // Overrides edge preview to use current edge shape and default style 替代边预览以使用当前边形状和默认样式
+  // 替代边预览以使用当前边形状和默认样式
   mxConnectionHandler.prototype.livePreview = true
   mxConnectionHandler.prototype.cursor = 'crosshair'
 
