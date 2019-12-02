@@ -88,7 +88,7 @@ export default {
   width: 100%;
   background-color: #2d3a4b;
   overflow: hidden;
-  background: url(~@/assets/images/login-bg.png);
+  // background: url(~@/assets/images/login-bg.png);
   background-size: 100% 100%;
   // 登录的中心盒子
   .login-content {
