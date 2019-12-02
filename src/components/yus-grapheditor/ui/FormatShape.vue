@@ -494,6 +494,18 @@ export default {
       this.$set(this.format, 'fontSize', ss.fontSize || 12)
       this.$set(this.format, 'value', cell.value || '')
 
+      // 线条类型 曲线 圆线 尖线
+      const a = mxUtils.getValue(ss, mxConstants.STYLE_CURVED, null)
+      const b = mxUtils.getValue(ss, mxConstants.STYLE_ROUNDED, null)
+      console.log(!a, b === 1)
+      if (!a && b === 1) {
+        this.format.edgeType = 'rounded'
+      } else if (a === 1 && b === 1) {
+        this.format.edgeType = 'curved'
+      } else {
+        this.format.edgeType = 'sharp'
+      }
+
       // 初始化字体样式 粗细 斜体 下划线
       var fontStyle = mxUtils.getValue(ss, mxConstants.STYLE_FONTSTYLE, 0)
       if ((fontStyle & mxConstants.FONT_BOLD) === mxConstants.FONT_BOLD) {
