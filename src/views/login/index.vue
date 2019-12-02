@@ -3,8 +3,8 @@
     <div class="login-content">
       <div class="content-box logo">
         <div class="img">
-          <img src="~@/assets/images/login-logo.png"
-               alt="">
+          <!-- <img src="~@/assets/images/login-logo.png"
+               alt=""> -->
         </div>
         <div class="title">通用型后台管理系统</div>
       </div>

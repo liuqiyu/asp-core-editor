@@ -3,12 +3,13 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-11-26 16:47:19
+ * @LastEditTime: 2019-12-02 14:34:44
  */
 import mxgraph from './mxgraph'
 import editor from './editor'
 const {
   // mxUtils,
+  mxEventObject,
   mxConstants
 } = mxgraph
 class Format {
@@ -88,6 +89,42 @@ class Format {
         console.log(keys[i], values[i])
         this.graph.setCellStyles(keys[i], values[i])
       }
+    } finally {
+      this.graph.getModel().endUpdate()
+    }
+  }
+
+  // 修改线条样式 solid dashed
+  static edgeStyleChange (keys, values) {
+    this.graph.getModel().beginUpdate()
+    try {
+      var cells = this.graph.getSelectionCells()
+      var edges = []
+
+      for (var i = 0; i < cells.length; i++) {
+        var cell = cells[i]
+
+        if (this.graph.getModel().isEdge(cell)) {
+          var geo = this.graph.getCellGeometry(cell)
+
+          // Resets all edge points
+          if (geo != null) {
+            geo = geo.clone()
+            geo.points = null
+            this.graph.getModel().setGeometry(cell, geo)
+          }
+
+          for (var j = 0; j < keys.length; j++) {
+            console.log(keys[j], values[j])
+            this.graph.setCellStyles(keys[j], values[j], [cell])
+          }
+
+          edges.push(cell)
+        }
+      }
+      // todo 未能改变线条样式
+      this.graph.fireEvent(new mxEventObject('styleChanged', 'keys', keys,
+        'values', values, 'cells', edges))
     } finally {
       this.graph.getModel().endUpdate()
     }
@@ -175,6 +212,16 @@ class Format {
     }
 
     return shape
+  }
+
+  // 移至最前
+  static toFront () {
+    this.graph.orderCells(false)
+  }
+
+  // 移至最前
+  static toBack () {
+    this.graph.orderCells(true)
   }
 }
 
