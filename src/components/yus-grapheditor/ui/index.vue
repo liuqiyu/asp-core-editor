@@ -109,6 +109,9 @@ export default {
           alert('绑定')
         })
       }
+      menu.addItem('粘贴到此处', null, () => {
+        Tool.pasteHere()
+      })
     }
   },
   methods: {
