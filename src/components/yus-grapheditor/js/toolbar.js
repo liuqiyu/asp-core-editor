@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-02 16:20:56
+ * @LastEditTime: 2019-12-03 18:01:36
  */
 import mxgraph from './mxgraph'
 
@@ -36,13 +36,15 @@ class Tool {
   // 放大
   static zoomIn () {
     // console.log(this.graph.view.scale)
-    Tool.editor.execute('zoomIn')
+    // Tool.editor.execute('zoomIn')
+    this.graph.zoomIn()
   }
 
   // 缩小
   static zoomOut () {
     // console.log(this.graph.view.scale)
-    Tool.editor.execute('zoomOut')
+    // Tool.editor.execute('zoomOut')
+    this.graph.zoomOut()
   }
 
   // 1:1还原

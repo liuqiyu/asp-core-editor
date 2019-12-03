@@ -3,13 +3,12 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-11-18 18:11:45
+ * @LastEditTime: 2019-12-03 14:56:33
  */
 import mxgraph from './mxgraph'
 const {
   mxResources,
-  mxEventSource,
-  mxConstants
+  mxEventSource
 } = mxgraph
 class Actions {
   static editor = null
@@ -20,7 +19,7 @@ class Actions {
   static init (editor, graph) {
     this.editor = editor
     this.graph = graph
-    console.log(mxConstants)
+    // console.log(mxConstants)
     // this.addAction('toFront', () => {
     //   this.graph.orderCells(false)
     // }, null, null, 'Ctrl+Shift+F')
@@ -50,7 +49,7 @@ class Actions {
 
 function Action (label, funct, enabled, iconCls, shortcut) {
   mxEventSource.call(this)
-  console.log(this)
+  // console.log(this)
   this.label = label
   this.funct = this.createFunction(funct)
   this.enabled = (enabled != null) ? enabled : true

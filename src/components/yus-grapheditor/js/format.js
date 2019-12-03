@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-02 15:52:27
+ * @LastEditTime: 2019-12-03 14:28:16
  */
 import mxgraph from './mxgraph'
 import editor from './editor'
@@ -22,7 +22,7 @@ class Format {
     this.graph = graph
   }
 
-  // update style
+  // 更新元件样式
   static updateStyleHandler (keyword, data) {
     this.graph.getModel().beginUpdate()
     try {
@@ -72,7 +72,7 @@ class Format {
     }
   }
 
-  // update fontStyle
+  // 更新字体样式 bold italic underline
   static toggleFontStyle (style) {
     let fontStyle
     switch (style) {
@@ -96,7 +96,7 @@ class Format {
     }
   }
 
-  // update value
+  // 更新 值
   static updateValueHandler (value) {
     // 多选修改
     var cells = this.graph.getSelectionCells()
@@ -105,7 +105,7 @@ class Format {
     })
   }
 
-  // update Geometry  width height x y
+  // 更新 元件几何  宽高 X Y
   static updateGeometryHandler (value, func) {
     const cells = this.graph.getSelectionCells()
     this.graph.getModel().beginUpdate()

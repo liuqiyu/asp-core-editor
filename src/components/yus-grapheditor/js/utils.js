@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-29 14:01:16
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-11-29 14:46:34
+ * @LastEditTime: 2019-12-03 15:02:52
  */
 
 /**
@@ -17,9 +17,6 @@
  */
 export const typeofElement = cells => {
   try {
-    cells.forEach(cell => {
-      console.log(cell)
-    })
     if (cells.length === 1) {
       return cells[0].edge ? 'singleEdge' : 'singleVertex'
     } else {

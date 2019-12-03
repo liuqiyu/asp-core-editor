@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-25 09:43:50
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-02 18:06:50
+ * @LastEditTime: 2019-12-03 15:14:49
  */
 
 import Base64 from './../utils/base64'
@@ -28,7 +28,7 @@ const {
   // mxCellEditor,
   mxConstraintHandler,
   mxConnectionConstraint,
-  // mxEllipse,
+  mxEllipse,
   mxPolyline,
   mxCellState
 } = mxgraph
@@ -42,9 +42,10 @@ var defaultEdgeStyle = {
 
 function Graph (graph) {
   // Graph.call(graph)
-  this.currentEdgeStyle = mxUtils.clone(defaultEdgeStyle)
-  graph.defaultEdgeStyle = this.currentEdgeStyle
-  graph.currentEdgeStyle = this.currentEdgeStyle
+  // var currentEdgeStyle = mxUtils.clone(defaultEdgeStyle)
+  graph.defaultEdgeStyle = mxUtils.clone(defaultEdgeStyle)
+  graph.currentEdgeStyle = mxUtils.clone(defaultEdgeStyle)
+
   graph.createCurrentEdgeStyle = function () {
     var style = 'edgeStyle=' + (this.currentEdgeStyle['edgeStyle'] || 'none') + ';'
 
@@ -91,6 +92,8 @@ function Graph (graph) {
     graph.connectionHandler.isValidSource = function (cell, me) {
       return false
     }
+
+    graph.alternateEdgeStyle = 'vertical'
   }
 
   // hover 锚点
@@ -160,20 +163,20 @@ export default Graph;
   mxConstants.HIGHLIGHT_OPACITY = 30
   mxConstants.HIGHLIGHT_SIZE = 4
 
-  // Enables snapping to off-grid terminals for edge waypoints 启用对边缘航路点的离网终端的捕捉
+  // 启用对边缘航路点的离网终端的捕捉
   mxEdgeHandler.prototype.snapToTerminals = true
 
-  // Enables guides 启用指南
+  // 启用指南
   mxGraphHandler.prototype.guidesEnabled = true
 
-  // Enables fading of rubberband 使橡胶带褪色
+  // 使橡胶带褪色
   mxRubberband.prototype.fadeOut = true
 
-  // Alt-move disables guides Alt move禁用辅助线
+  // Alt move禁用辅助线
   mxGuide.prototype.isEnabledForEvent = function (evt) {
     return !mxEvent.isAltDown(evt)
   }
-  // 选中元件锚点
+  // // 选中元件锚点
   var mxGraphViewUpdateFloatingTerminalPoint = mxGraphView.prototype.updateFloatingTerminalPoint
 
   mxGraphView.prototype.updateFloatingTerminalPoint = function (edge, start, end, source) {
@@ -244,14 +247,6 @@ export default Graph;
   //   return mxEvent.isControlDown(evt) || mxConnectionHandlerCreateTarget.apply(this, arguments);
   // };
 
-  // Overrides highlight shape for connection points 替代连接点的亮显形状
-  // mxConstraintHandler.prototype.createHighlightShape = function () {
-  //   var hl = new mxEllipse(null, this.highlightColor, this.highlightColor, 0);
-  //   hl.opacity = mxConstants.HIGHLIGHT_OPACITY;
-
-  //   return hl;
-  // };
-
   // No dashed shapes.
   mxGuide.prototype.createGuideShape = function (horizontal) {
     var guide = new mxPolyline([], mxConstants.GUIDE_COLOR, mxConstants.GUIDE_STROKEWIDTH)
@@ -259,11 +254,19 @@ export default Graph;
     return guide
   }
 
+  // 替代连接点的亮显形状
+  mxConstraintHandler.prototype.createHighlightShape = function () {
+    var hl = new mxEllipse(null, this.highlightColor, this.highlightColor, 0)
+    hl.opacity = mxConstants.HIGHLIGHT_OPACITY
+
+    return hl
+  }
+
   // 替代边预览以使用当前边形状和默认样式
   mxConnectionHandler.prototype.livePreview = true
   mxConnectionHandler.prototype.cursor = 'crosshair'
 
-  //  使用当前边样式进行连接预览
+  // 使用当前边样式进行连接预览
   mxConnectionHandler.prototype.createEdgeState = function (me) {
     let style = this.graph.createCurrentEdgeStyle()
     let edge = this.graph.createEdge(null, null, null, null, null, style)
@@ -272,6 +275,12 @@ export default Graph;
     for (var key in this.graph.currentEdgeStyle) {
       state.style[key] = this.graph.currentEdgeStyle[key]
     }
+
+    console.log(this)
+    console.log(this.graph)
+    console.log(style)
+    console.log(edge)
+    console.log(state)
     return state
   }
 

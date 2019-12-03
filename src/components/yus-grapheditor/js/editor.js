@@ -7,7 +7,8 @@ import MxEvents from './mxEvents'
 import Graph from './graph'
 
 const {
-  mxEditor,
+  // mxEditor,
+  mxGraph,
   // mxImage,
   mxUtils,
   mxRubberband,
@@ -39,9 +40,10 @@ class Editor {
       mxUtils.error('Browser is not supported!', 200, false)
     } else {
       // 初始化
-      this.editor = new mxEditor()
-      this.graph = this.editor.graph
-      this.editor.setGraphContainer(container)
+      // this.editor = new mxEditor()
+      // this.graph = this.editor.graph
+      // this.editor.setGraphContainer(container)
+      this.graph = new mxGraph(container)
 
       // this.graph.setEnabled(false) // 编辑与运行状态
       this.graph.setConnectable(true) // 指定图是否应允许新连接
@@ -49,10 +51,10 @@ class Editor {
       this.graph.setGridEnabled(false)
 
       // 键盘快捷键
-      const config = mxUtils
-        .load('static/keyhandler-commons.xml')
-        .getDocumentElement()
-      this.editor.configure(config)
+      // const config = mxUtils
+      //   .load('static/keyhandler-commons.xml')
+      //   .getDocumentElement()
+      // this.editor.configure(config)
 
       const node = mxUtils.load('static/default.xml').getDocumentElement()
       if (node != null) {
@@ -67,7 +69,7 @@ class Editor {
       PopupMenu.init(this.editor, this.graph, container)
       MxEvents.init()
       this.graphInit = new Graph(this.graph)
-      console.log(this.graphInit)
+      // console.log(this.graphInit)
 
       // 设置默认连线样式
       // this.graph.getStylesheet().getDefaultEdgeStyle()['edgeStyle'] = 'orthogonalEdgeStyle'
