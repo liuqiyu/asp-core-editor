@@ -2,3 +2,4 @@ build/*.js
 config/*.js
 src/assets
 src/components/yus-grapheditor/utils/base64.js
+src/components/yus-grapheditor1/utils/base64.js

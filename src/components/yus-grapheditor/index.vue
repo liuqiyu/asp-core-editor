@@ -1,6 +1,7 @@
 <template>
   <div id="graph-wrapper">
-    <Sidebar v-if="type === 'editor'"
+    <Sidebar :graph="graph"
+             v-if="type === 'editor'"
              id="graph-sidebar">
     </Sidebar>
     <div id="graph-map">
@@ -9,7 +10,8 @@
       </Toolbar>
 
       <div id="graph-content">
-        <div id="graph-container">
+        <div :id="timeStamp"
+             class="graph-container">
         </div>
         <div v-if="type === 'editor'"
              id="outlineContainer"
@@ -27,14 +29,15 @@
 </template>
 
 <script>
-import Toolbar from './Toolbar'
-import Format from './Format'
-import FormatShape from './FormatShape'
-import Sidebar from './Sidebar'
-import mxgraph from './../js/mxgraph'
-import editor from './../js'
-import OutLine from './../js/outLine'
-import Tool from './../js/toolbar'
+import moment from 'moment'
+import Toolbar from './components/Toolbar'
+import Format from './components/Format'
+import FormatShape from './components/FormatShape'
+import Sidebar from './components/Sidebar'
+import mxgraph from './js/mxgraph'
+import Editor from './js'
+import OutLine from './js/outLine'
+import Tool from './js/toolbar'
 
 const { mxEvent } = mxgraph
 
@@ -53,7 +56,8 @@ export default {
   data () {
     return {
       graph: null,
-      currentFormat: 'Format'
+      currentFormat: 'Format',
+      timeStamp: ''
     }
   },
   components: {
@@ -62,10 +66,20 @@ export default {
     Format,
     FormatShape
   },
-  mounted () {
-    let container = document.getElementById('graph-container')
+  async mounted () {
+    this.timeStamp = `graph${moment(new Date()).valueOf()}`
+    console.log(this.timeStamp)
+    await this.$nextTick()
+    let container = document.getElementById(this.timeStamp)
+    console.log(container)
     let outlineContainer = this.$refs.outlineContainer
-    const graph = editor.init(container) // 初始化
+    // const graph = editor.init(container, this.type === 'editor') // 初始化
+    var editor = new Editor(container, this.type === 'editor')
+
+    var graph = editor.graph
+    this.graph = graph
+    console.log(editor)
+    console.log(graph)
     OutLine.init(graph, outlineContainer) //
 
     // 选中元件
@@ -82,36 +96,34 @@ export default {
     })
 
     // 单击事件
-    // graph.addListener(mxEvent.CLICK, (sender, evt) => {
-    //   var cell = evt.getProperty('cell') // 元件
-    //   // console.log(cell)
-
-    // })
+    graph.addListener(mxEvent.CLICK, (sender, evt) => {
+      var cell = evt.getProperty('cell') // 元件
+      this.$emit('click', { graph, cell })
+    })
 
     // 双击事件
     graph.addListener(mxEvent.DOUBLE_CLICK, (sender, evt) => {
       var cell = evt.getProperty('cell') // 元件
-      // console.log(cell)
-      if (cell) { }
+      this.$emit('dblClick', { graph, cell })
     })
 
     // 安装菜单 => 右键
     graph.popupMenuHandler.factoryMethod = (menu, cell, evt) => {
-      console.log(cell)
-      if (cell) {
-        menu.addItem('删除', null, () => {
-          Tool.delete()
-        })
-        menu.addItem('绑定', null, () => {
-          alert('绑定')
-        })
-        menu.addItem('绑定子图层', null, () => {
-          alert('绑定')
-        })
+      // graph.isEnabled() 判断是否启用编辑
+      if (graph.isEnabled() && !graph.isCellLocked(graph.getDefaultParent())) {
+        if (cell) {
+          menu.addItem('删除', null, () => {
+            Tool.delete()
+          })
+          // menu.addItem('绑定', null, () => {
+          //   alert('绑定')
+          // })
+          // menu.addItem('绑定子图层', null, () => {
+          //   alert('绑定')
+          // })
+        }
+        this.$emit('popupMenuHandler', { menu, cell, evt })
       }
-      menu.addItem('粘贴到此处', null, () => {
-        Tool.pasteHere()
-      })
     }
   },
   methods: {
@@ -120,9 +132,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "./../styles/main.scss";
-@import "./../styles/common.css";
-@import "./../styles/grapheditor.css";
+@import "./styles/main.scss";
+@import "./styles/common.css";
+@import "./styles/grapheditor.css";
 
 #graph-wrapper {
   width: 100%;
@@ -146,7 +158,7 @@ export default {
       width: 100%;
       height: 100%;
       background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAgTSAwIDIwIEwgNDAgMjAgTSAyMCAwIEwgMjAgNDAgTSAwIDMwIEwgNDAgMzAgTSAzMCAwIEwgMzAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2UwZTBlMCIgb3BhY2l0eT0iMC4yIiBzdHJva2Utd2lkdGg9IjEiLz48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZTBlMGUwIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=");
-      #graph-container {
+      .graph-container {
         position: absolute;
         width: 100%;
         height: 100%;

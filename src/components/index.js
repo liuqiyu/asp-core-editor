@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-28 15:43:12
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-02 16:42:44
+ * @LastEditTime: 2019-12-04 19:06:50
  */
 import Vue from 'vue'
 import {
@@ -15,7 +15,7 @@ import directives from '../directives'
 // 全局组件
 import YusDialog from './yus-dialog'
 import YusContentPage from './yus-content-page'
-import YusGrapheditor from './yus-grapheditor/ui'
+import YusGrapheditor from './yus-grapheditor'
 import YusThemePicker from './yus-theme-picker'
 
 const components = [YusDialog, YusContentPage, YusGrapheditor, YusThemePicker]
