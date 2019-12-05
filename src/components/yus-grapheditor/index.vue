@@ -36,8 +36,8 @@ import FormatShape from './components/FormatShape'
 import Sidebar from './components/Sidebar'
 import mxgraph from './js/mxgraph'
 import CoreEditor from './js'
-// import OutLine from './js/outLine'
-// import Tool from './js/toolbar'
+import OutLine from './js/outLine'
+import Tool from './js/toolbar'
 
 const { mxEvent } = mxgraph
 
@@ -71,56 +71,56 @@ export default {
     await this.$nextTick()
     let container = document.getElementById(this.timeStamp)
 
-    // let outlineContainer = this.$refs.outlineContainer
+    let outlineContainer = this.$refs.outlineContainer
     var editor = new CoreEditor(container, this.setEnabled)
     console.log(editor)
 
-    var graph = editor.graph
+    var graph = editor.editor.graph
     this.graph = graph
-    // OutLine.init(graph, outlineContainer) //
+    OutLine.init(graph, outlineContainer) //
 
-    // // 选中元件
-    // graph.getSelectionModel().addListener(mxEvent.CHANGE, async (sender, evt) => {
-    //   var cell = graph.getSelectionCell()
-    //   if (cell) {
-    //     this.currentFormat = 'FormatShape'
-    //     await this.$nextTick()
-    //     this.$refs.format.selectionChanged(graph)
-    //   } else {
-    //     this.currentFormat = 'Format'
-    //   }
-    // })
+    // 选中元件
+    graph.getSelectionModel().addListener(mxEvent.CHANGE, async (sender, evt) => {
+      var cell = graph.getSelectionCell()
+      if (cell) {
+        this.currentFormat = 'FormatShape'
+        await this.$nextTick()
+        this.$refs.format.selectionChanged(graph)
+      } else {
+        this.currentFormat = 'Format'
+      }
+    })
 
-    // // 单击事件
-    // graph.addListener(mxEvent.CLICK, (sender, evt) => {
-    //   var cell = evt.getProperty('cell') // 元件
-    //   this.$emit('click', { graph, cell })
-    // })
+    // 单击事件
+    graph.addListener(mxEvent.CLICK, (sender, evt) => {
+      var cell = evt.getProperty('cell') // 元件
+      this.$emit('click', { graph, cell })
+    })
 
-    // // 双击事件
-    // graph.addListener(mxEvent.DOUBLE_CLICK, (sender, evt) => {
-    //   var cell = evt.getProperty('cell') // 元件
-    //   this.$emit('dblClick', { graph, cell })
-    // })
+    // 双击事件
+    graph.addListener(mxEvent.DOUBLE_CLICK, (sender, evt) => {
+      var cell = evt.getProperty('cell') // 元件
+      this.$emit('dblClick', { graph, cell })
+    })
 
-    // // 安装菜单 => 右键
-    // graph.popupMenuHandler.factoryMethod = (menu, cell, evt) => {
-    //   // graph.isEnabled() 判断是否启用编辑
-    //   if (graph.isEnabled() && !graph.isCellLocked(graph.getDefaultParent())) {
-    //     if (cell) {
-    //       menu.addItem('删除', null, () => {
-    //         Tool.delete()
-    //       })
-    //       // menu.addItem('绑定', null, () => {
-    //       //   alert('绑定')
-    //       // })
-    //       // menu.addItem('绑定子图层', null, () => {
-    //       //   alert('绑定')
-    //       // })
-    //     }
-    //     this.$emit('popupMenuHandler', { menu, cell, evt })
-    //   }
-    // }
+    // 安装菜单 => 右键
+    graph.popupMenuHandler.factoryMethod = (menu, cell, evt) => {
+      // graph.isEnabled() 判断是否启用编辑
+      if (graph.isEnabled() && !graph.isCellLocked(graph.getDefaultParent())) {
+        if (cell) {
+          menu.addItem('删除', null, () => {
+            Tool.delete()
+          })
+          // menu.addItem('绑定', null, () => {
+          //   alert('绑定')
+          // })
+          // menu.addItem('绑定子图层', null, () => {
+          //   alert('绑定')
+          // })
+        }
+        this.$emit('popupMenuHandler', { menu, cell, evt })
+      }
+    }
   },
   methods: {
   }

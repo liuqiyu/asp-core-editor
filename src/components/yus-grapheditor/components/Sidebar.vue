@@ -29,14 +29,14 @@
 </template>
 
 <script>
-// import Sidebar from './../js/sidebar'
+import Sidebar from './../js/sidebar'
 export default {
   name: 'Sidebar',
   props: ['graph'],
   mounted () {
     const ele = document.querySelectorAll('.drap')
     ele.forEach(item => {
-      // Sidebar.createDragSource(item)
+      Sidebar.createDragSource(item)
     })
   },
   data () {
