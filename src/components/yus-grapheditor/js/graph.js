@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-25 09:43:50
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-04 15:19:01
+ * @LastEditTime: 2019-12-05 16:58:16
  */
 
 import Base64 from '../utils/base64'
@@ -114,6 +114,40 @@ function Graph (graph) {
       ]
     }
     return null
+  }
+
+  graph.duplicateCells = function (cells, append) {
+    cells = (cells != null) ? cells : this.getSelectionCells()
+    append = (append != null) ? append : true
+
+    cells = this.model.getTopmostCells(cells)
+
+    var model = this.getModel()
+    var s = this.gridSize
+    var select = []
+
+    model.beginUpdate()
+    try {
+      var clones = this.cloneCells(cells, false)
+
+      for (var i = 0; i < cells.length; i++) {
+        var parent = model.getParent(cells[i])
+        var child = this.moveCells([clones[i]], s, s, false)[0]
+        select.push(child)
+
+        if (append) {
+          model.add(parent, clones[i])
+        } else {
+          // Maintains child index by inserting after clone in parent
+          var index = parent.getIndex(cells[i])
+          model.add(parent, clones[i], index + 1)
+        }
+      }
+    } finally {
+      model.endUpdate()
+    }
+
+    return select
   }
 }
 

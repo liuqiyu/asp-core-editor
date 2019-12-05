@@ -3,10 +3,10 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-03 14:28:16
+ * @LastEditTime: 2019-12-05 11:26:34
  */
 import mxgraph from './mxgraph'
-import editor from './editor'
+// import editor from './editor'
 const {
   // mxUtils,
   mxEventObject,
@@ -132,7 +132,7 @@ class Format {
 
   // 等距分布
   static distributeCells (boolean) {
-    editor.distributeCells(boolean)
+    // editor.distributeCells(boolean)
   }
 
   static initFormatField (cell) {

@@ -3,12 +3,12 @@
  * @Author: liuqiyu
  * @Date: 2019-11-28 15:49:56
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-04 18:57:32
+ * @LastEditTime: 2019-12-05 13:40:43
  -->
 
 <template>
   <yus-content-page style="height: 100%">
-    <yus-grapheditor type="editor"
+    <yus-grapheditor :setEnabled="true"
                      @click="click"
                      @dblClick="dblClick"
                      @popupMenuHandler="popupMenuHandler"></yus-grapheditor>
