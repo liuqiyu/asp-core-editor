@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-05 17:56:18
+ * @LastEditTime: 2019-12-05 18:16:23
  */
 import mxgraph from './mxgraph'
 
@@ -46,9 +46,9 @@ class Tool {
   }
 
   // 1:1还原
-  static zoomActual () {
+  static resetView () {
     // console.log(this.graph.view.scale)
-    this.editor.actions.actions['zoomActual'].funct()
+    this.editor.actions.actions['resetView'].funct()
   }
 
   static pan (status) {

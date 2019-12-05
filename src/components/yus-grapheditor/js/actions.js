@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-05 17:31:57
+ * @LastEditTime: 2019-12-05 18:15:38
  */
 import mxgraph from './mxgraph'
 import { ctrlKey } from './constant'
@@ -33,6 +33,7 @@ Actions.prototype.init = function () {
   this.addAction('undo', function () { undoManager.undo() }, null, 'sprite-undo', ctrlKey + '+Z')
   this.addAction('redo', function () { undoManager.redo() }, null, 'sprite-redo', (!mxClient.IS_WIN) ? ctrlKey + '+Shift+Z' : ctrlKey + '+Y')
 
+  this.addAction('resetView', function () { graph.zoomTo(1) }, null, null, ctrlKey + '+H') // 1:1 还原
   this.addAction('zoomIn', function (evt) { graph.zoomIn() }, null, null, ctrlKey + ' + (Numpad) / Alt+Mousewheel') // 放大
   this.addAction('zoomOut', function (evt) { graph.zoomOut() }, null, null, ctrlKey + ' - (Numpad) / Alt+Mousewheel') // 缩小
   this.addAction('toFront', function () { graph.orderCells(false) }, null, null, ctrlKey + '+Shift+F') // 移至最前

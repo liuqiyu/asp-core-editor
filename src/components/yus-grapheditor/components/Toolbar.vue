@@ -119,7 +119,7 @@ export default {
       Tool.zoomOut()
     },
     handleInit () {
-      Tool.zoomActual()
+      Tool.resetView()
     },
     handleUndo () {
       Tool.undo()

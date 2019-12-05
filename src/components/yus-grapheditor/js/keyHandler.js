@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-12-05 14:31:21
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-05 17:24:39
+ * @LastEditTime: 2019-12-05 18:16:15
  */
 import mxgraph from './mxgraph'
 
@@ -77,6 +77,7 @@ initKeyHandler.prototype.init = function () {
   keyHandler.bindAction(70, true, 'toFront', true) // Ctrl+Shift+F
   keyHandler.bindAction(107, true, 'zoomIn') // Ctrl+Plus
   keyHandler.bindAction(109, true, 'zoomOut') // Ctrl+Minus
+  keyHandler.bindAction(72, true, 'resetView') // Ctrl+H
 
   keyHandler.bindAction(88, true, 'cut') // Ctrl+X
   keyHandler.bindAction(67, true, 'copy') // Ctrl+C
