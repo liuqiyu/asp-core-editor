@@ -528,6 +528,12 @@ export default {
         this.format.waypoints = 'none'
       }
 
+      const startFill = mxUtils.getValue(ss, mxConstants.STYLE_STARTARROW, null) && mxUtils.getValue(ss, 'startFill', '1')
+      const endFill = mxUtils.getValue(ss, mxConstants.STYLE_ENDARROW, null) && mxUtils.getValue(ss, 'endFill', '1')
+
+      this.format.startFill = startFill ? 'default' : 'none'
+      this.format.endFill = endFill ? 'default' : 'none'
+
       // edgeStyle 线条样式 实线 虚线
       const dashed = mxUtils.getValue(ss, mxConstants.STYLE_DASHED, null)
       this.format.edgeStyle = (dashed === 1 ? 'dashed' : 'solid')
