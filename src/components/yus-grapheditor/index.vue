@@ -34,10 +34,10 @@ import Toolbar from './components/Toolbar'
 import Format from './components/Format'
 import FormatShape from './components/FormatShape'
 import Sidebar from './components/Sidebar'
-import mxgraph from './js/mxgraph'
-import CoreEditor from './js'
-import OutLine from './js/outLine'
-import Tool from './js/toolbar'
+import mxgraph from './core/mxgraph'
+import CoreEditor from './core'
+import OutLine from './core/outLine'
+import Tool from './core/toolbar'
 
 const { mxEvent } = mxgraph
 

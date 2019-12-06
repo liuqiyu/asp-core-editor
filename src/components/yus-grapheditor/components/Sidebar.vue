@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import Sidebar from './../js/sidebar'
+import Sidebar from './../core/sidebar'
 export default {
   name: 'Sidebar',
   props: ['graph'],

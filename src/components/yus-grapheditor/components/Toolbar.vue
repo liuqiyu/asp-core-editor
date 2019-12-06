@@ -103,7 +103,7 @@
 </template>
 
 <script>
-import Tool from './../js/toolbar'
+import Tool from './../core/toolbar'
 export default {
   name: 'AspTool',
   data () {

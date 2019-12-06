@@ -31,7 +31,7 @@
 
 <script>
 // import editor from '@/utils/editor'
-import format from './../js/format'
+import format from './../core/format'
 export default {
   name: 'Format',
   data () {

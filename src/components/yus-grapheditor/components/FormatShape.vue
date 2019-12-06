@@ -354,9 +354,9 @@
 
 <script>
 // import editor from '@/utils/editor'
-import mxgraph from './../js/mxgraph'
-import format from './../js/format'
-import { typeofElement } from './../js/utils'
+import mxgraph from './../core/mxgraph'
+import format from './../core/format'
+import { typeofElement } from './../core/utils'
 const { mxConstants, mxUtils } = mxgraph
 export default {
   name: 'Format',
