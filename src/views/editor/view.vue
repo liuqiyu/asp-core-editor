@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-28 15:49:56
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-05 13:41:44
+ * @LastEditTime: 2019-12-06 14:08:13
  -->
 
 <template>
@@ -20,6 +20,7 @@ export default {
     click ({ graph, cell }) {
       console.log(graph)
       console.log(cell)
+      graph.cellLabelChanged(cell, 123)
     },
     dblClick ({ graph, cell }) {
       console.log(graph)

@@ -39,7 +39,7 @@ import CoreEditor from './core'
 import OutLine from './core/outLine'
 import Tool from './core/toolbar'
 
-const { mxEvent } = mxgraph
+const { mxEvent, mxUtils } = mxgraph
 
 Object.assign(mxEvent, {
   NORMAL_TYPE_CLICKED: 'NORMAL_TYPE_CLICKED'
@@ -101,6 +101,24 @@ export default {
     graph.addListener(mxEvent.DOUBLE_CLICK, (sender, evt) => {
       var cell = evt.getProperty('cell') // 元件
       this.$emit('dblClick', { graph, cell })
+    })
+
+    // 鼠标移动事件
+    graph.addMouseListener({
+      // 鼠标按下
+      mouseDown: function (sender, evt) {
+        graph.container.style.cursor = 'grabbing'
+        this.$emit('mouseDown', { graph, evt })
+      },
+      // 鼠标拿开
+      mouseUp: function (sender, evt) {
+        graph.container.style.cursor = 'pointer'
+        this.$emit('mouseUp', { graph, evt })
+      },
+      // 鼠标移动
+      mouseMove: mxUtils.bind(this, function (sender, evt) {
+        this.$emit('mouseMove', { graph, evt })
+      })
     })
 
     // 安装菜单 => 右键
