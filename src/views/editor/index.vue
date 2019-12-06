@@ -3,12 +3,13 @@
  * @Author: liuqiyu
  * @Date: 2019-11-28 15:49:56
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-05 13:40:43
+ * @LastEditTime: 2019-12-06 15:18:02
  -->
 
 <template>
   <yus-content-page style="height: 100%">
-    <yus-grapheditor :setEnabled="true"
+    <yus-grapheditor :data="data"
+                     :setEnabled="true"
                      @click="click"
                      @dblClick="dblClick"
                      @popupMenuHandler="popupMenuHandler"></yus-grapheditor>
@@ -17,6 +18,16 @@
 
 <script>
 export default {
+  data () {
+    return {
+      data: ''
+    }
+  },
+  mounted () {
+    setTimeout(() => {
+      this.data = sessionStorage.getItem('xml')
+    })
+  },
   methods: {
     click ({ graph, cell }) {
       // alert('单击')

@@ -39,20 +39,32 @@ import CoreEditor from './core'
 import OutLine from './core/outLine'
 import Tool from './core/toolbar'
 
-const { mxEvent, mxUtils } = mxgraph
+const { mxEvent, mxUtils, mxCodec } = mxgraph
 
 Object.assign(mxEvent, {
   NORMAL_TYPE_CLICKED: 'NORMAL_TYPE_CLICKED'
 })
 
 export default {
+  name: 'yus-grapheditor',
   props: {
     setEnabled: {
       type: Boolean,
       default: () => true
+    },
+    data: {
+      type: String,
+      default: () => ''
     }
   },
-  name: 'yus-grapheditor',
+  watch: {
+    data: {
+      immediate: true,
+      handler (value) {
+        this.putData(value)
+      }
+    }
+  },
   data () {
     return {
       graph: null,
@@ -106,17 +118,17 @@ export default {
     // 鼠标移动事件
     graph.addMouseListener({
       // 鼠标按下
-      mouseDown: function (sender, evt) {
+      mouseDown: (sender, evt) => {
         graph.container.style.cursor = 'grabbing'
         this.$emit('mouseDown', { graph, evt })
       },
       // 鼠标拿开
-      mouseUp: function (sender, evt) {
+      mouseUp: (sender, evt) => {
         graph.container.style.cursor = 'pointer'
         this.$emit('mouseUp', { graph, evt })
       },
       // 鼠标移动
-      mouseMove: mxUtils.bind(this, function (sender, evt) {
+      mouseMove: mxUtils.bind(this, (sender, evt) => {
         this.$emit('mouseMove', { graph, evt })
       })
     })
@@ -141,6 +153,13 @@ export default {
     }
   },
   methods: {
+    putData (value) {
+      if (value) {
+        var doc = mxUtils.parseXml(value)
+        var codec = new mxCodec(doc)
+        codec.decode(doc.documentElement, this.graph.getModel())
+      }
+    }
   }
 }
 </script>

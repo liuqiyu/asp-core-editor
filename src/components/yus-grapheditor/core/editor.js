@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-12-04 15:00:15
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-06 13:54:02
+ * @LastEditTime: 2019-12-06 15:17:28
  */
 import mxgraph from './mxgraph'
 // import Toolbar from './toolbar'
@@ -48,11 +48,4 @@ Editor.prototype.init = function (container, setEnabled) {
   // 鼠标拖拽选中
   /* eslint-disable no-new */
   new mxRubberband(this.graph)
-
-  const xml = sessionStorage.getItem('xml')
-  if (xml) {
-    var doc = mxUtils.parseXml(xml)
-    var codec = new mxCodec(doc)
-    codec.decode(doc.documentElement, this.graph.getModel())
-  }
 }

@@ -3,12 +3,13 @@
  * @Author: liuqiyu
  * @Date: 2019-11-28 15:49:56
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-06 14:08:13
+ * @LastEditTime: 2019-12-06 15:17:15
  -->
 
 <template>
   <yus-content-page style="height: 100%">
-    <yus-grapheditor :setEnabled="false"
+    <yus-grapheditor :data="data"
+                     :setEnabled="false"
                      @click="click"
                      @dblClick="dblClick"></yus-grapheditor>
   </yus-content-page>
@@ -16,6 +17,16 @@
 
 <script>
 export default {
+  data () {
+    return {
+      data: ''
+    }
+  },
+  mounted () {
+    setTimeout(() => {
+      this.data = sessionStorage.getItem('xml')
+    })
+  },
   methods: {
     click ({ graph, cell }) {
       console.log(graph)
