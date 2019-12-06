@@ -267,35 +267,35 @@
            v-if="['singleEdge', 'multipleEdge', 'multipleAll'].includes(selectedType)">
         <div class="format-label">线条航点</div>
         <div class="format-content font">
-          <el-checkbox-group class="mini-checkbox-group"
-                             v-model="format.waypoints"
-                             @change="handleChangeStyle('waypoints')">
-            <el-checkbox-button label="edgeStyle"
-                                key="edgeStyle"
-                                title="直线"
-                                @click.native.prevent="handleChangeEdgeStyle([mxConstants.STYLE_EDGE, mxConstants.STYLE_CURVED, mxConstants.STYLE_NOEDGESTYLE], [null, null, null])">
-              <span class="iconfont iconedgeStyle"></span></el-checkbox-button>
-            <el-checkbox-button label="edgeStyl1"
-                                key="edgeStyl1"
-                                title="正交"
-                                @click.native.prevent="handleChangeEdgeStyle([mxConstants.STYLE_EDGE, mxConstants.STYLE_CURVED, mxConstants.STYLE_NOEDGESTYLE], ['orthogonalEdgeStyle', null, null])">
-              <span class="iconfont iconedgeStyle1"></span></el-checkbox-button>
-            <el-checkbox-button label="edgeStyle2"
-                                key="edgeStyle2"
-                                title="简单"
-                                @click.native.prevent="handleChangeEdgeStyle([mxConstants.STYLE_EDGE, mxConstants.STYLE_ELBOW, mxConstants.STYLE_CURVED, mxConstants.STYLE_NOEDGESTYLE], ['elbowEdgeStyle', null, null, null])">
-              <span class="iconfont iconedgeStyle2"></span></el-checkbox-button>
-            <el-checkbox-button label="edgeStyle4"
-                                key="edgeStyle4"
-                                title="等尺寸"
-                                @click.native.prevent="handleChangeEdgeStyle([mxConstants.STYLE_EDGE, mxConstants.STYLE_ELBOW, mxConstants.STYLE_CURVED, mxConstants.STYLE_NOEDGESTYLE], ['elbowEdgeStyle', 'vertical', null, null])">
-              <span class="iconfont iconedgeStyle4"></span></el-checkbox-button>
-            <el-checkbox-button label="edgeStyle7"
-                                key="edgeStyle7"
-                                title="实体关系"
-                                @click.native.prevent="handleChangeEdgeStyle([mxConstants.STYLE_EDGE, mxConstants.STYLE_CURVED, mxConstants.STYLE_NOEDGESTYLE], ['entityRelationEdgeStyle', null, null])">
-              <span class="iconfont iconedgeStyle7"></span></el-checkbox-button>
-          </el-checkbox-group>
+          <el-radio-group v-model="format.waypoints"
+                          class="mini-radio-group"
+                          @change="handleChangeStyle('waypoints')">
+            <el-radio-button label="none"
+                             key="none"
+                             title="直线"
+                             @click.native="handleChangeEdgeStyle([mxConstants.STYLE_EDGE, mxConstants.STYLE_CURVED, mxConstants.STYLE_NOEDGESTYLE], [null, null, null])">
+              <span class="iconfont iconedgeStyle"></span></el-radio-button>
+            <el-radio-button label="orthogonalEdgeStyle"
+                             key="orthogonalEdgeStyle"
+                             title="正交"
+                             @click.native="handleChangeEdgeStyle([mxConstants.STYLE_EDGE, mxConstants.STYLE_CURVED, mxConstants.STYLE_NOEDGESTYLE], ['orthogonalEdgeStyle', null, null])">
+              <span class="iconfont iconedgeStyle1"></span></el-radio-button>
+            <el-radio-button label="elbowEdgeStyle"
+                             key="elbowEdgeStyle"
+                             title="简单"
+                             @click.native="handleChangeEdgeStyle([mxConstants.STYLE_EDGE, mxConstants.STYLE_ELBOW, mxConstants.STYLE_CURVED, mxConstants.STYLE_NOEDGESTYLE], ['elbowEdgeStyle', null, null, null])">
+              <span class="iconfont iconedgeStyle2"></span></el-radio-button>
+            <el-radio-button label="elbowEdgeStyleVertical"
+                             key="elbowEdgeStyleVertical"
+                             title="等尺寸"
+                             @click.native="handleChangeEdgeStyle([mxConstants.STYLE_EDGE, mxConstants.STYLE_ELBOW, mxConstants.STYLE_CURVED, mxConstants.STYLE_NOEDGESTYLE], ['elbowEdgeStyle', 'vertical', null, null])">
+              <span class="iconfont iconedgeStyle4"></span></el-radio-button>
+            <el-radio-button label="entityRelationEdgeStyle"
+                             key="entityRelationEdgeStyle"
+                             title="实体关系"
+                             @click.native="handleChangeEdgeStyle([mxConstants.STYLE_EDGE, mxConstants.STYLE_CURVED, mxConstants.STYLE_NOEDGESTYLE], ['entityRelationEdgeStyle', null, null])">
+              <span class="iconfont iconedgeStyle7"></span></el-radio-button>
+          </el-radio-group>
         </div>
       </div>
       <!-- 线条箭头 -->
@@ -382,7 +382,7 @@ export default {
         edgeType: '',
         edgeStyle: '',
         strokeWidth: '',
-        waypoints: '', // 航点
+        waypoints: 'none', // 航点
 
         startFill: '', // 线始端 箭头
         endFill: '' // 线末端 箭头
@@ -505,11 +505,34 @@ export default {
         this.format.edgeType = 'sharp'
       }
 
-      // 线条样式 实线 虚线
-      const dashed = mxUtils.getValue(ss.style, mxConstants.STYLE_DASHED, null)
+      // 线条航点
+      var es = mxUtils.getValue(ss, mxConstants.STYLE_EDGE, null)
+      if (mxUtils.getValue(ss, mxConstants.STYLE_NOEDGESTYLE, null) === '1') {
+        es = null
+      }
+      if (es === 'orthogonalEdgeStyle') {
+        this.format.waypoints = 'orthogonalEdgeStyle' // 正交
+      } else if (es === 'straight' || es === 'none' || es == null) {
+        this.format.waypoints = 'none' // 直线
+      } else if (es === 'entityRelationEdgeStyle') {
+        this.format.waypoints = 'entityRelationEdgeStyle' // 实体关系
+      } else if (es === 'elbowEdgeStyle') {
+        if (mxUtils.getValue(ss, mxConstants.STYLE_ELBOW, null) === 'vertical') {
+          this.format.waypoints = 'elbowEdgeStyleVertical' // 等尺寸
+        } else {
+          this.format.waypoints = 'elbowEdgeStyle' // 简单
+        }
+      } else if (es === 'isometricEdgeStyle') {
+        this.format.waypoints = 'isometricEdgeStyle'
+      } else {
+        this.format.waypoints = 'none'
+      }
+
+      // edgeStyle 线条样式 实线 虚线
+      const dashed = mxUtils.getValue(ss, mxConstants.STYLE_DASHED, null)
       this.format.edgeStyle = (dashed === 1 ? 'dashed' : 'solid')
 
-      // 初始化字体样式 粗细 斜体 下划线
+      // fontStyle 初始化字体样式 粗细 斜体 下划线
       var fontStyle = mxUtils.getValue(ss, mxConstants.STYLE_FONTSTYLE, 0)
       if ((fontStyle & mxConstants.FONT_BOLD) === mxConstants.FONT_BOLD) {
         this.format.fontStyle.push('bold')
@@ -659,6 +682,11 @@ export default {
   }
 }
 
+::v-deep.mini-radio-group {
+  .el-radio-button__inner {
+    padding: 5px 6px;
+  }
+}
 ::v-deep.mini-button-group {
   .el-button {
     padding: 7px 6px;
