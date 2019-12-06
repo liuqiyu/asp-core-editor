@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-12-04 16:54:03
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-04 17:43:00
+ * @LastEditTime: 2019-12-06 13:56:34
  */
 import mxgraph from './mxgraph'
 const {
@@ -21,6 +21,7 @@ class Sidebar {
     this.graph = graph
   }
 
+  // 创建拖拽资源
   static createDragSource (ele) {
     const dataset = ele.dataset
     const src = dataset.src

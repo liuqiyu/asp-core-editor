@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-05 11:26:34
+ * @LastEditTime: 2019-12-06 13:59:26
  */
 import mxgraph from './mxgraph'
 // import editor from './editor'
@@ -17,9 +17,9 @@ class Format {
   static graph = null;
 
   // Tool 初始化
-  static init (editor, graph) {
+  static init (editor) {
     this.editor = editor
-    this.graph = graph
+    this.graph = editor.editor.graph
   }
 
   // 更新元件样式
@@ -132,7 +132,11 @@ class Format {
 
   // 等距分布
   static distributeCells (boolean) {
-    // editor.distributeCells(boolean)
+    if (boolean) {
+      this.editor.actions.actions['horizontal'].funct() // 等距分布 水平
+    } else {
+      this.editor.actions.actions['vertical'].funct() // 等距分布 垂直
+    }
   }
 
   static initFormatField (cell) {
@@ -158,12 +162,12 @@ class Format {
 
   // 移至最前
   static toFront () {
-    this.graph.orderCells(false)
+    this.editor.actions.actions['toFront'].funct() // 移至最前
   }
 
-  // 移至最前
+  // 移至最后
   static toBack () {
-    this.graph.orderCells(true)
+    this.editor.actions.actions['toFront'].funct() // 移至最后
   }
 }
 

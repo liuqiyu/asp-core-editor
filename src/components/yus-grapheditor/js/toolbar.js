@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-05 18:40:28
+ * @LastEditTime: 2019-12-06 13:42:21
  */
 import mxgraph from './mxgraph'
 
@@ -18,6 +18,7 @@ class Tool {
 
   // Tool 初始化
   static init (editor) {
+    console.log(editor)
     this.editor = editor
     this.graph = editor.editor.graph
     console.log(this.graph)

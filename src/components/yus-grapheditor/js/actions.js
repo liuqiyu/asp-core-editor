@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-05 18:15:38
+ * @LastEditTime: 2019-12-06 13:40:32
  */
 import mxgraph from './mxgraph'
 import { ctrlKey } from './constant'
@@ -62,6 +62,9 @@ Actions.prototype.init = function () {
     }
   }, null, null, 'F2/Enter')
 
+  this.addAction('horizontal', function () { _distributeCells(true) }, null, null, null) // 等距分布
+  this.addAction('vertical', function () { _distributeCells(false) }, null, null, null) // 等距分布
+
   // 删除操作
   function deleteCells (includeEdges) {
     // 取消交互操作
@@ -91,6 +94,75 @@ Actions.prototype.init = function () {
 
   function _listener (sender, evt) {
     undoManager.undoableEditHappened(evt.getProperty('edit'))
+  }
+
+  //   // 等距分布
+  function _distributeCells (horizontal, cells) {
+    if (cells == null) {
+      cells = graph.getSelectionCells()
+    }
+
+    if (cells != null && cells.length > 1) {
+      var vertices = []
+      var max = null
+      var min = null
+
+      for (var i = 0; i < cells.length; i++) {
+        if (graph.getModel().isVertex(cells[i])) {
+          var state = graph.view.getState(cells[i])
+
+          if (state != null) {
+            var tmp = horizontal ? state.getCenterX() : state.getCenterY()
+            max = max != null ? Math.max(max, tmp) : tmp
+            min = min != null ? Math.min(min, tmp) : tmp
+
+            vertices.push(state)
+          }
+        }
+      }
+
+      if (vertices.length > 2) {
+        vertices.sort(function (a, b) {
+          return horizontal ? a.x - b.x : a.y - b.y
+        })
+
+        var t = graph.view.translate
+        var s = graph.view.scale
+
+        min = min / s - (horizontal ? t.x : t.y)
+        max = max / s - (horizontal ? t.x : t.y)
+
+        graph.getModel().beginUpdate()
+        try {
+          var dt = (max - min) / (vertices.length - 1)
+          var t0 = min
+
+          for (let i = 1; i < vertices.length - 1; i++) {
+            var pstate = graph.view.getState(
+              graph.model.getParent(vertices[i].cell)
+            )
+            var geo = graph.getCellGeometry(vertices[i].cell)
+            t0 += dt
+
+            if (geo != null && pstate != null) {
+              geo = geo.clone()
+
+              if (horizontal) {
+                geo.x = Math.round(t0 - geo.width / 2) - pstate.origin.x
+              } else {
+                geo.y = Math.round(t0 - geo.height / 2) - pstate.origin.y
+              }
+
+              graph.getModel().setGeometry(vertices[i].cell, geo)
+            }
+          }
+        } finally {
+          graph.getModel().endUpdate()
+        }
+      }
+    }
+
+    return cells
   }
 }
 
