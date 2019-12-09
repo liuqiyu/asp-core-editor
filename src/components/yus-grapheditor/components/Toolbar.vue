@@ -1,108 +1,65 @@
 <template>
   <div class="graph-tool">
-    <el-tooltip class="item"
-                effect="dark"
-                content="放大"
-                placement="top">
-      <el-button @click="zoomIn"
-                 type="text"
-                 icon="iconfont iconiconset0158"></el-button>
-    </el-tooltip>
+    <el-button @click="zoomIn"
+               type="text"
+               title="放大"
+               icon="iconfont iconiconset0158"></el-button>
 
-    <el-tooltip class="item"
-                effect="dark"
-                content="缩小"
-                placement="top">
-      <el-button @click="zoomOut"
-                 type="text"
-                 icon="iconfont iconsuoxiao"></el-button>
-    </el-tooltip>
+    <el-button @click="zoomOut"
+               type="text"
+               title="缩小"
+               icon="iconfont iconsuoxiao"></el-button>
 
-    <el-tooltip class="item"
-                effect="dark"
-                content="1:1"
-                placement="top">
-      <el-button @click="handleInit"
-                 type="text"
-                 icon="iconfont iconhuanyuan"></el-button>
-    </el-tooltip>
+    <el-button @click="handleInit"
+               type="text"
+               title="1:1"
+               icon="iconfont iconhuanyuan"></el-button>
 
-    <el-tooltip class="item"
-                effect="dark"
-                content="还原"
-                placement="top">
-      <el-button @click="handleUndo"
-                 type="text"
-                 icon="iconfont iconundo"></el-button>
-    </el-tooltip>
+    <el-button @click="handleUndo"
+               type="text"
+               title="取消操作（Ctrl+Z）"
+               icon="iconfont iconundo"></el-button>
 
-    <el-tooltip class="item"
-                effect="dark"
-                content="重做"
-                placement="top">
-      <el-button @click="handleRedo"
-                 type="text"
-                 icon="iconfont iconredo"></el-button>
-    </el-tooltip>
+    <el-button @click="handleRedo"
+               type="text"
+               title="重做（Ctrl+Y）"
+               icon="iconfont iconredo"></el-button>
 
-    <el-tooltip class="item"
-                effect="dark"
-                content="拖动"
-                placement="top">
-      <el-button @click="handlePan"
-                 type="text"
-                 :class="this.panStatus ? 'finger-select': null "
-                 icon="iconfont icontuodong1"></el-button>
-    </el-tooltip>
+    <el-button @click="handlePan"
+               type="text"
+               title="拖动"
+               :class="this.panStatus ? 'finger-select': null "
+               icon="iconfont icontuodong1"></el-button>
 
-    <el-tooltip class="item"
-                effect="dark"
-                content="复制"
-                placement="top">
-      <el-button @click="handleCopy"
-                 type="text"
-                 icon="iconfont iconfuzhi"></el-button>
-    </el-tooltip>
+    <el-button @click="handleCopy"
+               type="text"
+               title="复制（Ctrl+C）"
+               icon="iconfont iconfuzhi"></el-button>
 
-    <el-tooltip class="item"
-                effect="dark"
-                content="粘贴"
-                placement="top">
-      <el-button @click="handleParse"
-                 type="text"
-                 icon="iconfont iconniantie"></el-button>
-    </el-tooltip>
+    <el-button @click="handleParse"
+               type="text"
+               title="粘贴（Ctrl+V）"
+               icon="iconfont iconniantie"></el-button>
 
-    <el-tooltip class="item"
-                effect="dark"
-                content="获取XML"
-                placement="top">
-      <el-button @click="handleGetXml"
-                 type="text"
-                 icon="iconfont iconXML"></el-button>
-    </el-tooltip>
+    <el-button @click="handleGetXml"
+               type="text"
+               title="数据预览"
+               icon="iconfont iconXML"></el-button>
 
-    <el-tooltip class="item"
-                effect="dark"
-                content="删除"
-                placement="top">
-      <el-button @click="hanleDelete"
-                 type="text"
-                 icon="iconfont iconshanchu"></el-button>
-    </el-tooltip>
+    <el-button @click="hanleDelete"
+               type="text"
+               title="删除（Delete）"
+               icon="iconfont iconshanchu"></el-button>
 
-    <el-tooltip class="item"
-                effect="dark"
-                content="保存"
-                placement="top">
-      <el-button @click="handleSave"
-                 type="text"
-                 icon="iconfont iconbaocun"></el-button>
-    </el-tooltip>
+    <el-button @click="handleSave"
+               type="text"
+               title="保存"
+               icon="iconfont iconbaocun"></el-button>
   </div>
 </template>
 
 <script>
+
 import Tool from './../core/toolbar'
 export default {
   name: 'AspTool',

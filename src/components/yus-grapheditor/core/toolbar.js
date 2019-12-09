@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-06 13:42:21
+ * @LastEditTime: 2019-12-09 11:30:30
  */
 import mxgraph from './mxgraph'
 
@@ -58,6 +58,7 @@ class Tool {
     //   Tool.graph.container.style.cursor = status ? 'move' : null
     //   return status
     // }
+    this.editor.actions.actions['pan'].funct(status)
   }
 
   // 打包XML文件

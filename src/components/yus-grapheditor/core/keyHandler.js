@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-12-05 14:31:21
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-05 18:16:15
+ * @LastEditTime: 2019-12-09 11:32:01
  */
 import mxgraph from './mxgraph'
 
@@ -61,8 +61,7 @@ initKeyHandler.prototype.init = function () {
   // keyHandler.bindKey(35, function () {
   //   graph.refresh()
   // }) // End
-  // keyHandler.bindAction(107, true, 'zoomIn') // Ctrl+Plus
-  // keyHandler.bindAction(109, true, 'zoomOut') // Ctrl+Minus
+
   // keyHandler.bindAction(80, true, 'print') // Ctrl+P
   // keyHandler.bindAction(79, true, 'outline', true) // Ctrl+Shift+O
   // keyHandler.bindAction(112, false, 'about') // F1
@@ -94,4 +93,6 @@ initKeyHandler.prototype.init = function () {
   keyHandler.bindAction(65, true, 'selectNone', true) // Ctrl+A
   keyHandler.bindAction(73, true, 'selectVertices', true) // Ctrl+Shift+I
   keyHandler.bindAction(69, true, 'selectEdges', true) // Ctrl+Shift+E
+
+  // keyHandler.bindAction(18, true, 'pan', true) // Alt
 }

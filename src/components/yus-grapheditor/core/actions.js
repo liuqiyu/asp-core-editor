@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-06 13:40:32
+ * @LastEditTime: 2019-12-09 11:27:57
  */
 import mxgraph from './mxgraph'
 import { ctrlKey } from './constant'
@@ -64,6 +64,13 @@ Actions.prototype.init = function () {
 
   this.addAction('horizontal', function () { _distributeCells(true) }, null, null, null) // 等距分布
   this.addAction('vertical', function () { _distributeCells(false) }, null, null, null) // 等距分布
+
+  this.addAction('pan', function (status) {
+    graph.panningHandler.isForcePanningEvent = me => {
+      graph.container.style.cursor = status ? 'move' : null
+      return status
+    }
+  }, null, null, 'Alt')
 
   // 删除操作
   function deleteCells (includeEdges) {
