@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-06 13:59:26
+ * @LastEditTime: 2019-12-09 09:31:39
  */
 import mxgraph from './mxgraph'
 // import editor from './editor'
@@ -167,7 +167,7 @@ class Format {
 
   // 移至最后
   static toBack () {
-    this.editor.actions.actions['toFront'].funct() // 移至最后
+    this.editor.actions.actions['toBack'].funct() // 移至最后
   }
 }
 
