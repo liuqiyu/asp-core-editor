@@ -3,15 +3,12 @@
  * @Author: liuqiyu
  * @Date: 2019-12-04 15:00:15
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-06 15:17:28
+ * @LastEditTime: 2019-12-10 18:33:59
  */
 import mxgraph from './mxgraph'
-// import Toolbar from './toolbar'
 import Sidebar from './sidebar'
-// import Format from './format'
-// import Actions from './actions'
 import PopupMenu from './popupMenu'
-// import MxEvents from './mxEvents'
+import MxEvents from './mxEvents'
 import Graph from './graph'
 
 const {
@@ -42,7 +39,7 @@ Editor.prototype.init = function (container, setEnabled) {
 
   Sidebar.init(this.graph)
   PopupMenu.init(this.editor, this.graph, container)
-  // MxEvents.init()
+  MxEvents.init()
   this.graphInit = new Graph(this.graph)
 
   // 鼠标拖拽选中

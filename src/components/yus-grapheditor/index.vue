@@ -85,7 +85,6 @@ export default {
 
     let outlineContainer = this.$refs.outlineContainer
     var editor = new CoreEditor(container, this.setEnabled)
-    console.log(editor)
 
     var graph = editor.editor.graph
     this.graph = graph
@@ -155,9 +154,14 @@ export default {
   methods: {
     putData (value) {
       if (value) {
-        var doc = mxUtils.parseXml(value)
-        var codec = new mxCodec(doc)
-        codec.decode(doc.documentElement, this.graph.getModel())
+        this.graph.model.beginUpdate()
+        try {
+          var doc = mxUtils.parseXml(value)
+          var codec = new mxCodec(doc)
+          codec.decode(doc.documentElement, this.graph.getModel())
+        } finally {
+          this.graph.model.endUpdate()
+        }
       }
     }
   }

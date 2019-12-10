@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-09 11:30:30
+ * @LastEditTime: 2019-12-10 11:19:20
  */
 import mxgraph from './mxgraph'
 
@@ -81,7 +81,7 @@ class Tool {
     // 保存到getXml参数中
     // xx.setAttribute('backgroundImage', this.graph.backgroundImage.src || '')
     const getXml = mxUtils.getXml(xx)
-    sessionStorage.setItem('xml', getXml)
+    localStorage.setItem('xml', getXml)
   }
 
   // 删除

@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-25 09:43:50
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-05 16:58:16
+ * @LastEditTime: 2019-12-10 11:19:47
  */
 
 import Base64 from '../utils/base64'
@@ -88,6 +88,24 @@ function Graph (graph) {
   }
 
   if (typeof mxVertexHandler !== 'undefined') {
+    graph.setConnectable(true)
+    graph.setDropEnabled(true)
+    graph.setPanning(true)
+    graph.setTooltips(true)
+    graph.setAllowLoops(true)
+    graph.allowAutoPanning = true
+    graph.resetEdgesOnConnect = false
+    graph.constrainChildren = false
+    graph.constrainRelativeChildren = true
+
+    // Do not scroll after moving cells
+    graph.graphHandler.scrollOnMove = false
+    graph.graphHandler.scaleGrid = true
+
+    // Disables cloning of connection sources by default
+    graph.connectionHandler.setCreateTarget(false)
+    graph.connectionHandler.insertBeforeSource = true
+
     // 禁用内置连接启动
     graph.connectionHandler.isValidSource = function (cell, me) {
       return false
@@ -276,10 +294,10 @@ export default Graph;
 
   // Extends connection handler to enable ctrl+drag for cloning source cell
   // since copyOnConnect is now disabled by default
-  // const mxConnectionHandlerCreateTarget = mxConnectionHandler.prototype.isCreateTarget;
-  // mxConnectionHandler.prototype.isCreateTarget = function (evt) {
-  //   return mxEvent.isControlDown(evt) || mxConnectionHandlerCreateTarget.apply(this, arguments);
-  // };
+  const mxConnectionHandlerCreateTarget = mxConnectionHandler.prototype.isCreateTarget
+  mxConnectionHandler.prototype.isCreateTarget = function (evt) {
+    return mxEvent.isControlDown(evt) || mxConnectionHandlerCreateTarget.apply(this, arguments)
+  }
 
   // No dashed shapes.
   mxGuide.prototype.createGuideShape = function (horizontal) {
@@ -309,12 +327,6 @@ export default Graph;
     for (var key in this.graph.currentEdgeStyle) {
       state.style[key] = this.graph.currentEdgeStyle[key]
     }
-
-    console.log(this)
-    console.log(this.graph)
-    console.log(style)
-    console.log(edge)
-    console.log(state)
     return state
   }
 
