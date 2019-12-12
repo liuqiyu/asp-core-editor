@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-12-04 15:00:15
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-10 18:33:59
+ * @LastEditTime: 2019-12-12 15:03:02
  */
 import mxgraph from './mxgraph'
 import Sidebar from './sidebar'
@@ -35,6 +35,15 @@ Editor.prototype.init = function (container, setEnabled) {
   if (node != null) {
     var dec = new mxCodec(node.ownerDocument)
     dec.decode(node, this.graph.getStylesheet())
+  }
+  let value = localStorage.getItem('xml')
+  this.graph.model.beginUpdate()
+  try {
+    var doc = mxUtils.parseXml(value)
+    var codec = new mxCodec(doc)
+    codec.decode(doc.documentElement, this.graph.getModel())
+  } finally {
+    this.graph.model.endUpdate()
   }
 
   Sidebar.init(this.graph)

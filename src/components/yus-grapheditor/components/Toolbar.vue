@@ -51,6 +51,11 @@
                title="删除（Delete）"
                icon="iconfont iconshanchu"></el-button>
 
+    <el-button @click="handleExport"
+               type="text"
+               title="导出"
+               icon="iconfont iconbaocun"></el-button>
+
     <el-button @click="handleSave"
                type="text"
                title="保存"
@@ -103,6 +108,9 @@ export default {
     },
     handleSave () {
       Tool.save()
+    },
+    handleExport () {
+      Tool.exportXml()
     }
   }
 }

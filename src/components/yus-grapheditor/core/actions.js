@@ -3,11 +3,12 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-09 11:27:57
+ * @LastEditTime: 2019-12-12 11:35:41
  */
 import mxgraph from './mxgraph'
 import { ctrlKey } from './constant'
 const {
+  mxCodec,
   mxResources,
   mxEventSource,
   mxUtils,
@@ -71,6 +72,21 @@ Actions.prototype.init = function () {
       return status
     }
   }, null, null, 'Alt')
+
+  this.addAction('saveXml', function () {
+    let encoder = new mxCodec()
+    let xx = encoder.encode(graph.getModel())
+    const getXml = mxUtils.getXml(xx)
+    var element = document.createElement('a')
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(getXml))
+    element.setAttribute('download', 'aaa.xml')
+    element.style.display = 'none'
+    document.body.appendChild(element)
+    var blob = new Blob([getXml])
+    element.href = URL.createObjectURL(blob)
+    element.click()
+    document.body.removeChild(element)
+  }, null, 'null', ctrlKey + '+X') // 剪切
 
   // 删除操作
   function deleteCells (includeEdges) {

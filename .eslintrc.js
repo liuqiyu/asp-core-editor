@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-28 15:43:12
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-02 14:27:56
+ * @LastEditTime: 2019-12-12 10:19:27
  */
 module.exports = {
   root: true,
@@ -17,7 +17,8 @@ module.exports = {
     "new-cap": ["error", {
       "newIsCap": false,
       "capIsNew": false
-    }]
+    }],
+    'no-inner-declarations': 'off'
   },
   parserOptions: {
     parser: 'babel-eslint'

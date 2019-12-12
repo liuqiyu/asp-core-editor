@@ -36,7 +36,7 @@ export const layoutRoutes = [
       {
         path: 'editor',
         name: 'editor',
-        component: () => import('@/views/editor'),
+        component: () => import('@/views/editor/index.vue'),
         meta: {
           icon: 'icon-bianji1',
           activeMenu: '/editor',
@@ -59,6 +59,24 @@ export const layoutRoutes = [
           icon: 'icon-yulan',
           activeMenu: '/view',
           title: '预览',
+          affix: true
+        }
+      }
+    ]
+  },
+  {
+    path: '/test',
+    redirect: 'test',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        name: 'test',
+        component: () => import('@/views/editor/test'),
+        meta: {
+          icon: 'icon-yulan',
+          activeMenu: '/test',
+          title: '测试',
           affix: true
         }
       }
