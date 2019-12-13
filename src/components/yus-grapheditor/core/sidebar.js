@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-12-04 16:54:03
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-06 13:56:34
+ * @LastEditTime: 2019-12-13 14:26:26
  */
 import mxgraph from './mxgraph'
 const {
@@ -17,8 +17,9 @@ const {
 class Sidebar {
   static graph = null;
 
-  static init (graph) {
-    this.graph = graph
+  static init (editor) {
+    this.editor = editor
+    this.graph = editor.editor.graph
   }
 
   // 创建拖拽资源

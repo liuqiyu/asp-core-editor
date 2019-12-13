@@ -30,7 +30,6 @@
 </template>
 
 <script>
-// import editor from '@/utils/editor'
 import { format } from './../core'
 export default {
   name: 'Format',

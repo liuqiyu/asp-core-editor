@@ -3,15 +3,15 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-09 09:31:39
+ * @LastEditTime: 2019-12-13 13:50:02
  */
 import mxgraph from './mxgraph'
-// import editor from './editor'
 const {
   // mxUtils,
   mxEventObject,
   mxConstants
 } = mxgraph
+
 class Format {
   static editor = null;
   static graph = null;
@@ -168,6 +168,10 @@ class Format {
   // 移至最后
   static toBack () {
     this.editor.actions.actions['toBack'].funct() // 移至最后
+  }
+
+  static action () {
+
   }
 }
 

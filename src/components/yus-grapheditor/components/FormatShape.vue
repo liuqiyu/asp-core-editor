@@ -353,9 +353,8 @@
 </template>
 
 <script>
-// import editor from '@/utils/editor'
 import mxgraph from './../core/mxgraph'
-import { format } from './../core'
+import { Format } from './../core'
 import { typeofElement } from './../core/utils'
 const { mxConstants, mxUtils } = mxgraph
 export default {
@@ -451,13 +450,13 @@ export default {
     handleEdgeTypeChange (e) {
       switch (e) {
         case 'sharp':
-          format.edgeStyleChange([mxConstants.STYLE_ROUNDED, mxConstants.STYLE_CURVED], ['0', null])
+          Format.edgeStyleChange([mxConstants.STYLE_ROUNDED, mxConstants.STYLE_CURVED], ['0', null])
           break
         case 'rounded':
-          format.edgeStyleChange([mxConstants.STYLE_ROUNDED, mxConstants.STYLE_CURVED], ['1', null])
+          Format.edgeStyleChange([mxConstants.STYLE_ROUNDED, mxConstants.STYLE_CURVED], ['1', null])
           break
         case 'curved':
-          format.edgeStyleChange([mxConstants.STYLE_ROUNDED, mxConstants.STYLE_CURVED], [null, '1'])
+          Format.edgeStyleChange([mxConstants.STYLE_ROUNDED, mxConstants.STYLE_CURVED], [null, '1'])
           break
       }
     },
@@ -465,21 +464,22 @@ export default {
     handleEdgeStyleChange (e) {
       switch (e) {
         case 'solid':
-          format.edgeStyleChange([mxConstants.STYLE_DASHED, mxConstants.STYLE_DASH_PATTERN], [null, null])
+          Format.edgeStyleChange([mxConstants.STYLE_DASHED, mxConstants.STYLE_DASH_PATTERN], [null, null])
           break
         case 'dashed':
-          format.edgeStyleChange([mxConstants.STYLE_DASHED, mxConstants.STYLE_DASH_PATTERN], ['1', null])
+          Format.edgeStyleChange([mxConstants.STYLE_DASHED, mxConstants.STYLE_DASH_PATTERN], ['1', null])
           break
       }
     },
     // 选中
     selectionChanged (graph) {
+      console.log(Format)
       var cells = graph.getSelectionCells()
       this.selectedType = typeofElement(cells)
       this.cells = cells
       if (cells && cells.length === 1) {
         const geometry = cells[0].geometry
-        const ss = format.getSelectionState()
+        const ss = Format.getSelectionState()
         this.selectionChangedFormat(cells[0], geometry, ss)
         this.selectionChangedGeometry(cells[0], geometry, ss)
       }
@@ -552,22 +552,22 @@ export default {
     },
     // todo update style
     handleChangeStyle (keyword) {
-      format.updateStyleHandler(keyword, this.format[keyword])
+      Format.updateStyleHandler(keyword, this.format[keyword])
     },
     // todo update edge style
     handleChangeEdgeStyle (keys, values) {
       // console.log(keys, values)
-      format.edgeStyleChange(keys, values)
+      Format.edgeStyleChange(keys, values)
     },
     // 线始端
     handleEdgeStartFillchange (e) {
       console.log(e)
       switch (e) {
         case 'none':
-          format.edgeStyleChange([mxConstants.STYLE_STARTARROW, 'startFill'], [mxConstants.NONE, 0])
+          Format.edgeStyleChange([mxConstants.STYLE_STARTARROW, 'startFill'], [mxConstants.NONE, 0])
           break
         case 'default':
-          format.edgeStyleChange([mxConstants.STYLE_STARTARROW, 'startFill'], [mxConstants.ARROW_CLASSIC, 1])
+          Format.edgeStyleChange([mxConstants.STYLE_STARTARROW, 'startFill'], [mxConstants.ARROW_CLASSIC, 1])
           break
       }
     },
@@ -576,21 +576,21 @@ export default {
       console.log(e)
       switch (e) {
         case 'none':
-          format.edgeStyleChange([mxConstants.STYLE_ENDARROW, 'endFill'], [mxConstants.NONE, 0])
+          Format.edgeStyleChange([mxConstants.STYLE_ENDARROW, 'endFill'], [mxConstants.NONE, 0])
           break
         case 'default':
-          format.edgeStyleChange([mxConstants.STYLE_ENDARROW, 'endFill'], [mxConstants.ARROW_CLASSIC, 1])
+          Format.edgeStyleChange([mxConstants.STYLE_ENDARROW, 'endFill'], [mxConstants.ARROW_CLASSIC, 1])
           break
       }
     },
     // fontStyle
     handleToggleFontStyle (style) {
-      format.toggleFontStyle(style)
+      Format.toggleFontStyle(style)
     },
     // update value
     handleChangeValue (e) {
       console.log(e)
-      format.updateValueHandler(e)
+      Format.updateValueHandler(e)
     },
     // geometry
     selectionChangedGeometry (cell, geometry, ss) {
@@ -601,29 +601,29 @@ export default {
     },
     // update geometry complete
     handleChangeGeometry (keyword) {
-      format.updateGeometryHandler(this.geometry[keyword], (geo) => {
+      Format.updateGeometryHandler(this.geometry[keyword], (geo) => {
         geo[keyword] = this.geometry[keyword]
       })
     },
     // 翻转
     handleFlipCells (style) {
-      format.FlipCells(style)
+      Format.FlipCells(style)
     },
     // 对齐
     handleAlign (align) {
-      format.align(align)
+      Format.align(align)
     },
     // 等距分布
     handleDistributeCells (boolean) {
-      format.distributeCells(boolean)
+      Format.distributeCells(boolean)
     },
     // 移至最前
     handleToFront () {
-      format.toFront()
+      Format.toFront()
     },
     // 移至最前
     handleToBack () {
-      format.toBack()
+      Format.toBack()
     }
   }
 }
