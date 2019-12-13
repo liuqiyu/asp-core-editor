@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-28 15:49:56
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-10 10:43:04
+ * @LastEditTime: 2019-12-13 11:04:58
  -->
 
 <template>
@@ -24,9 +24,7 @@ export default {
     }
   },
   mounted () {
-    setTimeout(() => {
-      this.data = localStorage.getItem('xml')
-    }, 1000)
+    this.data = localStorage.getItem('xml')
   },
   methods: {
     click ({ graph, cell }) {

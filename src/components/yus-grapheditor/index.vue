@@ -35,9 +35,8 @@ import Format from './components/Format'
 import FormatShape from './components/FormatShape'
 import Sidebar from './components/Sidebar'
 import mxgraph from './core/mxgraph'
-import CoreEditor from './core'
+import CoreEditor, { Tool } from './core'
 import OutLine from './core/outLine'
-import Tool from './core/toolbar'
 
 const { mxEvent, mxUtils, mxCodec } = mxgraph
 
@@ -61,6 +60,7 @@ export default {
     data: {
       immediate: true,
       handler (value) {
+        this.editorData = value
         this.putData(value)
       }
     }
@@ -69,7 +69,8 @@ export default {
     return {
       graph: null,
       currentFormat: 'Format',
-      timeStamp: ''
+      timeStamp: '',
+      editorData: ''
     }
   },
   components: {
@@ -89,6 +90,10 @@ export default {
     var graph = editor.editor.graph
     this.graph = graph
     OutLine.init(graph, outlineContainer) //
+
+    if (this.editorData) {
+      this.putData(this.editorData)
+    }
 
     // 选中元件
     graph.getSelectionModel().addListener(mxEvent.CHANGE, async (sender, evt) => {
@@ -153,7 +158,7 @@ export default {
   },
   methods: {
     putData (value) {
-      if (value) {
+      if (value && this.graph) {
         this.graph.model.beginUpdate()
         try {
           var doc = mxUtils.parseXml(value)
