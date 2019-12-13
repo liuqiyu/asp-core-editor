@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-12-04 15:00:15
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-09 19:27:13
+ * @LastEditTime: 2019-12-13 10:45:38
  */
 
 import mxgraph from './mxgraph'
@@ -12,6 +12,11 @@ import Actions from './actions'
 import initKeyHandler from './keyHandler'
 import Tool from './toolbar'
 import Format from './format'
+
+export {
+  Tool,
+  Format
+}
 
 const {
   mxUtils,
