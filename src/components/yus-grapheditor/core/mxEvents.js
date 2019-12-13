@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-09 13:46:39
+ * @LastEditTime: 2019-12-13 15:56:17
  */
 import mxgraph from './mxgraph'
 import Tool from './toolbar'
@@ -23,9 +23,9 @@ class MxEvents {
     mxEvent.addMouseWheelListener((evt, up) => {
       if (!mxEvent.isConsumed(evt)) {
         if (up) {
-          Tool.zoomIn()
+          Tool.actions('zoomIn')
         } else {
-          Tool.zoomOut()
+          Tool.actions('zoomOut')
         }
 
         mxEvent.consume(evt, false, false) // 消耗给定的事件
