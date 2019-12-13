@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-12-04 16:54:03
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-13 14:26:26
+ * @LastEditTime: 2019-12-13 17:37:46
  */
 import mxgraph from './mxgraph'
 const {
@@ -25,7 +25,7 @@ class Sidebar {
   // 创建拖拽资源
   static createDragSource (ele) {
     const dataset = ele.dataset
-    const src = dataset.src
+    // const src = dataset.src
     const width = Number(dataset.width)
     const height = Number(dataset.height)
     const style = dataset.style
@@ -72,9 +72,10 @@ class Sidebar {
       }
     }
 
-    const dragElt = document.createElement('img')
-    dragElt.setAttribute('src', src)
-    dragElt.setAttribute('style', `width:${width}px;height:${height}px;`)
+    const dragElt = document.createElement('div')
+    dragElt.style.border = 'dashed black 1px'
+    dragElt.style.width = width + 'px'
+    dragElt.style.height = height + 'px'
 
     mxUtils.makeDraggable(
       ele,
