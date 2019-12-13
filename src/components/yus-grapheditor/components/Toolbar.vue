@@ -100,6 +100,7 @@ export default {
   display: flex;
   align-items: center;
   padding-left: 12px;
+  background: #f6f6f6;
   .finger-select {
     opacity: 0.5;
   }
