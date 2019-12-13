@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { format } from './../core'
+import { Format } from './../core'
 export default {
   name: 'Format',
   data () {
@@ -47,63 +47,9 @@ export default {
     this.cells = []
   },
   methods: {
-    // 选中
-    selectionChanged (graph) {
-      var cells = graph.getSelectionCells()
-      this.cells = cells
-      if (cells) {
-        const geometry = cells[0].geometry
-        const ss = format.getSelectionState()
-        this.selectionChangedFormat(cells[0], geometry, ss)
-        this.selectionChangedGeometry(cells[0], geometry, ss)
-      }
-    },
-    // style,value
-    selectionChangedFormat (cell, geometry, ss) {
-      this.$set(this.format, 'fontColor', ss.fontColor || '')
-      this.$set(this.format, 'labelBackgroundColor', ss.labelBackgroundColor || '')
-      this.$set(this.format, 'fillColor', ss.fillColor || '')
-      this.$set(this.format, 'strokeColor', ss.strokeColor || '')
-      this.$set(this.format, 'fontSize', ss.fontSize || 12)
-      this.$set(this.format, 'value', cell.value || '')
-    },
     // todo update style
     handleChangeStyle (keyword) {
-      format.updateStyleHandler(keyword, this.format)
-    },
-    // fontStyle
-    handleToggleFontStyle (style) {
-      format.toggleFontStyle(style)
-    },
-    // update value
-    handleChangeValue (e) {
-      console.log(e)
-      format.updateValueHandler(e)
-    },
-    // geometry
-    selectionChangedGeometry (cell, geometry, ss) {
-      this.$set(this.geometry, 'width', geometry.width || '')
-      this.$set(this.geometry, 'height', geometry.height || '')
-      this.$set(this.geometry, 'x', geometry.x || '')
-      this.$set(this.geometry, 'y', geometry.y || '')
-    },
-    // update geometry complete
-    handleChangeGeometry (keyword) {
-      format.updateGeometryHandler(this.geometry[keyword], (geo) => {
-        geo[keyword] = this.geometry[keyword]
-      })
-    },
-    // 翻转
-    handleFlipCells (style) {
-      format.FlipCells(style)
-    },
-    // 对齐
-    handleAlign (align) {
-      format.align(align)
-    },
-    // 等距分布
-    handleDistributeCells (boolean) {
-      format.distributeCells(boolean)
+      Format.updateStyleHandler(keyword, this.format)
     }
   }
 }
