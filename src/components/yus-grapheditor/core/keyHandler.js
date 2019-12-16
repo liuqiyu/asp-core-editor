@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-12-05 14:31:21
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-09 11:32:01
+ * @LastEditTime: 2019-12-16 15:05:59
  */
 import mxgraph from './mxgraph'
 
@@ -13,15 +13,14 @@ const {
   mxClient
 } = mxgraph
 
-export default function initKeyHandler (editor) {
+export default function KeyHandler (editor) {
   this.editor = editor.editor
   this.init()
 }
 
-initKeyHandler.prototype.init = function () {
+KeyHandler.prototype.init = function () {
   const graph = this.editor.graph
   const keyHandler = new mxKeyHandler(graph)
-  console.log(keyHandler)
   // Binds keystrokes to actions
   keyHandler.bindAction = mxUtils.bind(this, function (code, control, key, shift) {
     var action = this.editor.editor.actions.actions[key]

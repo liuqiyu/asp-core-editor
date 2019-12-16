@@ -3,13 +3,13 @@
  * @Author: liuqiyu
  * @Date: 2019-12-04 15:00:15
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-13 14:25:17
+ * @LastEditTime: 2019-12-16 15:05:40
  */
 
 import mxgraph from './mxgraph'
 import { Editor } from './editor'
 import Actions from './actions'
-import initKeyHandler from './keyHandler'
+import KeyHandler from './keyHandler'
 import Tool from './toolbar'
 import Format from './format'
 import Sidebar from './sidebar'
@@ -32,7 +32,7 @@ function CoreEditor (container, setEnabled) {
     /* eslint-disable no-new */
     this.editor = new Editor(this, container, setEnabled)
     this.actions = new Actions(this)
-    this.initKeyHandler = new initKeyHandler(this)
+    this.KeyHandler = new KeyHandler(this)
     Tool.init(this)
     Format.init(this)
     Sidebar.init(this)
