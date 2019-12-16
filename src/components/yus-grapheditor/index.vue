@@ -85,9 +85,9 @@ export default {
     let container = document.getElementById(this.timeStamp)
 
     let outlineContainer = this.$refs.outlineContainer
-    var editor = new CoreEditor(container, this.setEnabled)
+    var coreEditor = new CoreEditor(container, this.setEnabled)
 
-    var graph = editor.editor.graph
+    var graph = coreEditor.editor.graph
     this.graph = graph
     OutLine.init(graph, outlineContainer) //
 
