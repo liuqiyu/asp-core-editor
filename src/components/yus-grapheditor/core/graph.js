@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-25 09:43:50
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-13 17:43:11
+ * @LastEditTime: 2019-12-16 17:47:54
  */
 
 import Base64 from '../utils/base64'
@@ -167,6 +167,17 @@ function Graph (graph) {
     }
 
     return select
+  }
+
+  /**
+  * Overrides createGroupCell to set the group style for new groups to 'group'.
+  */
+  var graphCreateGroupCell = graph.createGroupCell
+  graph.createGroupCell = function (cells) {
+    var group = graphCreateGroupCell.apply(this, arguments)
+    group.setStyle('group')
+
+    return group
   }
 }
 

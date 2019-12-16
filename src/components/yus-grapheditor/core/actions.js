@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-12 11:35:41
+ * @LastEditTime: 2019-12-16 15:44:38
  */
 import mxgraph from './mxgraph'
 import { ctrlKey } from './constant'
@@ -33,6 +33,23 @@ Actions.prototype.init = function () {
 
   this.addAction('undo', function () { undoManager.undo() }, null, 'sprite-undo', ctrlKey + '+Z')
   this.addAction('redo', function () { undoManager.redo() }, null, 'sprite-redo', (!mxClient.IS_WIN) ? ctrlKey + '+Shift+Z' : ctrlKey + '+Y')
+
+  // 组合
+  this.addAction('toBack', function () { graph.orderCells(true) }, null, null, ctrlKey + '+Shift+B')
+  this.addAction('group', function () {
+    if (graph.getSelectionCount() === 1) {
+      graph.setCellStyles('container', '1')
+    } else {
+      graph.setSelectionCell(graph.groupCells(null, 0))
+    }
+  }, null, null, ctrlKey + '+G')
+  this.addAction('ungroup', function () {
+    if (graph.getSelectionCount() === 1 && graph.getModel().getChildCount(graph.getSelectionCell()) === 0) {
+      graph.setCellStyles('container', '0')
+    } else {
+      graph.setSelectionCells(graph.ungroupCells())
+    }
+  }, null, null, ctrlKey + '+Shift+U')
 
   this.addAction('resetView', function () { graph.zoomTo(1) }, null, null, ctrlKey + '+H') // 1:1 还原
   this.addAction('zoomIn', function (evt) { graph.zoomIn() }, null, null, ctrlKey + ' + (Numpad) / Alt+Mousewheel') // 放大

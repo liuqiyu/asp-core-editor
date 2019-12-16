@@ -41,6 +41,16 @@
                title="粘贴（Ctrl+V）"
                icon="iconfont iconniantie"></el-button>
 
+    <el-button @click="actions('group')"
+               type="text"
+               title="组合"
+               icon="iconfont iconzuhe"></el-button>
+
+    <el-button @click="actions('ungroup')"
+               type="text"
+               title="取消组合"
+               icon="iconfont iconquxiaozuhe"></el-button>
+
     <el-button @click="handleGetXml"
                type="text"
                title="数据预览"
