@@ -12,7 +12,7 @@
                :data-height="cell.height"
                :data-src="cell.src"
                :data-style="cell.style"
-               :data-value="cell.name"
+               :data-value="cell.label"
                :data-type="cell.type"
                v-for="(cell, key) in item.children"
                :key="key">
@@ -51,7 +51,6 @@ export default {
               src: require('./../images/sidebar/24gl-rectangle.svg'),
               width: 120,
               height: 60,
-              type: 'image',
               style: 'rounded=0;whiteSpace=wrap;html=1;'
             },
             {
@@ -59,7 +58,6 @@ export default {
               src: require('./../images/sidebar/rectangle.svg'),
               width: 120,
               height: 60,
-              type: 'image',
               style: 'rounded=1;whiteSpace=wrap;html=1;'
             },
             {
@@ -67,15 +65,21 @@ export default {
               src: require('./../images/sidebar/text.svg'),
               width: 40,
               height: 20,
-              type: 'Text',
-              style: 'text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;'
+              style: 'text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;',
+              label: 'Text'
+            },
+            {
+              name: '图片',
+              src: require('./../images/sidebar/image.svg'),
+              width: 48,
+              height: 48,
+              type: 'image'
             },
             {
               name: 'Ellipse',
               src: require('./../images/sidebar/ellipse.svg'),
               width: 120,
               height: 80,
-              type: 'Ellipse',
               style: 'ellipse;whiteSpace=wrap;html=1;'
             },
             {
@@ -102,14 +106,10 @@ export default {
             {
               name: '你好1',
               src: require('./../images/mark.svg'),
-              width: 120,
+              width: 60,
               height: 60,
               type: 'image',
-              style: {
-                rounded: 0,
-                whiteSpace: 'wrap',
-                html: 1
-              }
+              label: '哈哈'
             }
           ]
         }
