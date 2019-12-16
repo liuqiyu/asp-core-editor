@@ -1,9 +1,9 @@
 /*
- * @Description:
+ * @Description: utils 工具函数
  * @Author: liuqiyu
  * @Date: 2019-11-29 14:01:16
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-03 15:02:52
+ * @LastEditTime: 2019-12-16 15:03:55
  */
 
 /**
