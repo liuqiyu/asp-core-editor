@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-13 14:14:04
+ * @LastEditTime: 2019-12-17 14:57:07
  */
 import mxgraph from './mxgraph'
 
@@ -21,10 +21,6 @@ class Tool {
     this.editor = editor
     this.graph = editor.editor.graph
     console.log(this.graph)
-  }
-
-  static pan (status) {
-    this.editor.actions.actions['pan'].funct(status)
   }
 
   // 打包XML文件
@@ -51,17 +47,14 @@ class Tool {
     localStorage.setItem('xml', getXml)
   }
 
-  static exportXml () {
-    this.editor.actions.actions['saveXml'].funct()
-  }
-
   // 粘贴到此处
   static pasteHere () {
     this.editor.actions.actions['pasteHere'].funct()
   }
 
-  static actions (name) {
-    this.editor.actions.actions[name].funct()
+  // 统一的actions执行函数
+  static actions (name, args) {
+    this.editor.actions.actions[name].funct(args)
   }
 }
 

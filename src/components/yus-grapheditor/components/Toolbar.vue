@@ -61,7 +61,7 @@
                title="删除（Delete）"
                icon="iconfont iconshanchu"></el-button>
 
-    <el-button @click="handleExport"
+    <el-button @click="actions('saveXml')"
                type="text"
                title="导出XML"
                icon="iconfont iconexport-xml"></el-button>
@@ -90,16 +90,13 @@ export default {
     // 拖动
     handlePan () {
       this.panStatus = !this.panStatus
-      Tool.pan(this.panStatus)
+      Tool.actions('pan', this.panStatus)
     },
     handleGetXml () {
       Tool.getXml()
     },
     handleSave () {
       Tool.save()
-    },
-    handleExport () {
-      Tool.exportXml()
     }
   }
 }
