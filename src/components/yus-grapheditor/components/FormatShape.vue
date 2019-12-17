@@ -534,8 +534,8 @@ export default {
       }
 
       // label position
-      var pos = mxUtils.getValue(ss.style, mxConstants.STYLE_LABEL_POSITION, mxConstants.ALIGN_CENTER)
-      var vpos = mxUtils.getValue(ss.style, mxConstants.STYLE_VERTICAL_LABEL_POSITION, mxConstants.ALIGN_MIDDLE)
+      var pos = mxUtils.getValue(ss, mxConstants.STYLE_LABEL_POSITION, mxConstants.ALIGN_CENTER)
+      var vpos = mxUtils.getValue(ss, mxConstants.STYLE_VERTICAL_LABEL_POSITION, mxConstants.ALIGN_MIDDLE)
 
       if (pos === mxConstants.ALIGN_LEFT && vpos === mxConstants.ALIGN_TOP) {
         this.format.labelPosition = 'topLeft'
