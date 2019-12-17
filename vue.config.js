@@ -3,11 +3,14 @@
  * @Author: liuqiyu
  * @Date: 2019-10-09 14:47:52
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-11-29 10:25:53
+ * @LastEditTime: 2019-12-17 10:59:50
  */
 const path = require('path')
 const webpack = require('webpack')
 const defaultSettings = require('./src/settings.js')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin
+const IS_PROD = ['production', 'prod'].includes(process.env.NODE_ENV)
 
 function resolve (dir) {
   return path.join(__dirname, dir)
@@ -69,10 +72,21 @@ module.exports = {
       assetFilter: function (assetFilename) {
         return assetFilename.endsWith('.js')
       }
+    },
+    externals: {
+      'mxgraph': 'mxgraph'
     }
   },
   // 删除moment除zh-cn中文包外的其它语言包，无需在代码中手动引入zh-cn语言包。
   chainWebpack: config => {
+    // 打包分析
+    if (IS_PROD) {
+      config.plugin('webpack-report').use(BundleAnalyzerPlugin, [
+        {
+          analyzerMode: 'static'
+        }
+      ])
+    }
     // 移除 prefetch 插件
     config.plugins.delete('prefetch')
     config
