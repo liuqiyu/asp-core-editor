@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-12-04 16:54:03
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-17 14:19:00
+ * @LastEditTime: 2019-12-17 15:14:59
  */
 import mxgraph from './mxgraph'
 const {
@@ -61,7 +61,7 @@ class Sidebar {
         cell.geometry.relative = true
         cell.edge = true
       } else if (type === 'image') {
-        cell = new mxCell(value, new mxGeometry(0, 0, width, height), `shape=image;image=${src};labelPosition=left;verticalLabelPosition=middle;align=right;aspect=fixed;whiteSpace=wrap;`)
+        cell = new mxCell(value, new mxGeometry(0, 0, width, height), `shape=image;image=${src};`)
         cell.vertex = true
       } else {
         cell = new mxCell(value, new mxGeometry(0, 0, width, height), style)

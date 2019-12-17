@@ -145,7 +145,7 @@
       <div class="format-item">
         <div class="format-label">字体位置</div>
         <div class="format-content">
-          <el-select v-model="format.position"
+          <el-select v-model="format.labelPosition"
                      @change="handleChangeLabelPosition">
             <el-option v-for="item in LABEL_POSITIONS"
                        :key="item.value"
@@ -407,6 +407,7 @@ export default {
         fillColor: '',
 
         fontStyle: [], // 粗细 斜体 下划线
+        labelPosition: '', // 文字位置
 
         edgeType: '',
         edgeStyle: '',
@@ -530,6 +531,30 @@ export default {
       }
       if ((fontStyle & mxConstants.FONT_UNDERLINE) === mxConstants.FONT_UNDERLINE) {
         this.format.fontStyle.push('underline')
+      }
+
+      // label position
+      var pos = mxUtils.getValue(ss.style, mxConstants.STYLE_LABEL_POSITION, mxConstants.ALIGN_CENTER)
+      var vpos = mxUtils.getValue(ss.style, mxConstants.STYLE_VERTICAL_LABEL_POSITION, mxConstants.ALIGN_MIDDLE)
+
+      if (pos === mxConstants.ALIGN_LEFT && vpos === mxConstants.ALIGN_TOP) {
+        this.format.labelPosition = 'topLeft'
+      } else if (pos === mxConstants.ALIGN_CENTER && vpos === mxConstants.ALIGN_TOP) {
+        this.format.labelPosition = 'top'
+      } else if (pos === mxConstants.ALIGN_RIGHT && vpos === mxConstants.ALIGN_TOP) {
+        this.format.labelPosition = 'topRight'
+      } else if (pos === mxConstants.ALIGN_LEFT && vpos === mxConstants.ALIGN_BOTTOM) {
+        this.format.labelPosition = 'bottomLeft'
+      } else if (pos === mxConstants.ALIGN_CENTER && vpos === mxConstants.ALIGN_BOTTOM) {
+        this.format.labelPosition = 'bottom'
+      } else if (pos === mxConstants.ALIGN_RIGHT && vpos === mxConstants.ALIGN_BOTTOM) {
+        this.format.labelPosition = 'bottomRight'
+      } else if (pos === mxConstants.ALIGN_LEFT) {
+        this.format.labelPosition = 'left'
+      } else if (pos === mxConstants.ALIGN_RIGHT) {
+        this.format.labelPosition = 'right'
+      } else {
+        this.format.labelPosition = 'center'
       }
     },
     // todo update style
