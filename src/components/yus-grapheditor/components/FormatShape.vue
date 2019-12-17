@@ -141,6 +141,20 @@
                            show-alpha></el-color-picker>
         </div>
       </div>
+      <!-- 字体位置 -->
+      <div class="format-item">
+        <div class="format-label">字体位置</div>
+        <div class="format-content">
+          <el-select v-model="format.position"
+                     @change="handleChangeLabelPosition">
+            <el-option v-for="item in LABEL_POSITIONS"
+                       :key="item.value"
+                       :label="item.label"
+                       :value="item.value">
+            </el-option>
+          </el-select>
+        </div>
+      </div>
       <!-- 翻转 -->
       <el-divider content-position="left"
                   v-if="['singleVertex', 'multipleVertex'].includes(selectedType)"></el-divider>
@@ -226,7 +240,7 @@
           <el-select v-model="format.edgeType"
                      placeholder=""
                      @change="handleEdgeTypeChange">
-            <el-option v-for="item in edgeType"
+            <el-option v-for="item in EDGE_TYPE"
                        :key="item.value"
                        :label="item.label"
                        :value="item.value">
@@ -247,7 +261,7 @@
                      v-model="format.edgeStyle"
                      placeholder=""
                      @change="handleEdgeStyleChange">
-            <el-option v-for="item in edgeStyle"
+            <el-option v-for="item in EDGE_STYLE"
                        :key="item.value"
                        :label="item.label"
                        :value="item.value">
@@ -308,7 +322,7 @@
                      v-model="format.startFill"
                      placeholder=""
                      @change="handleEdgeStartFillchange">
-            <el-option v-for="item in startFillOptions"
+            <el-option v-for="item in START_FILL_OPTIONS"
                        :key="item.value"
                        :label="item.label"
                        :value="item.value">
@@ -322,7 +336,7 @@
                      v-model="format.endFill"
                      placeholder=""
                      @change="handleEdgeEndFillchange">
-            <el-option v-for="item in endFillOptions"
+            <el-option v-for="item in END_FILL_OPTIONS"
                        :key="item.value"
                        :label="item.label"
                        :value="item.value">
@@ -356,12 +370,28 @@
 import mxgraph from './../core/mxgraph'
 import { Format } from './../core'
 import { typeofElement } from './../core/utils'
+import { LABEL_POSITIONS, END_FILL_OPTIONS, START_FILL_OPTIONS, EDGE_STYLE, EDGE_TYPE } from './FORMAT_CONSTANT'
 const { mxConstants, mxUtils } = mxgraph
 export default {
   name: 'Format',
   computed: {
     mxConstants () {
       return mxConstants
+    },
+    LABEL_POSITIONS () {
+      return LABEL_POSITIONS
+    },
+    END_FILL_OPTIONS () {
+      return END_FILL_OPTIONS
+    },
+    START_FILL_OPTIONS () {
+      return START_FILL_OPTIONS
+    },
+    EDGE_STYLE () {
+      return EDGE_STYLE
+    },
+    EDGE_TYPE () {
+      return EDGE_TYPE
     }
   },
   data () {
@@ -391,55 +421,7 @@ export default {
         y: '', // 位置
         width: '',
         height: ''
-      },
-      // 线条类型
-      edgeType: [
-        {
-          label: '尖角',
-          value: 'sharp'
-        },
-        {
-          label: '圆角',
-          value: 'rounded'
-        },
-        {
-          label: '曲线',
-          value: 'curved'
-        }
-      ],
-      // 线条样式
-      edgeStyle: [
-        {
-          label: '实线',
-          value: 'solid'
-        },
-        {
-          label: '虚线',
-          value: 'dashed'
-        }
-      ],
-      // 开始箭头
-      startFillOptions: [
-        {
-          label: '无',
-          value: 'none'
-        },
-        {
-          label: '箭头',
-          value: 'default'
-        }
-      ],
-      // 结尾箭头
-      endFillOptions: [
-        {
-          label: '无',
-          value: 'none'
-        },
-        {
-          label: '箭头',
-          value: 'default'
-        }
-      ]
+      }
     }
   },
   mounted () {
@@ -624,6 +606,9 @@ export default {
     // 移至最前
     handleToBack () {
       Format.toBack()
+    },
+    handleChangeLabelPosition (value) {
+      Format.changeLabelPosition(value)
     }
   }
 }

@@ -1,12 +1,10 @@
 <template>
   <div id="graph-wrapper">
-    <Sidebar :graph="graph"
-             v-if="setEnabled"
+    <Sidebar v-if="setEnabled"
              id="graph-sidebar">
     </Sidebar>
     <div id="graph-map">
-      <Toolbar :graph="graph"
-               id="graph-tool">
+      <Toolbar id="graph-tool">
       </Toolbar>
 
       <div id="graph-content">

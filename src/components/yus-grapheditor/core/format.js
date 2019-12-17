@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-13 13:50:02
+ * @LastEditTime: 2019-12-17 14:39:52
  */
 import mxgraph from './mxgraph'
 const {
@@ -139,10 +139,6 @@ class Format {
     }
   }
 
-  static initFormatField (cell) {
-    console.log(cell)
-  }
-
   // 返回style 对象
   static getSelectionState () {
     var cells = this.graph.getSelectionCells()
@@ -170,8 +166,33 @@ class Format {
     this.editor.actions.actions['toBack'].funct() // 移至最后
   }
 
-  static action () {
+  // 更新label position
+  static changeLabelPosition (value) {
+    const positions = {
+      'topLeft': [mxConstants.ALIGN_LEFT, mxConstants.ALIGN_TOP, mxConstants.ALIGN_RIGHT, mxConstants.ALIGN_BOTTOM],
+      'top': [mxConstants.ALIGN_CENTER, mxConstants.ALIGN_TOP, mxConstants.ALIGN_CENTER, mxConstants.ALIGN_BOTTOM],
+      'topRight': [mxConstants.ALIGN_RIGHT, mxConstants.ALIGN_TOP, mxConstants.ALIGN_LEFT, mxConstants.ALIGN_BOTTOM],
+      'left': [mxConstants.ALIGN_LEFT, mxConstants.ALIGN_MIDDLE, mxConstants.ALIGN_RIGHT, mxConstants.ALIGN_MIDDLE],
+      'center': [mxConstants.ALIGN_CENTER, mxConstants.ALIGN_MIDDLE, mxConstants.ALIGN_CENTER, mxConstants.ALIGN_MIDDLE],
+      'right': [mxConstants.ALIGN_RIGHT, mxConstants.ALIGN_MIDDLE, mxConstants.ALIGN_LEFT, mxConstants.ALIGN_MIDDLE],
+      'bottomLeft': [mxConstants.ALIGN_LEFT, mxConstants.ALIGN_BOTTOM, mxConstants.ALIGN_RIGHT, mxConstants.ALIGN_TOP],
+      'bottom': [mxConstants.ALIGN_CENTER, mxConstants.ALIGN_BOTTOM, mxConstants.ALIGN_CENTER, mxConstants.ALIGN_TOP],
+      'bottomRight': [mxConstants.ALIGN_RIGHT, mxConstants.ALIGN_BOTTOM, mxConstants.ALIGN_LEFT, mxConstants.ALIGN_TOP]
+    }
+    this.graph.getModel().beginUpdate()
+    try {
+      var vals = positions[value]
+      console.log(vals)
 
+      if (vals != null) {
+        this.graph.setCellStyles(mxConstants.STYLE_LABEL_POSITION, vals[0], this.graph.getSelectionCells())
+        this.graph.setCellStyles(mxConstants.STYLE_VERTICAL_LABEL_POSITION, vals[1], this.graph.getSelectionCells())
+        this.graph.setCellStyles(mxConstants.STYLE_ALIGN, vals[2], this.graph.getSelectionCells())
+        this.graph.setCellStyles(mxConstants.STYLE_VERTICAL_ALIGN, vals[3], this.graph.getSelectionCells())
+      }
+    } finally {
+      this.graph.getModel().endUpdate()
+    }
   }
 }
 

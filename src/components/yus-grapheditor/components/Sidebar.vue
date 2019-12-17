@@ -32,7 +32,6 @@
 import Sidebar from './../core/sidebar'
 export default {
   name: 'Sidebar',
-  props: ['graph'],
   mounted () {
     const ele = document.querySelectorAll('.drap')
     ele.forEach(item => {
