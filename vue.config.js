@@ -72,10 +72,10 @@ module.exports = {
       assetFilter: function (assetFilename) {
         return assetFilename.endsWith('.js')
       }
-    },
-    externals: {
-      'mxgraph': 'mxgraph'
     }
+    // externals: {
+    //   'mxgraph': 'mxgraph'
+    // }
   },
   // 删除moment除zh-cn中文包外的其它语言包，无需在代码中手动引入zh-cn语言包。
   chainWebpack: config => {

@@ -2,13 +2,14 @@
  * @Description: editor
  * @Author: liuqiyu
  * @Date: 2019-12-04 15:00:15
- * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-13 14:27:28
+ * @LastEditors  : liuqiyu
+ * @LastEditTime : 2019-12-19 13:39:09
  */
 import mxgraph from './mxgraph'
 import PopupMenu from './popupMenu'
 import MxEvents from './mxEvents'
 import Graph from './graph'
+import { defaultXml } from './constant'
 
 const {
   mxGraph,
@@ -30,7 +31,8 @@ Editor.prototype.init = function (container, setEnabled) {
   this.graph.setGridEnabled(false)
 
   // 初始化样式
-  const node = mxUtils.load('static/default.xml').getDocumentElement()
+  // const node = mxUtils.load('static/default.xml').getDocumentElement()
+  const node = mxUtils.parseXml(defaultXml).documentElement
   if (node != null) {
     var dec = new mxCodec(node.ownerDocument)
     dec.decode(node, this.graph.getStylesheet())
