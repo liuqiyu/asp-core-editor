@@ -31,7 +31,6 @@ Editor.prototype.init = function (container, setEnabled) {
   this.graph.setGridEnabled(false)
 
   // 初始化样式
-  // const node = mxUtils.load('static/default.xml').getDocumentElement()
   const node = mxUtils.parseXml(defaultXml).documentElement
   if (node != null) {
     var dec = new mxCodec(node.ownerDocument)
@@ -46,4 +45,15 @@ Editor.prototype.init = function (container, setEnabled) {
   // 鼠标拖拽选中
   /* eslint-disable no-new */
   new mxRubberband(this.graph)
+}
+
+Editor.prototype.renderXml = function (value) {
+  this.graph.model.beginUpdate()
+  try {
+    var doc = mxUtils.parseXml(value)
+    var codec = new mxCodec(doc)
+    codec.decode(doc.documentElement, this.graph.getModel())
+  } finally {
+    this.graph.model.endUpdate()
+  }
 }

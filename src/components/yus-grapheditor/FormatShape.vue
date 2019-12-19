@@ -367,10 +367,10 @@
 </template>
 
 <script>
-import mxgraph from './../core/mxgraph'
-import { Format } from './../core'
-import { typeofElement } from './../core/utils'
-import { LABEL_POSITIONS, END_FILL_OPTIONS, START_FILL_OPTIONS, EDGE_STYLE, EDGE_TYPE } from './FORMAT_CONSTANT'
+import mxgraph from './core/mxgraph'
+import { Format } from './core'
+import { typeofElement } from './core/utils'
+import { LABEL_POSITIONS, END_FILL_OPTIONS, START_FILL_OPTIONS, EDGE_STYLE, EDGE_TYPE } from './utils/FORMAT_CONSTANT'
 const { mxConstants, mxUtils } = mxgraph
 export default {
   name: 'Format',

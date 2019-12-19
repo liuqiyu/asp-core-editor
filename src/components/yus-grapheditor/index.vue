@@ -4,7 +4,8 @@
              id="graph-sidebar">
     </Sidebar>
     <div id="graph-map">
-      <Toolbar id="graph-tool">
+      <Toolbar id="graph-tool"
+               @renderXml="renderXml">
       </Toolbar>
 
       <div id="graph-content">
@@ -28,15 +29,15 @@
 
 <script>
 import moment from 'moment'
-import Toolbar from './components/Toolbar'
-import Format from './components/Format'
-import FormatShape from './components/FormatShape'
-import Sidebar from './components/Sidebar'
+import Toolbar from './Toolbar'
+import Format from './Format'
+import FormatShape from './FormatShape'
+import Sidebar from './Sidebar'
 import mxgraph from './core/mxgraph'
 import CoreEditor, { Tool } from './core'
 import OutLine from './core/outLine'
 
-const { mxEvent, mxUtils, mxCodec } = mxgraph
+const { mxEvent, mxUtils } = mxgraph
 
 Object.assign(mxEvent, {
   NORMAL_TYPE_CLICKED: 'NORMAL_TYPE_CLICKED'
@@ -59,12 +60,13 @@ export default {
       immediate: true,
       handler (value) {
         this.editorData = value
-        this.putData(value)
+        this.renderXml(value)
       }
     }
   },
   data () {
     return {
+      coreEditor: null,
       graph: null,
       currentFormat: 'Format',
       timeStamp: '',
@@ -83,14 +85,14 @@ export default {
     let container = document.getElementById(this.timeStamp)
 
     let outlineContainer = this.$refs.outlineContainer
-    var coreEditor = new CoreEditor(container, this.setEnabled)
+    this.coreEditor = new CoreEditor(container, this.setEnabled)
 
-    var graph = coreEditor.editor.graph
+    var graph = this.coreEditor.editor.graph
     this.graph = graph
     OutLine.init(graph, outlineContainer) //
 
     if (this.editorData) {
-      this.putData(this.editorData)
+      this.renderXml(this.editorData)
     }
 
     // 选中元件
@@ -155,16 +157,9 @@ export default {
     }
   },
   methods: {
-    putData (value) {
+    renderXml (value) {
       if (value && this.graph) {
-        this.graph.model.beginUpdate()
-        try {
-          var doc = mxUtils.parseXml(value)
-          var codec = new mxCodec(doc)
-          codec.decode(doc.documentElement, this.graph.getModel())
-        } finally {
-          this.graph.model.endUpdate()
-        }
+        this.coreEditor.editor.renderXml(value)
       }
     }
   }

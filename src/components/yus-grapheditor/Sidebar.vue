@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import Sidebar from './../core/sidebar'
+import Sidebar from './core/sidebar'
 export default {
   name: 'Sidebar',
   mounted () {
@@ -47,21 +47,21 @@ export default {
           children: [
             {
               name: 'rectangle',
-              src: require('./../images/sidebar/24gl-rectangle.svg'),
+              src: require('./images/sidebar/24gl-rectangle.svg'),
               width: 120,
               height: 60,
               style: 'rounded=0;whiteSpace=wrap;html=1;'
             },
             {
               name: 'rectangle',
-              src: require('./../images/sidebar/rectangle.svg'),
+              src: require('./images/sidebar/rectangle.svg'),
               width: 120,
               height: 60,
               style: 'rounded=1;whiteSpace=wrap;html=1;'
             },
             {
               name: 'Text',
-              src: require('./../images/sidebar/text.svg'),
+              src: require('./images/sidebar/text.svg'),
               width: 40,
               height: 20,
               style: 'text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;',
@@ -69,21 +69,21 @@ export default {
             },
             {
               name: '图片',
-              src: require('./../images/sidebar/image.svg'),
+              src: require('./images/sidebar/image.svg'),
               width: 48,
               height: 48,
               type: 'image'
             },
             {
               name: 'Ellipse',
-              src: require('./../images/sidebar/ellipse.svg'),
+              src: require('./images/sidebar/ellipse.svg'),
               width: 120,
               height: 80,
               style: 'ellipse;whiteSpace=wrap;html=1;'
             },
             {
               name: 'Line',
-              src: require('./../images/sidebar/line.svg'),
+              src: require('./images/sidebar/line.svg'),
               width: 50,
               height: 50,
               type: 'edge',
@@ -91,7 +91,7 @@ export default {
             },
             {
               name: 'curve',
-              src: require('./../images/sidebar/curve.svg'),
+              src: require('./images/sidebar/curve.svg'),
               width: 50,
               height: 50,
               type: 'curve',
@@ -104,7 +104,7 @@ export default {
           children: [
             {
               name: '你好1',
-              src: require('./../images/mark.svg'),
+              src: require('./images/mark.svg'),
               width: 60,
               height: 60,
               type: 'image',
