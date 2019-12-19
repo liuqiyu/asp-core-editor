@@ -2,8 +2,8 @@
  * @Description: components
  * @Author: liuqiyu
  * @Date: 2019-11-28 15:43:12
- * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-05 11:37:31
+ * @LastEditors  : liuqiyu
+ * @LastEditTime : 2019-12-19 15:10:04
  */
 import Vue from 'vue'
 import {
@@ -16,10 +16,9 @@ import directives from '../directives'
 import YusDialog from './yus-dialog'
 import YusContentPage from './yus-content-page'
 import YusGrapheditor from './yus-grapheditor'
-import YusGrapheditor1 from './yus-grapheditor1'
 import YusThemePicker from './yus-theme-picker'
 
-const components = [YusDialog, YusContentPage, YusGrapheditor, YusGrapheditor1, YusThemePicker]
+const components = [YusDialog, YusContentPage, YusGrapheditor, YusThemePicker]
 
 const setPrototype = () => {
   Vue.prototype.$bus = new Vue()
