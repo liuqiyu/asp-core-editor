@@ -1,3 +1,10 @@
+/*
+ * @Description: eslint config
+ * @Author: liuqiyu
+ * @Date: 2019-12-30 14:35:07
+ * @LastEditors: liuqiyu
+ * @LastEditTime: 2019-12-30 17:26:37
+ */
 module.exports = {
   root: true,
   env: {
@@ -9,7 +16,12 @@ module.exports = {
   ],
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    "new-cap": ["error", {
+      "newIsCap": false,
+      "capIsNew": false
+    }],
+    'no-inner-declarations': 'off'
   },
   parserOptions: {
     parser: 'babel-eslint'

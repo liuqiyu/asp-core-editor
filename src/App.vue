@@ -1,32 +1,67 @@
+<!--
+ * @Description: App
+ * @Author: liuqiyu
+ * @Date: 2019-12-30 14:35:07
+ * @LastEditors  : liuqiyu
+ * @LastEditTime : 2019-12-30 15:37:11
+ -->
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div class="topbar">
+      <div class="logo">拓扑编辑器</div>
+      <div class="nav">
+        <router-link to="/">Editor</router-link> |
+        <router-link to="/preview">Preview</router-link>
+      </div>
     </div>
-    <router-view/>
+    <div class="router-wrapper">
+      <router-view />
+    </div>
+    <p class="copyright">Copyright © 1993 - 2019 Liuqiyu. All Rights Reserved. Liuqiyu 版权所有</p>
   </div>
 </template>
 
 <style lang="scss">
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  display: flex;
+  flex-direction: column;
 }
 
-#nav {
-  padding: 30px;
+.topbar {
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  background-image: linear-gradient(-179deg, #225dde 0%, #4a86f0 100%);
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
 
-  a {
+  .logo {
+    font-size: 18px;
+    color: #fff;
     font-weight: bold;
-    color: #2c3e50;
+  }
 
-    &.router-link-exact-active {
-      color: #42b983;
+  .nav {
+    a {
+      font-weight: bold;
+      color: #fff;
+      font-size: 16px;
+
+      &.router-link-exact-active {
+        color: yellow;
+      }
     }
   }
+}
+
+.router-wrapper {
+  width: 100%;
+  height: calc(100% - 80px);
+}
+.copyright {
+  text-align: center;
+  line-height: 30px;
+  color: #5f6464;
 }
 </style>
