@@ -108,7 +108,14 @@
                type="text"
                title="保存"
                icon="iconfont iconbaocun2"></el-button>
-
+    <el-button @click="handleSave"
+               type="text"
+               title="帮助"
+               icon="iconfont iconiconfontbangzhu"></el-button>
+    <el-button @click="handleSave"
+               type="text"
+               title="关于我们"
+               icon="iconfont iconziyuan"></el-button>
     <!--弹出框-->
     <el-dialog :title="dialogTitle"
                :visible.sync="dialogVisible"
