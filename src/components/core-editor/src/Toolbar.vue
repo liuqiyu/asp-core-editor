@@ -40,6 +40,7 @@
     <el-button @click="actions('copy')"
                type="text"
                title="复制（Ctrl+C）"
+               :disabled="!isSelect"
                icon="iconfont iconfuzhi"></el-button>
 
     <el-button @click="actions('paste')"
@@ -67,6 +68,7 @@
     <el-button @click="actions('delete')"
                type="text"
                title="删除（Delete）"
+               :disabled="!isSelect"
                icon="iconfont iconshanchu"></el-button>
 
     <div class="separator"></div>
@@ -120,7 +122,7 @@ export default {
       dialogVisible: false,
       panStatus: false,
       currentComponent: null,
-      isnEmpty: true,
+      isEmpty: true,
       isSelect: false
     }
   },
@@ -175,6 +177,9 @@ export default {
   .el-button {
     color: #444;
     margin: 0 6px;
+    &.is-disabled {
+      color: #C0C4CC;
+    }
   }
   .separator {
     width: 1px;

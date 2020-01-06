@@ -5,6 +5,7 @@
     </Sidebar>
     <div id="graph-map">
       <Toolbar id="graph-tool"
+               ref="toolbar"
                @renderXml="renderXml">
       </Toolbar>
 
@@ -99,8 +100,10 @@ export default {
         this.currentFormat = 'FormatShape'
         await this.$nextTick()
         this.$refs.format.selectionChanged(graph)
+        this.$refs.toolbar._data.isSelect = true
       } else {
         this.currentFormat = 'Format'
+        this.$refs.toolbar._data.isSelect = false
       }
     })
 
