@@ -50,6 +50,20 @@
 
     <div class="separator"></div>
 
+    <el-button @click="actions('toFront')"
+               type="text"
+               title="移至最前（Ctrl+Shift+F）"
+               :disabled="!isSelect"
+               icon="iconfont iconzuiqiankong"></el-button>
+
+    <el-button @click="actions('toBack')"
+               type="text"
+               title="移至最后（Ctrl+Shift+B）"
+               :disabled="!isSelect"
+               icon="iconfont iconzuihoukong"></el-button>
+
+    <div class="separator"></div>
+
     <!-- <el-button @click="actions('group')"
                type="text"
                title="组合"
