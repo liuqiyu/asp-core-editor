@@ -3,17 +3,19 @@
     <el-button @click="actions('zoomIn')"
                type="text"
                title="放大"
-               icon="iconfont iconiconset0158"></el-button>
+               icon="iconfont iconfangda"></el-button>
 
     <el-button @click="actions('zoomOut')"
                type="text"
                title="缩小"
-               icon="iconfont iconsuoxiao"></el-button>
+               icon="iconfont iconsuoxiao1"></el-button>
 
     <el-button @click="actions('resetView')"
                type="text"
-               title="1:1"
-               icon="iconfont iconhuanyuan"></el-button>
+               title="还原1:1"
+               icon="iconfont iconrestore"></el-button>
+
+    <div class="separator"></div>
 
     <el-button @click="actions('undo')"
                type="text"
@@ -25,11 +27,15 @@
                title="重做（Ctrl+Y）"
                icon="iconfont iconredo"></el-button>
 
+    <div class="separator"></div>
+
     <el-button @click="handlePan"
                type="text"
                title="拖动"
                :class="this.panStatus ? 'finger-select': null "
                icon="iconfont icontuodong1"></el-button>
+
+    <div class="separator"></div>
 
     <el-button @click="actions('copy')"
                type="text"
@@ -39,7 +45,9 @@
     <el-button @click="actions('paste')"
                type="text"
                title="粘贴（Ctrl+V）"
-               icon="iconfont iconniantie"></el-button>
+               icon="iconfont iconniantie2"></el-button>
+
+    <div class="separator"></div>
 
     <!-- <el-button @click="actions('group')"
                type="text"
@@ -61,10 +69,12 @@
                title="删除（Delete）"
                icon="iconfont iconshanchu"></el-button>
 
+    <div class="separator"></div>
+
     <el-button @click="importXml"
                type="text"
                title="导入XML"
-               icon="iconfont icondaoru1"></el-button>
+               icon="iconfont icondaoru2"></el-button>
 
     <el-button @click="actions('saveXml')"
                type="text"
@@ -76,10 +86,12 @@
                title="导出图片"
                icon="iconfont icondaochutupian"></el-button>
 
+    <div class="separator"></div>
+
     <el-button @click="handleSave"
                type="text"
                title="保存"
-               icon="iconfont iconbaocun"></el-button>
+               icon="iconfont iconbaocun2"></el-button>
 
     <!--弹出框-->
     <el-dialog :title="dialogTitle"
@@ -98,7 +110,7 @@ import Tool from './core/toolbar'
 import importXml from './components/dialog/importXml.vue'
 
 export default {
-  name: 'AspTool',
+  name: 'Toolbar',
   components: {
     importXml
   },
@@ -107,7 +119,9 @@ export default {
       dialogTitle: null,
       dialogVisible: false,
       panStatus: false,
-      currentComponent: null
+      currentComponent: null,
+      isnEmpty: true,
+      isSelect: false
     }
   },
   methods: {
@@ -126,7 +140,10 @@ export default {
       Tool.save((xml, graph) => {
         console.log(xml)
         localStorage.setItem('xml', xml)
-        console.log(graph)
+        this.$message({
+          message: '保存成功',
+          type: 'success'
+        })
       })
     },
     importXml () {
@@ -144,14 +161,28 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .graph-tool {
+  height: 34px;
   display: flex;
   align-items: center;
   padding-left: 12px;
   background: #f6f6f6;
+  border-bottom: 1px solid #e0e0e0;
   .finger-select {
     opacity: 0.5;
+  }
+  .el-button {
+    color: #444;
+    margin: 0 6px;
+  }
+  .separator {
+    width: 1px;
+    height: 34px;
+    background: rgba(0, 0, 0, 0.1);
+    margin-left: 6px;
+    margin-right: 6px;
+    margin-top: -2px;
   }
 }
 </style>

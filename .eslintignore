@@ -1,0 +1,3 @@
+build/*.js
+config/*.js
+src/components/core-editor/src/utils/base64.js

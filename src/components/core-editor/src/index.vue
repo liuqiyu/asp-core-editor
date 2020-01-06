@@ -142,12 +142,6 @@ export default {
           menu.addItem('删除', null, () => {
             // Tool.delete()
           })
-          // menu.addItem('绑定', null, () => {
-          //   alert('绑定')
-          // })
-          // menu.addItem('绑定子图层', null, () => {
-          //   alert('绑定')
-          // })
         }
         this.$emit('popupMenuHandler', { menu, cell, evt })
       }
@@ -182,7 +176,6 @@ export default {
     #graph-tool {
       flex: none;
       width: 100%;
-      height: 40px;
     }
     #graph-content {
       position: relative;

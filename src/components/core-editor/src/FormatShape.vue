@@ -15,7 +15,7 @@
       </div>
       <!-- 背景颜色 -->
       <div class="format-item"
-           v-if="['singleVertex', 'multipleVertex', 'multipleAll'].includes(selectedType)">
+           v-if="['singleVertex', 'multipleVertex',].includes(selectedType)">
         <div class="format-label">背景颜色</div>
         <div class="format-content">
           <el-color-picker v-model="format.fillColor"
@@ -27,7 +27,7 @@
       </div>
       <!-- 边框颜色 -->
       <div class="format-item"
-           v-if="['singleVertex', 'multipleVertex', 'multipleAll'].includes(selectedType)">
+           v-if="['singleVertex', 'multipleVertex'].includes(selectedType)">
         <div class="format-label">边框颜色</div>
         <div class="format-content">
           <el-color-picker v-model="format.strokeColor"
@@ -39,7 +39,7 @@
       </div>
       <!-- 元件大小 -->
       <div class="format-item"
-           v-if="['singleVertex', 'multipleVertex', 'multipleAll'].includes(selectedType)">
+           v-if="['singleVertex', 'multipleVertex'].includes(selectedType)">
         <div class="format-label">大小</div>
         <div class="format-content">
           <el-input-number style="width: 65px"
@@ -67,7 +67,7 @@
       </div>
       <!-- 位置 -->
       <div class="format-item"
-           v-if="['singleVertex', 'multipleVertex', 'multipleAll'].includes(selectedType)">
+           v-if="['singleVertex', 'multipleVertex'].includes(selectedType)">
         <div class="format-label">位置</div>
         <div class="format-content">
           <el-input-number title="X轴"
@@ -270,10 +270,10 @@
       <!-- 线条 -->
       <!-- -- -->
       <el-divider content-position="left"
-                  v-if="['singleEdge', 'multipleEdge', 'multipleAll'].includes(selectedType)">线条</el-divider>
+                  v-if="['singleEdge', 'multipleEdge'].includes(selectedType)">线条</el-divider>
       <!-- 线条类型 -->
       <div class="format-item"
-           v-if="['singleEdge', 'multipleEdge', 'multipleAll'].includes(selectedType)">
+           v-if="['singleEdge', 'multipleEdge'].includes(selectedType)">
         <div class="format-label">线条类型</div>
         <div class="format-content">
           <el-select v-model="format.edgeType"
@@ -295,7 +295,7 @@
       </div>
       <!-- 线条样式 -->
       <div class="format-item"
-           v-if="['singleEdge', 'multipleEdge', 'multipleAll'].includes(selectedType)">
+           v-if="['singleEdge', 'multipleEdge'].includes(selectedType)">
         <div class="format-label">线条样式</div>
         <div class="format-content">
           <el-select style="width: 75px;"
@@ -321,7 +321,7 @@
       </div>
       <!-- 线条航点 -->
       <div class="format-item"
-           v-if="['singleEdge', 'multipleEdge', 'multipleAll'].includes(selectedType)">
+           v-if="['singleEdge', 'multipleEdge'].includes(selectedType)">
         <div class="format-label">线条航点</div>
         <div class="format-content font">
           <el-radio-group v-model="format.waypoints"
@@ -362,7 +362,7 @@
       </div>
       <!-- 线条箭头 -->
       <div class="format-item"
-           v-if="['singleEdge', 'multipleEdge', 'multipleAll'].includes(selectedType)">
+           v-if="['singleEdge', 'multipleEdge'].includes(selectedType)">
         <div class="format-label">线条箭头</div>
         <div class="format-content">
           <el-select style="width: 65px;"
@@ -637,6 +637,9 @@ export default {
 
 <style lang="scss">
 .graph-format {
+  .title {
+    color: #333333
+  }
   .mini-input-number {
     width: 60px;
     .el-input-number__decrease,

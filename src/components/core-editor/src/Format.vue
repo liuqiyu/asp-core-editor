@@ -67,11 +67,12 @@ export default {
   border-bottom: 1px solid #ebeef5;
   width: 241px;
   .title {
-    height: 40px;
+    height: 34px;
     background: #f6f6f6;
-    line-height: 40px;
+    line-height: 34px;
     text-indent: 12px;
     font-size: 14px;
+    color: #333333;
   }
   .format-wrapper {
     padding-top: 10px;

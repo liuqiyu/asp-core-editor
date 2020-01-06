@@ -148,11 +148,12 @@ export default {
   border-right: 1px solid #e1e1e1;
   width: 251px;
   .title {
-    height: 40px;
+    height: 34px;
     background: #f6f6f6;
-    line-height: 40px;
+    line-height: 34px;
     text-indent: 12px;
     font-size: 14px;
+    color: #333333;
   }
   .collapse-wrapper {
     width: 100%;

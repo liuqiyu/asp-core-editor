@@ -1,0 +1,88 @@
+<!--
+ * @Description: demo
+ * @Author: liuqiyu
+ * @Date: 2019-12-31 15:02:29
+ * @LastEditors  : liuqiyu
+ * @LastEditTime : 2020-01-06 14:31:04
+ -->
+ <!DOCTYPE html>
+ <html lang="en">
+ 
+ <head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <!-- 引入样式 -->
+   <!-- <link rel="stylesheet" href="//at.alicdn.com/t/font_1475373_384953u9ui.css" /> -->
+   <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+   <link rel="stylesheet" href="index.css">
+   <title>Document</title>
+ </head>
+ 
+ <body>
+   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+   <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+   <!-- <script src="./../dist/vue-core-editor.js?4"></script> -->
+   <script src="./../dist1/core-editor.min.js"></script>
+   <div id="app">
+     <!-- <core-editor :setEnabled="true" @click="click" @dblClick="dblClick" @mouseDown="mouseDown" @mouseUp="mouseUp"
+       @mouseMove="mouseMove" @popupMenuHandler="popupMenuHandler"></core-editor> -->
+   </div>
+   <script>
+     var graph = new CoreEditor.default(document.getElementById('app'))
+     console.log(graph.editor.readXml)
+     graph.editor.readXml('aaa.xml')
+     var app = new Vue({
+       el: '#app',
+       created() {
+         // console.log(CoreEditor)
+       },
+       methods: {
+         click({
+           graph,
+           cell
+         }) {
+           // alert('单击')
+         },
+         dblClick({
+           graph,
+           cell
+         }) {
+           // alert('双击')
+         },
+         mouseDown({
+           graph,
+           evt
+         }) {
+ 
+         },
+         mouseUp({
+           graph,
+           evt
+         }) {
+ 
+         },
+         mouseMove({
+           graph,
+           evt
+         }) {
+ 
+         },
+         popupMenuHandler({
+           menu,
+           cell,
+           evt
+         }) {
+           menu.addItem('绑定', null, () => {
+             alert('绑定')
+           })
+           menu.addItem('绑定子图层', null, () => {
+             alert('绑定')
+           })
+         }
+       }
+     })
+   </script>
+ </body>
+ 
+ </html>
