@@ -108,15 +108,98 @@ export default {
           ]
         },
         {
-          title: '元件2',
+          title: '办公',
           children: [
             {
-              name: '你好1',
-              src: require('./images/mark.svg'),
+              name: '地球',
+              src: require('./images/work/Earth_globe_128x128.png'),
               width: 60,
               height: 60,
-              type: 'image',
-              label: '哈哈'
+              type: 'image'
+            },
+            {
+              name: '邮箱',
+              src: require('./images/work/Email_128x128.png'),
+              width: 60,
+              height: 60,
+              type: 'image'
+            },
+            {
+              name: '文件夹',
+              src: require('./images/work/Empty_Folder_128x128.png'),
+              width: 60,
+              height: 60,
+              type: 'image'
+            },
+            {
+              name: '文件夹2',
+              src: require('./images/work/Full_Folder_128x128.png'),
+              width: 60,
+              height: 60,
+              type: 'image'
+            },
+            {
+              name: '齿轮',
+              src: require('./images/work/Gear_128x128.png'),
+              width: 60,
+              height: 60,
+              type: 'image'
+            },
+            {
+              name: '图表',
+              src: require('./images/work/Graph_128x128.png'),
+              width: 60,
+              height: 60,
+              type: 'image'
+            },
+            {
+              name: 'iMac',
+              src: require('./images/work/iMac_128x128.png'),
+              width: 60,
+              height: 60,
+              type: 'image'
+            },
+            {
+              name: 'iPad',
+              src: require('./images/work/iPad_128x128.png'),
+              width: 60,
+              height: 60,
+              type: 'image'
+            },
+            {
+              name: '笔记本',
+              src: require('./images/work/Laptop_128x128.png'),
+              width: 60,
+              height: 60,
+              type: 'image'
+            },
+            {
+              name: '钟表',
+              src: require('./images/work/Lock_128x128.png'),
+              width: 60,
+              height: 60,
+              type: 'image'
+            },
+            {
+              name: 'MacBook',
+              src: require('./images/work/MacBook_128x128.png'),
+              width: 60,
+              height: 60,
+              type: 'image'
+            },
+            {
+              name: '主机',
+              src: require('./images/work/Monitor_Tower_128x128.png'),
+              width: 60,
+              height: 60,
+              type: 'image'
+            },
+            {
+              name: '打印机',
+              src: require('./images/work/Printer_128x128.png'),
+              width: 60,
+              height: 60,
+              type: 'image'
             }
           ]
         }
