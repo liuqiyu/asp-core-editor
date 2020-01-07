@@ -64,16 +64,6 @@
 
     <div class="separator"></div>
 
-    <!-- <el-button @click="actions('group')"
-               type="text"
-               title="组合"
-               icon="iconfont iconzuhe"></el-button>
-
-    <el-button @click="actions('ungroup')"
-               type="text"
-               title="取消组合"
-               icon="iconfont iconquxiaozuhe"></el-button> -->
-
     <el-button @click="handleShowXml"
                type="text"
                title="数据预览"
@@ -199,7 +189,7 @@ export default {
     color: #444;
     margin: 0 6px;
     &.is-disabled {
-      color: #C0C4CC;
+      color: #c0c4cc;
     }
   }
   .separator {

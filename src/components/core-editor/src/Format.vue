@@ -2,7 +2,8 @@
   <div class="graph-format">
     <header class="title">编辑器</header>
     <div class="format-wrapper">
-      <div class="format-item">
+      <div style="padding-top: 200px; text-align: center; color: #ccc; font-size: 18px;">请选中元件</div>
+      <!-- <div class="format-item">
         <div class="format-label">背景</div>
         <div class="format-content">
           <el-color-picker v-model="format.background"
@@ -10,9 +11,9 @@
                            @change="handleChangeStyle('background')"
                            show-alpha></el-color-picker>
         </div>
-      </div>
+      </div> -->
       <!-- 字体 -->
-      <div class="format-item">
+      <!-- <div class="format-item">
         <div class="format-label">网格</div>
         <div class="format-content font">
           <el-input-number class="mini-input-number"
@@ -27,7 +28,7 @@
                            @change="handleChangeStyle('background')"
                            show-alpha></el-color-picker>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
