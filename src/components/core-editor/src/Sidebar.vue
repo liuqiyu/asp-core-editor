@@ -108,6 +108,25 @@ export default {
           ]
         },
         {
+          title: '箭头',
+          children: [
+            {
+              name: 'Arrow Left',
+              src: require('./images/sidebar/24gl-rectangle.svg'),
+              width: 100,
+              height: 60,
+              style: 'shape=singleArrow;direction=west;whiteSpace=wrap;html=1;'
+            },
+            {
+              name: 'Arrow Right',
+              src: require('./images/sidebar/24gl-rectangle.svg'),
+              width: 100,
+              height: 60,
+              style: 'shape=singleArrow;whiteSpace=wrap;html=1;'
+            }
+          ]
+        },
+        {
           title: '办公',
           children: [
             {
