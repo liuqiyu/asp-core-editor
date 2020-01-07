@@ -433,6 +433,7 @@
         <div class="format-label">图片</div>
         <div class="format-content">
           <InputUpload v-model="format.image"
+                       :accept="['image']"
                        @onSuccess="onSuccess"
                        @clear="clear"></InputUpload>
         </div>

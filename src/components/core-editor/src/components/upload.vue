@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :title="value">
     <el-input style="vertical-align: unset;"
               :placeholder="placeholder"
               :value="fileName"
@@ -10,6 +10,7 @@
       <el-upload slot="append"
                  ref="upload"
                  action=""
+                 :accept="currentAccept"
                  :show-file-list="false"
                  :data="formData"
                  :multiple="false"
@@ -31,15 +32,15 @@ export default {
   props: {
     placeholder: {
       type: [String, Number],
-      default: '多文件请上传压缩包'
+      default: '点击上传文件'
     },
     accept: {
-      type: String,
+      type: Array,
       default: null
     },
     Size: {
       type: [String, Number],
-      default: 20
+      default: 2
     },
     button: {
       type: String,
@@ -61,7 +62,28 @@ export default {
       loading: false,
       show: false,
       fileName: '',
-      file: ''
+      file: '',
+      accepts: {
+        excel: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, application/kset',
+        word: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/msword, application/kswps',
+        pdf: 'application/pdf, application/kswps',
+        image: 'image/gif, image/jpeg, image/png, image/x-ms-bmp',
+        zip: 'application/zip, application/x-zip-compressed',
+        ppt: `application/vnd.ms-powerpoint,
+            application/vnd.ms-powerpoint,
+            application/vnd.ms-powerpoint,
+            application/vnd.openxmlformats-officedocument.presentationml.template,
+            application/vnd.openxmlformats-officedocument.presentationml.slideshow,
+            application/vnd.openxmlformats-officedocument.presentationml.presentation`
+      }
+    }
+  },
+  computed: {
+    currentAccept () {
+      if (this.accept) {
+        return this.accept.map(k => this.accepts[k]).join(',')
+      }
+      return ''
     }
   },
   watch: {
