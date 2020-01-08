@@ -119,8 +119,9 @@
 </template>
 
 <script>
-import { Tool } from './core'
+// import { Tool } from './core'
 import importXml from './components/dialog/importXml.vue'
+const { Tool } = AspCoreEditor
 
 export default {
   name: 'Toolbar',

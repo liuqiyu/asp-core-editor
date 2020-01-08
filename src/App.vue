@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-12-30 14:35:07
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2019-12-30 15:37:11
+ * @LastEditTime : 2020-01-08 20:05:27
  -->
 <template>
   <div id="app">
@@ -11,6 +11,7 @@
       <div class="logo">拓扑编辑器</div>
       <div class="nav">
         <router-link to="/">Editor</router-link> |
+        <router-link to="/editor1">Editor1</router-link> |
         <router-link to="/preview">Preview</router-link>
       </div>
     </div>

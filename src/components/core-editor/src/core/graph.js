@@ -3,10 +3,10 @@
  * @Author: liuqiyu
  * @Date: 2019-11-25 09:43:50
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2020-01-08 15:23:05
+ * @LastEditTime : 2020-01-08 17:41:14
  */
 
-import Base64 from '../utils/base64'
+import Base64 from './base64'
 import mxgraph from './mxgraph'
 import { IMAGE_PATH } from './path'
 

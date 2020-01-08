@@ -1,0 +1,63 @@
+<!--
+ * @Description: editor
+ * @Author: liuqiyu
+ * @Date: 2019-12-30 14:35:07
+ * @LastEditors  : liuqiyu
+ * @LastEditTime : 2020-01-08 20:05:49
+ -->
+<template>
+  <div class="editor">
+    <core-editor1 :data="data"
+                 :setEnabled="true"
+                 @click="click"
+                 @dblClick="dblClick"
+                 @mouseDown="mouseDown"
+                 @mouseUp="mouseUp"
+                 @mouseMove="mouseMove"
+                 @popupMenuHandler="popupMenuHandler"></core-editor1>
+  </div>
+</template>
+
+<script>
+export default {
+  data () {
+    return {
+      data: ''
+    }
+  },
+  mounted () {
+    this.data = localStorage.getItem('xml')
+  },
+  methods: {
+    click ({ graph, cell }) {
+      // alert('单击')
+    },
+    dblClick ({ graph, cell }) {
+      // alert('双击')
+    },
+    mouseDown ({ graph, evt }) {
+
+    },
+    mouseUp ({ graph, evt }) {
+
+    },
+    mouseMove ({ graph, evt }) {
+
+    },
+    popupMenuHandler ({ menu, cell, evt }) {
+      menu.addItem('绑定', null, () => {
+        alert('绑定')
+      })
+      menu.addItem('绑定子图层', null, () => {
+        alert('绑定')
+      })
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.editor {
+  height: 100%;
+}
+</style>

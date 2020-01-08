@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-10-09 14:47:52
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2020-01-08 16:42:30
+ * @LastEditTime : 2020-01-08 20:10:11
  */
 const path = require('path')
 const webpack = require('webpack')
@@ -52,6 +52,9 @@ module.exports = {
       assetFilter: function (assetFilename) {
         return assetFilename.endsWith('.js')
       }
+    },
+    externals: {
+      'CoreEditor': 'CoreEditor'
     }
   },
   // 删除moment除zh-cn中文包外的其它语言包，无需在代码中手动引入zh-cn语言包。

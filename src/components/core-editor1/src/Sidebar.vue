@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { Sidebar } from './core'
+const { Sidebar } = AspCoreEditor
 export default {
   name: 'Sidebar',
   mounted () {

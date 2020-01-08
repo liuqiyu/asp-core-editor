@@ -30,21 +30,13 @@
 
 <script>
 import Toolbar from './Toolbar.vue'
-import Format from './Format.vue'
+import Format1 from './Format.vue'
 import FormatShape from './FormatShape.vue'
 import Sidebar from './Sidebar.vue'
-import mxgraph from './core/mxgraph'
-import CoreEditor from './core'
-import OutLine from './core/outLine'
-
-const { mxEvent, mxUtils } = mxgraph
-
-Object.assign(mxEvent, {
-  NORMAL_TYPE_CLICKED: 'NORMAL_TYPE_CLICKED'
-})
+const { CoreEditor } = AspCoreEditor
 
 export default {
-  name: 'core-editor',
+  name: 'core-editor1',
   props: {
     setEnabled: {
       type: Boolean,
@@ -68,27 +60,28 @@ export default {
     return {
       coreEditor: null,
       graph: null,
-      currentFormat: 'Format',
+      currentFormat: 'Format1',
       editorData: ''
     }
   },
   components: {
     Toolbar,
     Sidebar,
-    Format,
+    Format1,
     FormatShape
   },
   async mounted () {
     await this.$nextTick()
     let container = document.getElementById('graph')
 
-    let outlineContainer = this.$refs.outlineContainer
+    // let outlineContainer = this.$refs.outlineContainer
 
+    console.log(CoreEditor)
     this.coreEditor = new CoreEditor(container, this.setEnabled)
 
     var graph = this.coreEditor.editor.graph
     this.graph = graph
-    OutLine.init(graph, outlineContainer) //
+    // OutLine.init(graph, outlineContainer) //
 
     if (this.editorData) {
       this.renderXml(this.editorData)
@@ -103,7 +96,7 @@ export default {
         this.$refs.format.selectionChanged(graph)
         this.$refs.toolbar._data.isSelect = true
       } else {
-        this.currentFormat = 'Format'
+        this.currentFormat = 'Format1'
         this.$refs.toolbar._data.isSelect = false
       }
     })
@@ -162,9 +155,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "./styles/main.scss";
-@import "./styles/common.css";
-@import "./styles/grapheditor.css";
 
 #graph-wrapper {
   width: 100%;

@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-12-18 15:03:17
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2020-01-06 14:18:02
+ * @LastEditTime : 2020-01-08 21:29:59
  */
 const path = require('path')
 const webpack = require('webpack')
@@ -13,13 +13,13 @@ function resolve (dir) {
 
 module.exports = {
   entry: {
-    'core-editor': './src/components/core-editor/src/core/index.js'
+    'asp-core-editor': './src/components/core-editor/src/core/index.js'
   },
   output: {
     path: path.resolve(__dirname, './dist1'),
     publicPath: '/dist1/',
     filename: '[name].min.js',
-    library: 'CoreEditor',
+    library: 'AspCoreEditor',
     libraryTarget: 'umd',
     umdNamedDefine: true
   },

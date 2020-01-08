@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-12-30 14:35:07
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2020-01-08 16:38:59
+ * @LastEditTime : 2020-01-08 21:36:15
  */
 module.exports = {
   root: true,
@@ -22,6 +22,9 @@ module.exports = {
       "capIsNew": false
     }],
     'no-inner-declarations': 'off'
+  },
+  "globals": {
+    "AspCoreEditor": true,
   },
   parserOptions: {
     parser: 'babel-eslint'
