@@ -3,13 +3,13 @@
  * @Author: liuqiyu
  * @Date: 2019-12-19 10:46:02
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2019-12-31 14:22:11
+ * @LastEditTime : 2020-01-08 11:02:06
  */
 import mx from 'mxgraph'
 
 const mxgraph = mx({
   mxImageBasePath: './src/images',
-  mxBasePath: '/src'
+  mxBasePath: '/static'
 })
 
 // // decode bug https://github.com/jgraph/mxgraph/issues/49

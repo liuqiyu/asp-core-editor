@@ -1,15 +1,20 @@
+/*
+ * @Description:
+ * @Author: liuqiyu
+ * @Date: 2020-01-02 14:12:50
+ * @LastEditors  : liuqiyu
+ * @LastEditTime : 2020-01-08 15:22:39
+ */
 import mxgraph from './mxgraph'
 
 const {
   mxOutline
 } = mxgraph
 
-let MxOutline = mxOutline
-
 class OutLine {
   static init (graph, container) {
     /* eslint-disable no-new */
-    new MxOutline(graph, container)
+    new mxOutline(graph, container)
   }
 }
 

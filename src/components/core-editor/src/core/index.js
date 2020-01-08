@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-12-04 15:00:15
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2020-01-02 17:40:08
+ * @LastEditTime : 2020-01-08 16:40:31
  */
 
 import mxgraph from './mxgraph'
@@ -13,11 +13,6 @@ import KeyHandler from './keyHandler'
 import Tool from './toolbar'
 import Format from './format'
 import Sidebar from './sidebar'
-
-export {
-  Tool,
-  Format
-}
 
 const {
   mxUtils,
@@ -40,3 +35,9 @@ function CoreEditor (container, setEnabled) {
 }
 
 export default CoreEditor
+
+export {
+  Tool,
+  Format,
+  Sidebar
+}

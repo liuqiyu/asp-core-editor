@@ -2,8 +2,8 @@
 # @Description: 
  # @Author: liuqiyu
  # @Date: 2019-11-28 15:43:12
- # @LastEditors: liuqiyu
- # @LastEditTime: 2019-11-28 18:27:32
+ # @LastEditors  : liuqiyu
+ # @LastEditTime : 2020-01-08 09:42:54
  ###
 #!/usr/bin/env bash
 # 确保脚本抛出遇到的错误
@@ -29,6 +29,6 @@ git commit -am 'deploy'
 # git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master
 
 # 如果发布到 https://<USERNAME>.github.io/<REPO>
-git push -f https://github.com/liuqiyu/vue-mxgraph.git master:gh-pages
+git push -f https://github.com/liuqiyu/core-editor.git master:gh-pages
 
 cd -

@@ -2,8 +2,8 @@
  * @Description: eslint config
  * @Author: liuqiyu
  * @Date: 2019-12-30 14:35:07
- * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-30 17:26:37
+ * @LastEditors  : liuqiyu
+ * @LastEditTime : 2020-01-08 16:38:59
  */
 module.exports = {
   root: true,
@@ -15,7 +15,7 @@ module.exports = {
     '@vue/standard'
   ],
   rules: {
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    // 'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     "new-cap": ["error", {
       "newIsCap": false,

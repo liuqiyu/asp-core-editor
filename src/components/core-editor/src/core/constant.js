@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-12-05 15:35:57
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2019-12-19 13:38:58
+ * @LastEditTime : 2020-01-08 15:23:22
  */
 import mxgraph from './mxgraph'
 const { mxClient } = mxgraph

@@ -444,7 +444,7 @@
 
 <script>
 import { Format } from './core'
-import { typeofElement } from './core/utils'
+import { typeofElement } from './utils/utils'
 import InputUpload from './components/upload'
 import { LABEL_POSITIONS, END_FILL_OPTIONS, START_FILL_OPTIONS, EDGE_STYLE, EDGE_TYPE, FONT_DEFAULTS } from './utils/FORMAT_CONSTANT'
 export default {

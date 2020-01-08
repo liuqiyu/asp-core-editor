@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-12-31 15:02:29
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2020-01-06 14:31:04
+ * @LastEditTime : 2020-01-08 15:53:16
  -->
  <!DOCTYPE html>
  <html lang="en">
@@ -23,14 +23,18 @@
    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
    <!-- <script src="./../dist/vue-core-editor.js?4"></script> -->
+   <script>
+    window.mxLoadResources = false // 不用加载资源
+    window.mxLoadStylesheets = false // 不用加载样式 common.css
+ </script>
    <script src="./../dist1/core-editor.min.js"></script>
    <div id="app">
      <!-- <core-editor :setEnabled="true" @click="click" @dblClick="dblClick" @mouseDown="mouseDown" @mouseUp="mouseUp"
        @mouseMove="mouseMove" @popupMenuHandler="popupMenuHandler"></core-editor> -->
    </div>
    <script>
-     var graph = new CoreEditor.default(document.getElementById('app'))
-     console.log(graph.editor.readXml)
+    //  var graph = new CoreEditor.default(document.getElementById('app'))
+    console.log(CoreEditor)
      graph.editor.readXml('aaa.xml')
      var app = new Vue({
        el: '#app',

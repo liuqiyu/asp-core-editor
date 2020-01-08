@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { Format } from './core'
+// import { Format } from './core'
 export default {
   name: 'Format',
   data () {
@@ -53,7 +53,7 @@ export default {
   methods: {
     // todo update style
     handleChangeStyle (keyword) {
-      Format.updateStyleHandler(keyword, this.format)
+      // CoreEditor.Format.updateStyleHandler(keyword, this.format)
     }
   }
 }

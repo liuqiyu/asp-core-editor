@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-12-30 14:35:07
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2020-01-06 15:06:18
+ * @LastEditTime : 2020-01-08 16:42:19
  -->
 <!DOCTYPE html>
 <html lang="en">
@@ -15,6 +15,10 @@
   <!-- editor -->
   <link rel="stylesheet" href="//at.alicdn.com/t/font_1475373_6bcpp4049l3.css" />
   <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+  <script>
+     window.mxLoadResources = false // 不用加载资源
+     window.mxLoadStylesheets = false // 不用加载样式 common.css
+  </script>
   <script src="./mxClient.min.js"></script>
   <title>new-core-editor</title>
 </head>
@@ -27,5 +31,4 @@
   <div id="app"></div>
   <!-- built files will be auto injected -->
 </body>
-
 </html>

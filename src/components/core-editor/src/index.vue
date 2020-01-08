@@ -83,6 +83,7 @@ export default {
     let container = document.getElementById('graph')
 
     let outlineContainer = this.$refs.outlineContainer
+    console.log(CoreEditor)
     this.coreEditor = new CoreEditor(container, this.setEnabled)
 
     var graph = this.coreEditor.editor.graph

@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-10-09 14:47:52
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2019-12-30 15:08:49
+ * @LastEditTime : 2020-01-08 16:42:30
  */
 const path = require('path')
 const webpack = require('webpack')
@@ -39,7 +39,7 @@ module.exports = {
     resolve: {
       alias: {
         '@': resolve('src'),
-        static: resolve('public/static')
+        static: resolve('public')
       }
     },
     performance: {
@@ -53,9 +53,6 @@ module.exports = {
         return assetFilename.endsWith('.js')
       }
     }
-    // externals: {
-    //   'mxgraph': 'mxgraph'
-    // }
   },
   // 删除moment除zh-cn中文包外的其它语言包，无需在代码中手动引入zh-cn语言包。
   chainWebpack: config => {

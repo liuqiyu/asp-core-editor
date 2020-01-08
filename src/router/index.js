@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-12-30 14:35:07
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2019-12-30 14:46:01
+ * @LastEditTime : 2020-01-08 11:13:32
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -24,7 +24,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes
 })
