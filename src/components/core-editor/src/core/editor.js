@@ -3,11 +3,11 @@
  * @Author: liuqiyu
  * @Date: 2019-12-04 15:00:15
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2020-01-08 15:23:13
+ * @LastEditTime : 2020-01-10 17:56:20
  */
 import mxgraph from './mxgraph'
 import PopupMenu from './popupMenu'
-import MxEvents from './mxEvents'
+// import MxEvents from './mxEvents'
 import Graph from './graph'
 import { defaultXml } from './constant'
 
@@ -38,7 +38,6 @@ Editor.prototype.init = function (container, setEnabled) {
   }
 
   PopupMenu.init(this.editor, this.graph, container)
-  MxEvents.init()
   /* eslint-disable no-new */
   new Graph(this.graph)
 

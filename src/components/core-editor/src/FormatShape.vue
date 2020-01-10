@@ -443,12 +443,12 @@
 </template>
 
 <script>
-import { Format } from './core'
-import { typeofElement } from './utils/utils'
+import { Utils } from './core'
 import InputUpload from './components/upload'
 import { LABEL_POSITIONS, END_FILL_OPTIONS, START_FILL_OPTIONS, EDGE_STYLE, EDGE_TYPE, FONT_DEFAULTS } from './utils/FORMAT_CONSTANT'
+
 export default {
-  name: 'Format',
+  name: 'FormatShape',
   computed: {
     LABEL_POSITIONS () {
       return LABEL_POSITIONS
@@ -472,6 +472,7 @@ export default {
   components: {
     InputUpload
   },
+  props: ['coreEditor'],
   data () {
     return {
       cells: null,
@@ -513,11 +514,11 @@ export default {
     // 选中
     selectionChanged (graph) {
       var cells = graph.getSelectionCells()
-      this.selectedType = typeofElement(cells)
+      this.selectedType = Utils.typeofElement(cells)
       this.cells = cells
       if (cells && cells.length === 1) {
         const geometry = cells[0].geometry
-        const ss = Format.getSelectionState()
+        const ss = this.coreEditor.methods.getSelectionState()
         console.log(ss)
         this.selectionChangedFormat(cells[0], geometry, ss)
         this.selectionChangedGeometry(cells[0], geometry, ss)
@@ -541,16 +542,16 @@ export default {
       this.$set(this.format, 'fontSize', ss.fontSize || 12)
       this.$set(this.format, 'value', cell.value || '')
       // 线条类型
-      this.format.edgeType = Format.getEdgeType(ss)
+      this.format.edgeType = this.coreEditor.methods.getEdgeType(ss)
       // 线条航点
-      this.format.waypoints = Format.getWaypoints(ss)
+      this.format.waypoints = this.coreEditor.methods.getWaypoints(ss)
       // 开始结束 箭头
-      this.format.startFill = Format.getEdgeFill('startFill', ss) ? 'default' : 'none'
-      this.format.endFill = Format.getEdgeFill('endFill', ss) ? 'default' : 'none'
+      this.format.startFill = this.coreEditor.methods.getEdgeFill('startFill', ss) ? 'default' : 'none'
+      this.format.endFill = this.coreEditor.methods.getEdgeFill('endFill', ss) ? 'default' : 'none'
       // 线条样式 实线 虚线
-      this.format.fontStyle = Format.getFontStyle(ss)
+      this.format.fontStyle = this.coreEditor.methods.getFontStyle(ss)
       // 文字位置
-      this.format.labelPosition = Format.getLabelPosition(ss)
+      this.format.labelPosition = this.coreEditor.methods.getLabelPosition(ss)
     },
     // 初始化几何
     selectionChangedGeometry (cell, geometry, ss) {
@@ -561,84 +562,84 @@ export default {
     },
     // 更新元件样式
     handleChangeStyle (keyword) {
-      Format.updateStyleHandler(keyword, this.format[keyword])
+      this.coreEditor.methods.updateStyleHandler(keyword, this.format[keyword])
     },
     // 修改线条样式
     handleChangeEdgeStyle (keys, values) {
-      Format.edgeWaypointsChange(keys)
+      this.coreEditor.methods.edgeWaypointsChange(keys)
     },
     // 线始端
     handleEdgeStartFillchange (e) {
-      Format.edgeFillChange('startFill', e)
+      this.coreEditor.methods.edgeFillChange('startFill', e)
     },
     // 线始端
     handleEdgeEndFillchange (e) {
-      Format.edgeFillChange('endFill', e)
+      this.coreEditor.methods.edgeFillChange('endFill', e)
     },
     // 条线类型 尖角 圆角 曲线
     handleEdgeTypeChange (e) {
-      Format.edgeTypeChange(e)
+      this.coreEditor.methods.edgeTypeChange(e)
     },
     // 线条样式
     handleEdgeStyleChange (e) {
-      Format.edgeBorderStyleChange(e)
+      this.coreEditor.methods.edgeBorderStyleChange(e)
     },
     //  更新字体样式 bold italic underline
     handleToggleFontStyle (style) {
-      Format.toggleFontStyle(style)
+      this.coreEditor.methods.toggleFontStyle(style)
     },
     // 更新值
     handleChangeValue (e) {
-      Format.updateValueHandler(e)
+      this.coreEditor.methods.updateValueHandler(e)
     },
     // 更新 元件几何  宽高 X Y
     handleChangeGeometry (keyword) {
-      Format.updateGeometryHandler(this.geometry[keyword], (geo) => {
+      this.coreEditor.methods.updateGeometryHandler(this.geometry[keyword], (geo) => {
         geo[keyword] = this.geometry[keyword]
       })
     },
     // actions 翻转
     handleFlipCells (style) {
-      Format.actions('flipCells', style)
+      this.coreEditor.methods.actions('flipCells', style)
     },
     // actions 对齐
     handleAlign (align) {
-      Format.actions('alignCells', align)
+      this.coreEditor.methods.actions('alignCells', align)
     },
     // actions 等距分布
     handleDistributeCells (e) {
-      Format.actions(e)
+      this.coreEditor.methods.actions(e)
     },
     // actions 移至最前
     handleToFront () {
-      Format.actions('toFront')
+      this.coreEditor.methods.actions('toFront')
     },
     // actions 移至最前
     handleToBack () {
-      Format.actions('toBack')
+      this.coreEditor.methods.actions('toBack')
     },
     // 字体位置
     handleChangeLabelPosition (value) {
-      Format.changeLabelPosition(value)
+      this.coreEditor.methods.changeLabelPosition(value)
     },
     // 字体 family
     handleFontDefaults (e) {
       console.log(e)
-      Format.changeLabelPosition(e)
+      this.coreEditor.methods.changeLabelPosition(e)
     },
     // 上传图片
     onSuccess ({ filename, file }) {
-      const ss = Format.getSelectionState()
-      Format.updateStyleHandler('oldImage', ss.image)
-      Format.updateStyleHandler('image', file.split(';')[0] + '' + file.split(';')[1])
-      Format.updateStyleHandler('imageName', filename)
+      const ss = this.coreEditor.methods.getSelectionState()
+      this.coreEditor.methods.updateStyleHandler('oldImage', ss.image)
+      this.coreEditor.methods.updateStyleHandler('image', file.split(';')[0] + '' + file.split(';')[1])
+      this.coreEditor.methods.updateStyleHandler('imageName', filename)
     },
     // 清除图片
     clear () {
-      const ss = Format.getSelectionState()
-      Format.updateStyleHandler('image', ss.oldImage)
-      Format.updateStyleHandler('oldImage', '')
-      Format.updateStyleHandler('imageName', '')
+      const ss = this.coreEditor.methods.getSelectionState()
+      this.coreEditor.methods.updateStyleHandler('image', ss.oldImage)
+      this.coreEditor.methods.updateStyleHandler('oldImage', '')
+      this.coreEditor.methods.updateStyleHandler('imageName', '')
     }
   }
 }

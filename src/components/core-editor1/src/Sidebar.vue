@@ -29,14 +29,15 @@
 </template>
 
 <script>
-const { Sidebar } = AspCoreEditor
 export default {
   name: 'Sidebar',
-  mounted () {
-    const ele = document.querySelectorAll('.drap')
-    ele.forEach(item => {
-      Sidebar.createDragSource(item)
-    })
+  props: ['coreEditor'],
+  watch: {
+    coreEditor (val) {
+      if (val) {
+        this.createDragSource()
+      }
+    }
   },
   data () {
     return {
@@ -237,6 +238,12 @@ export default {
         str += `${item}=${style[item]};`
       })
       return str
+    },
+    createDragSource () {
+      const ele = document.querySelectorAll('.drap')
+      ele.forEach(item => {
+        this.coreEditor.sidebar.createDragSource(item)
+      })
     }
   }
 }

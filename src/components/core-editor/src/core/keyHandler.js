@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-12-05 14:31:21
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2020-01-08 15:22:53
+ * @LastEditTime : 2020-01-10 16:05:09
  */
 import mxgraph from './mxgraph'
 
@@ -13,8 +13,8 @@ const {
   mxClient
 } = mxgraph
 
-export default function KeyHandler (editor) {
-  this.editor = editor.editor
+export default function KeyHandler (CoreEditor) {
+  this.editor = CoreEditor.editor
   this.init()
 }
 

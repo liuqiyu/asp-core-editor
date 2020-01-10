@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-12-18 15:03:17
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2020-01-08 21:29:59
+ * @LastEditTime : 2020-01-10 18:23:06
  */
 const path = require('path')
 const webpack = require('webpack')
@@ -16,8 +16,8 @@ module.exports = {
     'asp-core-editor': './src/components/core-editor/src/core/index.js'
   },
   output: {
-    path: path.resolve(__dirname, './dist1'),
-    publicPath: '/dist1/',
+    path: path.resolve(__dirname, './public'),
+    publicPath: '/public/',
     filename: '[name].min.js',
     library: 'AspCoreEditor',
     libraryTarget: 'umd',

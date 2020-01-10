@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2020-01-08 15:23:29
+ * @LastEditTime : 2020-01-10 16:05:16
  */
 import mxgraph from './mxgraph'
 import { ctrlKey } from './constant'
@@ -18,8 +18,8 @@ const {
   mxClipboard
 } = mxgraph
 
-function Actions (editor) {
-  this.editor = editor.editor
+function Actions (CoreEditor) {
+  this.editor = CoreEditor.editor
   this.actions = {}
   this.init()
 }

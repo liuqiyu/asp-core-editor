@@ -3,10 +3,18 @@
  * @Author: liuqiyu
  * @Date: 2019-12-30 14:35:07
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2020-01-08 11:14:57
+ * @LastEditTime : 2020-01-10 18:05:50
  -->
 <template>
   <div class="editor">
+    <core-editor :data="data"
+                 :setEnabled="true"
+                 @click="click"
+                 @dblClick="dblClick"
+                 @mouseDown="mouseDown"
+                 @mouseUp="mouseUp"
+                 @mouseMove="mouseMove"
+                 @popupMenuHandler="popupMenuHandler"></core-editor>
     <core-editor :data="data"
                  :setEnabled="true"
                  @click="click"
@@ -58,6 +66,6 @@ export default {
 
 <style lang="scss" scoped>
 .editor {
-  height: 100%;
+  height: 50%;
 }
 </style>

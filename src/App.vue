@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-12-30 14:35:07
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2020-01-08 20:05:27
+ * @LastEditTime : 2020-01-10 11:36:33
  -->
 <template>
   <div id="app">
@@ -18,7 +18,7 @@
     <div class="router-wrapper">
       <router-view />
     </div>
-    <p class="copyright">Copyright © 1993 - 2019 Liuqiyu. All Rights Reserved. Liuqiyu 版权所有</p>
+    <p class="copyright">Copyright © 2019 - 2020 Aspire. All Rights Reserved. Aspire 版权所有</p>
   </div>
 </template>
 

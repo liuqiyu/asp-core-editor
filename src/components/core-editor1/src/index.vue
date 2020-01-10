@@ -1,16 +1,19 @@
 <template>
   <div id="graph-wrapper">
     <Sidebar v-if="setEnabled"
+             :coreEditor="coreEditor"
              id="graph-sidebar">
     </Sidebar>
     <div id="graph-map">
       <Toolbar id="graph-tool"
+               :coreEditor="coreEditor"
                ref="toolbar"
                @renderXml="renderXml">
       </Toolbar>
 
       <div id="graph-content">
         <div id="graph"
+             ref="graph"
              class="graph-container">
         </div>
         <div v-if="setEnabled"
@@ -23,6 +26,7 @@
     <div id="graph-sidebar"
          v-if="setEnabled">
       <components :is="currentFormat"
+                  :coreEditor="coreEditor"
                   ref="format"></components>
     </div>
   </div>
@@ -30,10 +34,12 @@
 
 <script>
 import Toolbar from './Toolbar.vue'
-import Format1 from './Format.vue'
+import Format from './Format.vue'
 import FormatShape from './FormatShape.vue'
 import Sidebar from './Sidebar.vue'
-const { CoreEditor } = AspCoreEditor
+const { CoreEditor, OutLine, mxgraph } = AspCoreEditor
+
+const { mxEvent, mxUtils } = mxgraph
 
 export default {
   name: 'core-editor1',
@@ -60,35 +66,34 @@ export default {
     return {
       coreEditor: null,
       graph: null,
-      currentFormat: 'Format1',
+      currentFormat: 'Format',
       editorData: ''
     }
   },
   components: {
     Toolbar,
     Sidebar,
-    Format1,
+    Format,
     FormatShape
   },
   async mounted () {
     await this.$nextTick()
-    let container = document.getElementById('graph')
+    let container = this.$refs.graph
 
-    // let outlineContainer = this.$refs.outlineContainer
+    let outlineContainer = this.$refs.outlineContainer
 
-    console.log(CoreEditor)
     this.coreEditor = new CoreEditor(container, this.setEnabled)
 
     var graph = this.coreEditor.editor.graph
     this.graph = graph
-    // OutLine.init(graph, outlineContainer) //
+    OutLine.init(graph, outlineContainer) //
 
     if (this.editorData) {
       this.renderXml(this.editorData)
     }
 
     // 选中元件
-    graph.getSelectionModel().addListener(mxEvent.CHANGE, async (sender, evt) => {
+    graph.getSelectionModel().addListener('change', async (sender, evt) => {
       var cell = graph.getSelectionCell()
       if (cell) {
         this.currentFormat = 'FormatShape'
@@ -96,22 +101,36 @@ export default {
         this.$refs.format.selectionChanged(graph)
         this.$refs.toolbar._data.isSelect = true
       } else {
-        this.currentFormat = 'Format1'
+        this.currentFormat = 'Format'
         this.$refs.toolbar._data.isSelect = false
       }
     })
 
     // 单击事件
-    graph.addListener(mxEvent.CLICK, (sender, evt) => {
+    graph.addListener('click', (sender, evt) => {
       var cell = evt.getProperty('cell') // 元件
       this.$emit('click', { graph, cell })
     })
 
     // 双击事件
-    graph.addListener(mxEvent.DOUBLE_CLICK, (sender, evt) => {
+    graph.addListener('dblclick', (sender, evt) => {
       var cell = evt.getProperty('cell') // 元件
       this.$emit('dblClick', { graph, cell })
     })
+
+    const _t = this
+
+    mxEvent.addMouseWheelListener(mxUtils.bind(this, function (evt, up) {
+      if (!mxEvent.isConsumed(evt)) {
+        if (up) {
+          _t.coreEditor.methods.actions('zoomIn')
+        } else {
+          _t.coreEditor.methods.actions('zoomOut')
+        }
+
+        mxEvent.consume(evt, false, false) // 消耗给定的事件
+      }
+    }), container)
 
     // 鼠标移动事件
     graph.addMouseListener({
@@ -155,7 +174,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 #graph-wrapper {
   width: 100%;
   height: 100%;

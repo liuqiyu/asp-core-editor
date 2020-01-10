@@ -3,17 +3,17 @@
  * @Author: liuqiyu
  * @Date: 2019-12-04 15:00:15
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2020-01-08 21:19:09
+ * @LastEditTime : 2020-01-10 18:12:24
  */
 
 import mxgraph from './mxgraph'
 import { Editor } from './editor'
 import Actions from './actions'
 import KeyHandler from './keyHandler'
-import Tool from './toolbar'
-import Format from './format'
+import Methods from './methods'
 import Sidebar from './sidebar'
 import OutLine from './outLine'
+import Utils from './utils'
 
 const {
   mxUtils,
@@ -29,16 +29,16 @@ function CoreEditor (container, setEnabled) {
     this.editor = new Editor(this, container, setEnabled)
     this.actions = new Actions(this)
     this.KeyHandler = new KeyHandler(this)
-    Tool.init(this)
-    Format.init(this)
-    Sidebar.init(this)
+    this.sidebar = new Sidebar(this)
+    this.methods = new Methods(this)
   }
 }
 
+CoreEditor.prototype.aaaa = 123
+
 export {
-  Tool,
-  Format,
-  Sidebar,
   CoreEditor,
-  OutLine
+  OutLine,
+  Utils,
+  mxgraph
 }

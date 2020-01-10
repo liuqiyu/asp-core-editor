@@ -2,8 +2,8 @@
  * @Description: utils 工具函数
  * @Author: liuqiyu
  * @Date: 2019-11-29 14:01:16
- * @LastEditors: liuqiyu
- * @LastEditTime: 2019-12-16 15:03:55
+ * @LastEditors  : liuqiyu
+ * @LastEditTime : 2020-01-10 18:14:44
  */
 
 /**
@@ -15,7 +15,7 @@
  * multipleVertex: 多个 vertex
  * multipleAll: 多个 edge 和 vertex
  */
-export const typeofElement = cells => {
+const typeofElement = cells => {
   try {
     if (cells.length === 1) {
       return cells[0].edge ? 'singleEdge' : 'singleVertex'
@@ -37,4 +37,8 @@ export const typeofElement = cells => {
   } catch (e) {
     console.log(e)
   }
+}
+
+export default {
+  typeofElement
 }

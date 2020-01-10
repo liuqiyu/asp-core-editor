@@ -1,16 +1,19 @@
 <template>
   <div id="graph-wrapper">
     <Sidebar v-if="setEnabled"
+             :coreEditor="coreEditor"
              id="graph-sidebar">
     </Sidebar>
     <div id="graph-map">
       <Toolbar id="graph-tool"
+               :coreEditor="coreEditor"
                ref="toolbar"
                @renderXml="renderXml">
       </Toolbar>
 
       <div id="graph-content">
         <div id="graph"
+             ref="graph"
              class="graph-container">
         </div>
         <div v-if="setEnabled"
@@ -23,6 +26,7 @@
     <div id="graph-sidebar"
          v-if="setEnabled">
       <components :is="currentFormat"
+                  :coreEditor="coreEditor"
                   ref="format"></components>
     </div>
   </div>
@@ -33,15 +37,9 @@ import Toolbar from './Toolbar.vue'
 import Format from './Format.vue'
 import FormatShape from './FormatShape.vue'
 import Sidebar from './Sidebar.vue'
-import mxgraph from './core/mxgraph'
-import CoreEditor from './core'
-import OutLine from './core/outLine'
+import { CoreEditor, OutLine, mxgraph } from './core'
 
 const { mxEvent, mxUtils } = mxgraph
-
-Object.assign(mxEvent, {
-  NORMAL_TYPE_CLICKED: 'NORMAL_TYPE_CLICKED'
-})
 
 export default {
   name: 'core-editor',
@@ -80,7 +78,7 @@ export default {
   },
   async mounted () {
     await this.$nextTick()
-    let container = document.getElementById('graph')
+    let container = this.$refs.graph
 
     let outlineContainer = this.$refs.outlineContainer
 
@@ -95,7 +93,7 @@ export default {
     }
 
     // 选中元件
-    graph.getSelectionModel().addListener(mxEvent.CHANGE, async (sender, evt) => {
+    graph.getSelectionModel().addListener('change', async (sender, evt) => {
       var cell = graph.getSelectionCell()
       if (cell) {
         this.currentFormat = 'FormatShape'
@@ -109,16 +107,30 @@ export default {
     })
 
     // 单击事件
-    graph.addListener(mxEvent.CLICK, (sender, evt) => {
+    graph.addListener('click', (sender, evt) => {
       var cell = evt.getProperty('cell') // 元件
       this.$emit('click', { graph, cell })
     })
 
     // 双击事件
-    graph.addListener(mxEvent.DOUBLE_CLICK, (sender, evt) => {
+    graph.addListener('dblclick', (sender, evt) => {
       var cell = evt.getProperty('cell') // 元件
       this.$emit('dblClick', { graph, cell })
     })
+
+    const _t = this
+
+    mxEvent.addMouseWheelListener(mxUtils.bind(this, function (evt, up) {
+      if (!mxEvent.isConsumed(evt)) {
+        if (up) {
+          _t.coreEditor.methods.actions('zoomIn')
+        } else {
+          _t.coreEditor.methods.actions('zoomOut')
+        }
+
+        mxEvent.consume(evt, false, false) // 消耗给定的事件
+      }
+    }), container)
 
     // 鼠标移动事件
     graph.addMouseListener({
@@ -164,7 +176,6 @@ export default {
 <style lang="scss" scoped>
 @import "./styles/main.scss";
 @import "./styles/common.css";
-@import "./styles/grapheditor.css";
 
 #graph-wrapper {
   width: 100%;

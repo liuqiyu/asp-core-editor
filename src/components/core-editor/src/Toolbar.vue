@@ -119,13 +119,18 @@
 </template>
 
 <script>
-import { Tool } from './core'
 import importXml from './components/dialog/importXml.vue'
 
 export default {
   name: 'Toolbar',
   components: {
     importXml
+  },
+  props: ['coreEditor'],
+  computed: {
+    methods () {
+      return this.coreEditor.methods
+    }
   },
   data () {
     return {
@@ -139,18 +144,18 @@ export default {
   },
   methods: {
     actions (name) {
-      Tool.actions(name)
+      this.methods.actions(name)
     },
     // 拖动
     handlePan () {
       this.panStatus = !this.panStatus
-      Tool.actions('pan', this.panStatus)
+      this.methods.actions('pan', this.panStatus)
     },
     handleShowXml () {
-      Tool.showXml()
+      this.methods.showXml()
     },
     handleSave () {
-      Tool.save((xml, graph) => {
+      this.methods.save((xml, graph) => {
         console.log(xml)
         localStorage.setItem('xml', xml)
         this.$message({
