@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-12-30 14:35:07
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2020-01-08 20:05:05
+ * @LastEditTime : 2020-01-13 16:50:38
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -13,13 +13,13 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'editor',
-    component: () => import(/* webpackChunkName: "editor" */ '@/views/editor')
+    name: 'development',
+    component: () => import(/* webpackChunkName: "editor" */ '@/views/development')
   },
   {
-    path: '/editor1',
-    name: 'editor1',
-    component: () => import(/* webpackChunkName: "editor" */ '@/views/editor1')
+    path: '/production',
+    name: 'production',
+    component: () => import(/* webpackChunkName: "editor" */ '@/views/production')
   },
   {
     path: '/preview',

@@ -37,11 +37,12 @@ import Toolbar from './Toolbar.vue'
 import Format from './Format.vue'
 import FormatShape from './FormatShape.vue'
 import Sidebar from './Sidebar.vue'
-const { CoreEditor, OutLine, mxgraph } = AspCoreEditor
+import { CoreEditor, OutLine, mxgraph } from './core'
+
 const { mxEvent, mxUtils } = mxgraph
 
 export default {
-  name: 'core-editor1',
+  name: 'core-editor',
   props: {
     setEnabled: {
       type: Boolean,
@@ -173,6 +174,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "./styles/main.scss";
+@import "./styles/common.css";
+
 #graph-wrapper {
   width: 100%;
   height: 100%;

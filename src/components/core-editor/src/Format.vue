@@ -34,7 +34,7 @@
 </template>
 
 <script>
-// import { Format } from './core'
+
 export default {
   name: 'Format',
   data () {

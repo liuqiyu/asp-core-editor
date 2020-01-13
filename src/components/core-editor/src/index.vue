@@ -37,12 +37,11 @@ import Toolbar from './Toolbar.vue'
 import Format from './Format.vue'
 import FormatShape from './FormatShape.vue'
 import Sidebar from './Sidebar.vue'
-import { CoreEditor, OutLine, mxgraph } from './core'
-
+const { CoreEditor, OutLine, mxgraph } = AspCoreEditor
 const { mxEvent, mxUtils } = mxgraph
 
 export default {
-  name: 'core-editor',
+  name: 'asp-core-editor',
   props: {
     setEnabled: {
       type: Boolean,

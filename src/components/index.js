@@ -3,12 +3,12 @@
  * @Author: liuqiyu
  * @Date: 2019-12-30 14:48:23
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2020-01-13 13:46:24
+ * @LastEditTime : 2020-01-13 16:49:54
  */
-import CoreEditor from './core-editor'
-import CoreEditor1 from './core-editor1'
+import CoreEditor from './core-editor/index-development'
+import AspCoreEditor from './core-editor/index-production'
 
-const components = [CoreEditor, CoreEditor1]
+const components = [CoreEditor, AspCoreEditor]
 
 const install = (Vue) => {
   components.forEach(component => {

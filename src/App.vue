@@ -3,16 +3,16 @@
  * @Author: liuqiyu
  * @Date: 2019-12-30 14:35:07
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2020-01-10 11:36:33
+ * @LastEditTime : 2020-01-13 17:00:43
  -->
 <template>
   <div id="app">
     <div class="topbar">
-      <div class="logo">拓扑编辑器</div>
+      <div class="logo">ASP-CORE-EDITOR 拓扑编辑器</div>
       <div class="nav">
-        <router-link to="/">Editor</router-link> |
-        <router-link to="/editor1">Editor1</router-link> |
-        <router-link to="/preview">Preview</router-link>
+        <router-link to="/">开发</router-link> |
+        <router-link to="/production">生产</router-link> |
+        <router-link to="/preview">预览</router-link>
       </div>
     </div>
     <div class="router-wrapper">

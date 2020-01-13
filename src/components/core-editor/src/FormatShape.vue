@@ -513,7 +513,7 @@ export default {
   methods: {
     // 选中
     selectionChanged (graph) {
-      var cells = graph.getSelectionCells()
+      let cells = graph.getSelectionCells()
       this.selectedType = Utils.typeofElement(cells)
       this.cells = cells
       if (cells && cells.length === 1) {

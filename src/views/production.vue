@@ -3,18 +3,19 @@
  * @Author: liuqiyu
  * @Date: 2019-12-30 14:35:07
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2020-01-13 13:45:22
+ * @LastEditTime : 2020-01-13 16:49:02
  -->
 <template>
   <div class="editor">
-    <core-editor1 :data="data"
-                  :setEnabled="true"
-                  @click="click"
-                  @dblClick="dblClick"
-                  @mouseDown="mouseDown"
-                  @mouseUp="mouseUp"
-                  @mouseMove="mouseMove"
-                  @popupMenuHandler="popupMenuHandler"></core-editor1>
+    <asp-core-editor :data="data"
+                     :setEnabled="true"
+                     @click="click"
+                     @dblClick="dblClick"
+                     @mouseDown="mouseDown"
+                     @mouseUp="mouseUp"
+                     @mouseMove="mouseMove"
+                     @popupMenuHandler="popupMenuHandler">
+    </asp-core-editor>
   </div>
 </template>
 

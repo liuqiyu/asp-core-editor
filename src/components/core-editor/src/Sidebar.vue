@@ -29,7 +29,7 @@
 </template>
 
 <script>
-// import { Sidebar } from './core'
+
 export default {
   name: 'Sidebar',
   props: ['coreEditor'],
