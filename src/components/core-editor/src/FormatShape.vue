@@ -563,7 +563,15 @@ export default {
     },
     // 更新元件样式
     handleChangeStyle (keyword) {
-      this.coreEditor.methods.updateStyleHandler(keyword, this.format[keyword])
+      let key = ''
+      if (keyword === 'fillColor' && this.shape === 'image') {
+        key = 'imageBackground'
+      }
+      if (keyword === 'strokeColor' && this.shape === 'image') {
+        key = 'imageBorder'
+      }
+      console.log(key)
+      this.coreEditor.methods.updateStyleHandler(key || keyword, this.format[keyword])
     },
     // 修改线条样式
     handleChangeEdgeStyle (keys, values) {
