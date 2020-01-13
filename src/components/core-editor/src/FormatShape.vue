@@ -520,6 +520,7 @@ export default {
         const geometry = cells[0].geometry
         const ss = this.coreEditor.methods.getSelectionState()
         console.log(ss)
+        console.log(geometry)
         this.selectionChangedFormat(cells[0], geometry, ss)
         this.selectionChangedGeometry(cells[0], geometry, ss)
         switch (ss.shape) {

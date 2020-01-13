@@ -75,8 +75,7 @@ export default {
     Format,
     FormatShape
   },
-  async mounted () {
-    await this.$nextTick()
+  mounted () {
     let container = this.$refs.graph
 
     let outlineContainer = this.$refs.outlineContainer
@@ -91,19 +90,8 @@ export default {
       this.renderXml(this.editorData)
     }
 
-    // 选中元件
-    graph.getSelectionModel().addListener('change', async (sender, evt) => {
-      let cell = graph.getSelectionCell()
-      if (cell) {
-        this.currentFormat = 'FormatShape'
-        await this.$nextTick()
-        this.$refs.format.selectionChanged(graph)
-        this.$refs.toolbar._data.isSelect = true
-      } else {
-        this.currentFormat = 'Format'
-        this.$refs.toolbar._data.isSelect = false
-      }
-    })
+    graph.getSelectionModel().addListener('change', this.updateCells) // 选中元件
+    graph.getModel().addListener('change', this.updateCells) // 拖动元件
 
     // 单击事件
     graph.addListener('click', (sender, evt) => {
@@ -166,6 +154,18 @@ export default {
     renderXml (value) {
       if (value && this.graph) {
         this.coreEditor.editor.renderXml(value)
+      }
+    },
+    async updateCells () {
+      let cell = this.graph.getSelectionCell()
+      if (cell) {
+        this.currentFormat = 'FormatShape'
+        await this.$nextTick()
+        this.$refs.format.selectionChanged(this.graph)
+        this.$refs.toolbar._data.isSelect = true
+      } else {
+        this.currentFormat = 'Format'
+        this.$refs.toolbar._data.isSelect = false
       }
     }
   }

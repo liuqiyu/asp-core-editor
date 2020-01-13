@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-12-30 14:35:07
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2020-01-13 17:00:43
+ * @LastEditTime : 2020-01-13 17:11:40
  -->
 <template>
   <div id="app">
@@ -44,11 +44,11 @@
   }
 
   .nav {
-    a {
+    > a {
       font-weight: bold;
       color: #fff;
       font-size: 16px;
-
+      padding: 0 10px;
       &.router-link-exact-active {
         color: yellow;
       }
