@@ -519,10 +519,6 @@ export default {
       if (cells && cells.length === 1) {
         const geometry = cells[0].geometry
         const ss = this.coreEditor.methods.getSelectionState()
-        console.log(ss)
-        console.log(geometry)
-        this.selectionChangedFormat(cells[0], geometry, ss)
-        this.selectionChangedGeometry(cells[0], geometry, ss)
         switch (ss.shape) {
           case 'image':
             this.shape = 'image'
@@ -531,14 +527,17 @@ export default {
             this.shape = ''
             break
         }
+        this.selectionChangedFormat(cells[0], geometry, ss)
+        this.selectionChangedGeometry(cells[0], geometry, ss)
       }
     },
     // 初始化样式
     selectionChangedFormat (cell, geometry, ss) {
+      console.log(ss)
       this.$set(this.format, 'fontColor', ss.fontColor || '')
       this.$set(this.format, 'labelBackgroundColor', ss.labelBackgroundColor || '')
-      this.$set(this.format, 'fillColor', ss.fillColor || '')
-      this.$set(this.format, 'strokeColor', ss.strokeColor || '')
+      this.$set(this.format, 'fillColor', this.shape !== 'image' ? ss.fillColor : ss.imageBackground)
+      this.$set(this.format, 'strokeColor', this.shape !== 'image' ? ss.strokeColor : ss.imageBorder)
       this.$set(this.format, 'strokeWidth', ss.strokeWidth || '')
       this.$set(this.format, 'fontSize', ss.fontSize || 12)
       this.$set(this.format, 'value', cell.value || '')
@@ -546,10 +545,11 @@ export default {
       this.format.edgeType = this.coreEditor.methods.getEdgeType(ss)
       // 线条航点
       this.format.waypoints = this.coreEditor.methods.getWaypoints(ss)
+      this.format.edgeStyle = this.coreEditor.methods.getEdgeStyle(ss)
       // 开始结束 箭头
       this.format.startFill = this.coreEditor.methods.getEdgeFill('startFill', ss) ? 'default' : 'none'
       this.format.endFill = this.coreEditor.methods.getEdgeFill('endFill', ss) ? 'default' : 'none'
-      // 线条样式 实线 虚线
+      // 文字样式 加粗 斜体 下划线
       this.format.fontStyle = this.coreEditor.methods.getFontStyle(ss)
       // 文字位置
       this.format.labelPosition = this.coreEditor.methods.getLabelPosition(ss)
@@ -570,7 +570,6 @@ export default {
       if (keyword === 'strokeColor' && this.shape === 'image') {
         key = 'imageBorder'
       }
-      console.log(key)
       this.coreEditor.methods.updateStyleHandler(key || keyword, this.format[keyword])
     },
     // 修改线条样式

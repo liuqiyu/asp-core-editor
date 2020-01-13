@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2020-01-13 11:44:01
+ * @LastEditTime : 2020-01-13 18:22:57
  */
 import mxgraph from './mxgraph'
 const {
@@ -362,6 +362,13 @@ Methods.prototype.getEdgeType = function (ss) {
     edgeType = 'sharp'
   }
   return edgeType
+}
+
+// 线条样式 虚线 实线
+Methods.prototype.getEdgeStyle = function (ss) {
+  const dashed = mxUtils.getValue(ss, mxConstants.STYLE_DASHED, null)
+
+  return dashed === 1 ? 'dashed' : 'solid'
 }
 
 // 统一的actions执行函数
