@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-12-05 14:31:21
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2020-01-10 18:00:50
+ * @LastEditTime : 2020-01-13 14:37:26
  */
 import mxgraph from './mxgraph'
 
@@ -43,7 +43,7 @@ Sidebar.prototype.createDragSource = function (ele) {
   }
 
   const _dropSuccessCb = (graph, evt, target, x, y) => {
-    var cell = null
+    let cell = null
     if (type === 'edge') {
       cell = new mxCell('', new mxGeometry(0, 0, width, height), style)
       cell.geometry.setTerminalPoint(new mxPoint(0, height), true)
@@ -64,7 +64,7 @@ Sidebar.prototype.createDragSource = function (ele) {
       cell = new mxCell(value, new mxGeometry(0, 0, width, height), style)
       cell.vertex = true
     }
-    var cells = graph.importCells([cell], x, y, target)
+    let cells = graph.importCells([cell], x, y, target)
 
     if (cells != null && cells.length > 0) {
       graph.scrollCellToVisible(cells[0])

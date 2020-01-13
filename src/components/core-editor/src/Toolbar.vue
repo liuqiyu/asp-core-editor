@@ -98,7 +98,7 @@
                type="text"
                title="保存"
                icon="iconfont iconbaocun2"></el-button>
-    <el-button @click="handleSave"
+    <el-button @click="handleHelp"
                type="text"
                title="帮助"
                icon="iconfont iconiconfontbangzhu"></el-button>
@@ -107,24 +107,27 @@
                title="关于我们"
                icon="iconfont iconziyuan"></el-button>
     <!--弹出框-->
-    <el-dialog :title="dialogTitle"
+    <el-dialog class="asp-dialog"
+               :title="dialogTitle"
                :visible.sync="dialogVisible"
                :close-on-click-modal="false"
-               width="30%">
+               :width="dialogWidth">
       <component :is="currentComponent"
-                 @importXml="importXml"
+                 @importXml="renderXml"
                  @close="close"></component>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import importXml from './components/dialog/importXml.vue'
+import importXml from './components/dialog/importXml'
+import help from './components/dialog/help'
 
 export default {
   name: 'Toolbar',
   components: {
-    importXml
+    importXml,
+    help
   },
   props: ['coreEditor'],
   computed: {
@@ -136,6 +139,7 @@ export default {
     return {
       dialogTitle: null,
       dialogVisible: false,
+      dialogWidth: '500px',
       panStatus: false,
       currentComponent: null,
       isEmpty: true,
@@ -164,9 +168,16 @@ export default {
         })
       })
     },
+    handleHelp () {
+      this.dialogTitle = '帮助'
+      this.dialogVisible = true
+      this.dialogWidth = '600px'
+      this.currentComponent = 'help'
+    },
     importXml () {
       this.dialogTitle = '导入'
       this.dialogVisible = true
+      this.dialogWidth = '500px'
       this.currentComponent = 'importXml'
     },
     close () {
@@ -204,6 +215,11 @@ export default {
     margin-left: 6px;
     margin-right: 6px;
     margin-top: -2px;
+  }
+}
+.asp-dialog {
+  ::v-deep .el-dialog__body {
+    padding: 10px 20px 15px 20px !important;
   }
 }
 </style>

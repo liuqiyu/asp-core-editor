@@ -3,11 +3,11 @@
  * @Author: liuqiyu
  * @Date: 2019-12-19 16:11:18
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2019-12-30 15:48:53
+ * @LastEditTime : 2020-01-13 14:51:11
  -->
 <template>
   <div>
-    <div class="yus-dialog__body">
+    <div class="asp-dialog-body">
       <el-upload class="upload-demo"
                  action=""
                  :http-request="handleBeforeUpload"
@@ -20,7 +20,7 @@
       </el-upload>
     </div>
     <div slot="footer"
-         class="yus-dialog__footer">
+         class="asp-dialog-footer">
       <el-button @click="save"
                  type="primary"
                  :disabled="disabled">保存</el-button>
@@ -53,9 +53,9 @@ export default {
       this.$emit('close')
     },
     handleBeforeUpload (params) {
-      var self = this
+      let self = this
       const flie = params.file
-      var x = new FileReader()
+      let x = new FileReader()
       x.readAsText(flie, 'UTF-8')
       x.onloadend = function (ev) {
         self.xml = x.result
@@ -68,14 +68,8 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.graph-tool {
-  display: flex;
-  align-items: center;
-  padding-left: 12px;
-  background: #f6f6f6;
-  .finger-select {
-    opacity: 0.5;
-  }
+<style lang="scss" scoped>
+.asp-dialog-footer {
+  text-align: right;
 }
 </style>
