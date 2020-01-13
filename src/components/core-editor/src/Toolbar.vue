@@ -102,7 +102,7 @@
                type="text"
                title="帮助"
                icon="iconfont iconiconfontbangzhu"></el-button>
-    <el-button @click="handleSave"
+    <el-button @click="handleAbout"
                type="text"
                title="关于我们"
                icon="iconfont iconziyuan"></el-button>
@@ -122,12 +122,14 @@
 <script>
 import importXml from './components/dialog/importXml'
 import help from './components/dialog/help'
+import about from './components/dialog/about'
 
 export default {
   name: 'Toolbar',
   components: {
     importXml,
-    help
+    help,
+    about
   },
   props: ['coreEditor'],
   computed: {
@@ -173,6 +175,12 @@ export default {
       this.dialogVisible = true
       this.dialogWidth = '600px'
       this.currentComponent = 'help'
+    },
+    handleAbout () {
+      this.dialogTitle = '关于我们'
+      this.dialogVisible = true
+      this.dialogWidth = '400px'
+      this.currentComponent = 'about'
     },
     importXml () {
       this.dialogTitle = '导入'
