@@ -38,7 +38,6 @@ import Format from './Format.vue'
 import FormatShape from './FormatShape.vue'
 import Sidebar from './Sidebar.vue'
 const { CoreEditor, OutLine, mxgraph } = AspCoreEditor
-
 const { mxEvent, mxUtils } = mxgraph
 
 export default {
@@ -84,7 +83,7 @@ export default {
 
     this.coreEditor = new CoreEditor(container, this.setEnabled)
 
-    var graph = this.coreEditor.editor.graph
+    let graph = this.coreEditor.editor.graph
     this.graph = graph
     OutLine.init(graph, outlineContainer) //
 
@@ -94,7 +93,7 @@ export default {
 
     // 选中元件
     graph.getSelectionModel().addListener('change', async (sender, evt) => {
-      var cell = graph.getSelectionCell()
+      let cell = graph.getSelectionCell()
       if (cell) {
         this.currentFormat = 'FormatShape'
         await this.$nextTick()
@@ -108,13 +107,13 @@ export default {
 
     // 单击事件
     graph.addListener('click', (sender, evt) => {
-      var cell = evt.getProperty('cell') // 元件
+      let cell = evt.getProperty('cell') // 元件
       this.$emit('click', { graph, cell })
     })
 
     // 双击事件
     graph.addListener('dblclick', (sender, evt) => {
-      var cell = evt.getProperty('cell') // 元件
+      let cell = evt.getProperty('cell') // 元件
       this.$emit('dblClick', { graph, cell })
     })
 

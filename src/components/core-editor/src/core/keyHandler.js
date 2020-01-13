@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-12-05 14:31:21
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2020-01-10 16:05:09
+ * @LastEditTime : 2020-01-13 11:43:46
  */
 import mxgraph from './mxgraph'
 
@@ -23,10 +23,10 @@ KeyHandler.prototype.init = function () {
   const keyHandler = new mxKeyHandler(graph)
   // Binds keystrokes to actions
   keyHandler.bindAction = mxUtils.bind(this, function (code, control, key, shift) {
-    var action = this.editor.editor.actions.actions[key]
+    let action = this.editor.editor.actions.actions[key]
     // var action = this.actions.get(key)
     if (action != null) {
-      var f = function () {
+      let f = function () {
         if (action.enabled) {
           action.funct()
         }

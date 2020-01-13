@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2020-01-10 16:05:16
+ * @LastEditTime : 2020-01-13 11:42:11
  */
 import mxgraph from './mxgraph'
 import { ctrlKey } from './constant'
@@ -106,12 +106,12 @@ Actions.prototype.init = function () {
     let encoder = new mxCodec()
     let xx = encoder.encode(graph.getModel())
     const getXml = mxUtils.getXml(xx)
-    var element = document.createElement('a')
+    let element = document.createElement('a')
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(getXml))
     element.setAttribute('download', 'aaa.xml')
     element.style.display = 'none'
     document.body.appendChild(element)
-    var blob = new Blob([getXml])
+    let blob = new Blob([getXml])
     element.href = URL.createObjectURL(blob)
     element.click()
     document.body.removeChild(element)
@@ -121,17 +121,17 @@ Actions.prototype.init = function () {
   function deleteCells (includeEdges) {
     // 取消交互操作
     graph.escape()
-    var cells = graph.getDeletableCells(graph.getSelectionCells())
+    let cells = graph.getDeletableCells(graph.getSelectionCells())
 
     if (cells != null && cells.length > 0) {
-      var parents = graph.model.getParents(cells)
+      let parents = graph.model.getParents(cells)
       graph.removeCells(cells, includeEdges)
 
       // Selects parents for easier editing of groups
       if (parents != null) {
-        var select = []
+        let select = []
 
-        for (var i = 0; i < parents.length; i++) {
+        for (let i = 0; i < parents.length; i++) {
           if (graph.model.contains(parents[i]) &&
             (graph.model.isVertex(parents[i]) ||
               graph.model.isEdge(parents[i]))) {
@@ -155,16 +155,16 @@ Actions.prototype.init = function () {
     }
 
     if (cells != null && cells.length > 1) {
-      var vertices = []
-      var max = null
-      var min = null
+      let vertices = []
+      let max = null
+      let min = null
 
-      for (var i = 0; i < cells.length; i++) {
+      for (let i = 0; i < cells.length; i++) {
         if (graph.getModel().isVertex(cells[i])) {
-          var state = graph.view.getState(cells[i])
+          let state = graph.view.getState(cells[i])
 
           if (state != null) {
-            var tmp = horizontal ? state.getCenterX() : state.getCenterY()
+            let tmp = horizontal ? state.getCenterX() : state.getCenterY()
             max = max != null ? Math.max(max, tmp) : tmp
             min = min != null ? Math.min(min, tmp) : tmp
 
@@ -178,22 +178,22 @@ Actions.prototype.init = function () {
           return horizontal ? a.x - b.x : a.y - b.y
         })
 
-        var t = graph.view.translate
-        var s = graph.view.scale
+        let t = graph.view.translate
+        let s = graph.view.scale
 
         min = min / s - (horizontal ? t.x : t.y)
         max = max / s - (horizontal ? t.x : t.y)
 
         graph.getModel().beginUpdate()
         try {
-          var dt = (max - min) / (vertices.length - 1)
-          var t0 = min
+          let dt = (max - min) / (vertices.length - 1)
+          let t0 = min
 
           for (let i = 1; i < vertices.length - 1; i++) {
-            var pstate = graph.view.getState(
+            let pstate = graph.view.getState(
               graph.model.getParent(vertices[i].cell)
             )
-            var geo = graph.getCellGeometry(vertices[i].cell)
+            let geo = graph.getCellGeometry(vertices[i].cell)
             t0 += dt
 
             if (geo != null && pstate != null) {
@@ -222,7 +222,7 @@ Actions.prototype.init = function () {
  * 在给定的名称下注册给定的操作。
  */
 Actions.prototype.addAction = function (key, funct, enabled, iconCls, shortcut) {
-  var title
+  let title
 
   if (key.substring(key.length - 3) === '...') {
     key = key.substring(0, key.length - 3)

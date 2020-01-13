@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-12-30 14:35:07
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2020-01-10 13:57:39
+ * @LastEditTime : 2020-01-13 13:45:31
  */
 module.exports = {
   root: true,
@@ -21,9 +21,10 @@ module.exports = {
       "newIsCap": false,
       "capIsNew": false
     }],
-    'no-inner-declarations': 'off'
+    'no-inner-declarations': 'off',
+    'no-var': ['error']
   },
-  "globals": {
+  'globals': {
     "AspCoreEditor": true
   },
   parserOptions: {

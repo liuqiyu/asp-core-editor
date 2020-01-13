@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-12-04 15:00:15
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2020-01-10 18:12:24
+ * @LastEditTime : 2020-01-13 13:46:54
  */
 
 import mxgraph from './mxgraph'
@@ -33,8 +33,6 @@ function CoreEditor (container, setEnabled) {
     this.methods = new Methods(this)
   }
 }
-
-CoreEditor.prototype.aaaa = 123
 
 export {
   CoreEditor,

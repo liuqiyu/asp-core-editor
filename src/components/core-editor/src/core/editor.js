@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-12-04 15:00:15
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2020-01-10 17:56:20
+ * @LastEditTime : 2020-01-13 11:42:32
  */
 import mxgraph from './mxgraph'
 import PopupMenu from './popupMenu'
@@ -33,7 +33,7 @@ Editor.prototype.init = function (container, setEnabled) {
   // 初始化样式
   const node = mxUtils.parseXml(defaultXml).documentElement
   if (node != null) {
-    var dec = new mxCodec(node.ownerDocument)
+    let dec = new mxCodec(node.ownerDocument)
     dec.decode(node, this.graph.getStylesheet())
   }
 
@@ -49,8 +49,8 @@ Editor.prototype.init = function (container, setEnabled) {
 Editor.prototype.renderXml = function (value) {
   this.graph.model.beginUpdate()
   try {
-    var doc = mxUtils.parseXml(value)
-    var codec = new mxCodec(doc)
+    let doc = mxUtils.parseXml(value)
+    let codec = new mxCodec(doc)
     codec.decode(doc.documentElement, this.graph.getModel())
   } finally {
     this.graph.model.endUpdate()

@@ -3,22 +3,24 @@
  * @Author: liuqiyu
  * @Date: 2019-12-30 14:35:07
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2020-01-08 20:05:49
+ * @LastEditTime : 2020-01-13 13:45:22
  -->
 <template>
   <div class="editor">
     <core-editor1 :data="data"
-                 :setEnabled="true"
-                 @click="click"
-                 @dblClick="dblClick"
-                 @mouseDown="mouseDown"
-                 @mouseUp="mouseUp"
-                 @mouseMove="mouseMove"
-                 @popupMenuHandler="popupMenuHandler"></core-editor1>
+                  :setEnabled="true"
+                  @click="click"
+                  @dblClick="dblClick"
+                  @mouseDown="mouseDown"
+                  @mouseUp="mouseUp"
+                  @mouseMove="mouseMove"
+                  @popupMenuHandler="popupMenuHandler"></core-editor1>
   </div>
 </template>
 
 <script>
+
+console.log(AspCoreEditor)
 export default {
   data () {
     return {

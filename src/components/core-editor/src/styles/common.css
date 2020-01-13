@@ -138,6 +138,10 @@ div.mxTooltip {
   color: black;
 }
 
+
+/**
+* 右键菜单样式
+*/
 div.mxPopupMenu {
   -webkit-box-shadow: 3px 3px 12px #C0C0C0;
   -moz-box-shadow: 3px 3px 12px #C0C0C0;
@@ -180,4 +184,68 @@ td.mxPopupMenuIcon {
 .mxDisabled {
   opacity: 0.2 !important;
   cursor: default !important;
+}
+
+td.mxPopupMenuIcon div {
+  width: 16px;
+  height: 16px;
+}
+
+html div.mxPopupMenu {
+  -webkit-box-shadow: 2px 2px 3px #d5d5d5;
+  -moz-box-shadow: 2px 2px 3px #d5d5d5;
+  box-shadow: 2px 2px 3px #d5d5d5;
+  _filter: progid:DXImageTransform.Microsoft.DropShadow(OffX=2, OffY=2, Color='#d0d0d0', Positive='true');
+  background: white;
+  position: absolute;
+  border: 3px solid #e7e7e7;
+  padding: 3px;
+}
+
+html table.mxPopupMenu {
+  border-collapse: collapse;
+  margin: 0px;
+}
+
+html td.mxPopupMenuItem {
+  padding: 7px 30px 7px 30px;
+  font-family: Helvetica Neue, Helvetica, Arial Unicode MS, Arial;
+  font-size: 10pt;
+}
+
+html td.mxPopupMenuIcon {
+  background-color: white;
+  padding: 0px;
+}
+
+td.mxPopupMenuIcon .geIcon {
+  padding: 2px;
+  padding-bottom: 4px;
+  margin: 2px;
+  border: 1px solid transparent;
+  opacity: 0.5;
+  _width: 26px;
+  _height: 26px;
+}
+
+td.mxPopupMenuIcon .geIcon:hover {
+  border: 1px solid gray;
+  border-radius: 2px;
+  opacity: 1;
+}
+
+html tr.mxPopupMenuItemHover {
+  background-color: #eeeeee;
+  color: black;
+}
+
+table.mxPopupMenu hr {
+  color: #cccccc;
+  background-color: #cccccc;
+  border: none;
+  height: 1px;
+}
+
+table.mxPopupMenu tr {
+  font-size: 4pt;
 }

@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-25 09:43:50
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2020-01-10 14:42:56
+ * @LastEditTime : 2020-01-13 11:43:34
  */
 
 import Base64 from './base64'
@@ -33,7 +33,7 @@ const {
   mxRectangle
 } = mxgraph
 
-var defaultEdgeStyle = {
+let defaultEdgeStyle = {
   'edgeStyle': 'orthogonalEdgeStyle',
   'rounded': '0',
   'jettySize': 'auto',
@@ -47,7 +47,7 @@ function Graph (graph) {
   graph.currentEdgeStyle = mxUtils.clone(defaultEdgeStyle)
 
   graph.createCurrentEdgeStyle = function () {
-    var style = 'edgeStyle=' + (this.currentEdgeStyle['edgeStyle'] || 'none') + ';'
+    let style = 'edgeStyle=' + (this.currentEdgeStyle['edgeStyle'] || 'none') + ';'
 
     if (!(this.currentEdgeStyle['shape'] === null || this.currentEdgeStyle['shape'] === undefined)) {
       style += 'shape=' + this.currentEdgeStyle['shape'] + ';'
@@ -141,24 +141,24 @@ function Graph (graph) {
 
     cells = this.model.getTopmostCells(cells)
 
-    var model = this.getModel()
-    var s = this.gridSize
-    var select = []
+    let model = this.getModel()
+    let s = this.gridSize
+    let select = []
 
     model.beginUpdate()
     try {
-      var clones = this.cloneCells(cells, false)
+      let clones = this.cloneCells(cells, false)
 
-      for (var i = 0; i < cells.length; i++) {
-        var parent = model.getParent(cells[i])
-        var child = this.moveCells([clones[i]], s, s, false)[0]
+      for (let i = 0; i < cells.length; i++) {
+        let parent = model.getParent(cells[i])
+        let child = this.moveCells([clones[i]], s, s, false)[0]
         select.push(child)
 
         if (append) {
           model.add(parent, clones[i])
         } else {
           // Maintains child index by inserting after clone in parent
-          var index = parent.getIndex(cells[i])
+          let index = parent.getIndex(cells[i])
           model.add(parent, clones[i], index + 1)
         }
       }
@@ -172,9 +172,9 @@ function Graph (graph) {
   /**
   * Overrides createGroupCell to set the group style for new groups to 'group'.
   */
-  var graphCreateGroupCell = graph.createGroupCell
+  let graphCreateGroupCell = graph.createGroupCell
   graph.createGroupCell = function (cells) {
-    var group = graphCreateGroupCell.apply(this, arguments)
+    let group = graphCreateGroupCell.apply(this, arguments)
     group.setStyle('group')
 
     return group
@@ -183,7 +183,7 @@ function Graph (graph) {
 
 // Helper function (requires atob).
 Graph.createSvgImage = function (w, h, data) {
-  var tmp = unescape(encodeURIComponent(
+  let tmp = unescape(encodeURIComponent(
     '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">' +
     '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="' + w + 'px" height="' + h + 'px" ' +
     'version="1.1">' + data + '</svg>'))
@@ -239,11 +239,11 @@ export default Graph;
   // 函数：getGraphBounds
   // 重写getGraphBounds以使用SVG中的边界框。
   mxGraphView.prototype.getGraphBounds = function () {
-    var b = this.graphBounds
+    let b = this.graphBounds
 
     if (this.graph.useCssTransforms) {
-      var t = this.graph.currentTranslate
-      var s = this.graph.currentScale
+      let t = this.graph.currentTranslate
+      let s = this.graph.currentScale
 
       b = new mxRectangle(
         (b.x + t.x) * s, (b.y + t.y) * s,
@@ -268,7 +268,7 @@ export default Graph;
   // 功能：验证
   // 重写validate以规范化验证视图状态和传递
   // CSS转换的当前状态。
-  var graphViewValidate = mxGraphView.prototype.validate
+  let graphViewValidate = mxGraphView.prototype.validate
 
   mxGraphView.prototype.validate = function (cell) {
     if (this.graph.useCssTransforms) {
@@ -293,7 +293,7 @@ export default Graph;
   }
 
   // 重置已处理边的列表。
-  var mxGraphViewResetValidationState = mxGraphView.prototype.resetValidationState
+  let mxGraphViewResetValidationState = mxGraphView.prototype.resetValidationState
 
   mxGraphView.prototype.resetValidationState = function () {
     mxGraphViewResetValidationState.apply(this, arguments)
@@ -302,10 +302,10 @@ export default Graph;
   }
 
   // 更新有效边的跳转并根据需要重新绘制。
-  var mxGraphViewValidateCellState = mxGraphView.prototype.validateCellState
+  let mxGraphViewValidateCellState = mxGraphView.prototype.validateCellState
 
   mxGraphView.prototype.validateCellState = function (cell, recurse) {
-    var state = this.getState(cell)
+    let state = this.getState(cell)
 
     // Forces repaint if jumps change on a valid edge
     if (state != null && this.graph.model.isEdge(state.cell) &&
@@ -327,7 +327,7 @@ export default Graph;
   }
 
   // 更新无效边的跳转。
-  var mxGraphViewUpdateCellState = mxGraphView.prototype.updateCellState
+  let mxGraphViewUpdateCellState = mxGraphView.prototype.updateCellState
 
   mxGraphView.prototype.updateCellState = function (state) {
     mxGraphViewUpdateCellState.apply(this, arguments)
@@ -341,36 +341,36 @@ export default Graph;
 
   // 更新给定状态和已处理边之间的跳转。
   mxGraphView.prototype.updateLineJumps = function (state) {
-    var pts = state.absolutePoints
+    let pts = state.absolutePoints
 
     if (Graph.lineJumpsEnabled) {
-      var changed = state.routedPoints != null
-      var actual = null
+      let changed = state.routedPoints != null
+      let actual = null
 
       if (pts != null && this.validEdges != null &&
         mxUtils.getValue(state.style, 'jumpStyle', 'none') !== 'none') {
-        var thresh = 0.5 * this.scale
+        let thresh = 0.5 * this.scale
         changed = false
         actual = []
 
         // Type 0 means normal waypoint, 1 means jump
         function addPoint (type, x, y) {
-          var rpt = new mxPoint(x, y)
+          let rpt = new mxPoint(x, y)
           rpt.type = type
 
           actual.push(rpt)
-          var curr = (state.routedPoints != null) ? state.routedPoints[actual.length - 1] : null
+          let curr = (state.routedPoints != null) ? state.routedPoints[actual.length - 1] : null
 
           return curr == null || curr.type !== type || curr.x !== x || curr.y !== y
         }
 
-        for (var i = 0; i < pts.length - 1; i++) {
-          var p1 = pts[i + 1]
-          var p0 = pts[i]
-          var list = []
+        for (let i = 0; i < pts.length - 1; i++) {
+          let p1 = pts[i + 1]
+          let p0 = pts[i]
+          let list = []
 
           // Ignores waypoints on straight segments
-          var pn = pts[i + 2]
+          let pn = pts[i + 2]
 
           while (i < pts.length - 2 &&
             mxUtils.ptSegDistSq(p0.x, p0.y, pn.x, pn.y,
@@ -383,15 +383,15 @@ export default Graph;
           changed = addPoint(0, p0.x, p0.y) || changed
 
           // Processes all previous edges
-          for (var e = 0; e < this.validEdges.length; e++) {
-            var state2 = this.validEdges[e]
-            var pts2 = state2.absolutePoints
+          for (let e = 0; e < this.validEdges.length; e++) {
+            let state2 = this.validEdges[e]
+            let pts2 = state2.absolutePoints
 
             if (pts2 != null && mxUtils.intersects(state, state2) && state2.style['noJump'] !== '1') {
               // Compares each segment of the edge with the current segment
-              for (var j = 0; j < pts2.length - 1; j++) {
-                var p3 = pts2[j + 1]
-                var p2 = pts2[j]
+              for (let j = 0; j < pts2.length - 1; j++) {
+                let p3 = pts2[j + 1]
+                let p2 = pts2[j]
 
                 // Ignores waypoints on straight segments
                 pn = pts2[j + 2]
@@ -404,19 +404,19 @@ export default Graph;
                   pn = pts2[j + 2]
                 }
 
-                var pt = mxUtils.intersection(p0.x, p0.y, p1.x, p1.y, p2.x, p2.y, p3.x, p3.y)
+                let pt = mxUtils.intersection(p0.x, p0.y, p1.x, p1.y, p2.x, p2.y, p3.x, p3.y)
 
                 // Handles intersection between two segments
                 if (pt != null && (Math.abs(pt.x - p2.x) > thresh ||
                   Math.abs(pt.y - p2.y) > thresh) &&
                   (Math.abs(pt.x - p3.x) > thresh ||
                     Math.abs(pt.y - p3.y) > thresh)) {
-                  var dx = pt.x - p0.x
-                  var dy = pt.y - p0.y
-                  var temp = { distSq: dx * dx + dy * dy, x: pt.x, y: pt.y }
+                  let dx = pt.x - p0.x
+                  let dy = pt.y - p0.y
+                  let temp = { distSq: dx * dx + dy * dy, x: pt.x, y: pt.y }
 
                   // Intersections must be ordered by distance from start of segment
-                  for (var t = 0; t < list.length; t++) {
+                  for (let t = 0; t < list.length; t++) {
                     if (list[t].distSq > temp.distSq) {
                       list.splice(t, 0, temp)
                       temp = null
@@ -442,7 +442,7 @@ export default Graph;
           }
         }
 
-        var ptxx = pts[pts.length - 1]
+        let ptxx = pts[pts.length - 1]
         changed = addPoint(0, ptxx.x, ptxx.y) || changed
       }
 
@@ -454,28 +454,29 @@ export default Graph;
     }
   }
   // // 选中元件锚点
-  var mxGraphViewUpdateFloatingTerminalPoint = mxGraphView.prototype.updateFloatingTerminalPoint
+  let mxGraphViewUpdateFloatingTerminalPoint = mxGraphView.prototype.updateFloatingTerminalPoint
 
   mxGraphView.prototype.updateFloatingTerminalPoint = function (edge, start, end, source) {
+    let cos, sin
     if (start != null && edge != null &&
       (start.style['snapToPoint'] === '1' ||
         edge.style['snapToPoint'] === '1')) {
       start = this.getTerminalPort(edge, start, source)
-      var next = this.getNextPoint(edge, end, source)
+      let next = this.getNextPoint(edge, end, source)
 
-      var orth = this.graph.isOrthogonal(edge)
-      var alpha = mxUtils.toRadians(Number(start.style[mxConstants.STYLE_ROTATION] || '0'))
-      var center = new mxPoint(start.getCenterX(), start.getCenterY())
+      let orth = this.graph.isOrthogonal(edge)
+      let alpha = mxUtils.toRadians(Number(start.style[mxConstants.STYLE_ROTATION] || '0'))
+      let center = new mxPoint(start.getCenterX(), start.getCenterY())
 
       if (alpha !== 0) {
-        var cos = Math.cos(-alpha)
-        var sin = Math.sin(-alpha)
+        cos = Math.cos(-alpha)
+        sin = Math.sin(-alpha)
         next = mxUtils.getRotatedPoint(next, cos, sin, center)
       }
 
-      var border = parseFloat(edge.style[mxConstants.STYLE_PERIMETER_SPACING] || 0)
+      let border = parseFloat(edge.style[mxConstants.STYLE_PERIMETER_SPACING] || 0)
       border += parseFloat(edge.style[(source) ? mxConstants.STYLE_SOURCE_PERIMETER_SPACING : mxConstants.STYLE_TARGET_PERIMETER_SPACING] || 0)
-      var pt = this.getPerimeterPoint(start, next, alpha === 0 && orth, border)
+      let pt = this.getPerimeterPoint(start, next, alpha === 0 && orth, border)
 
       if (alpha !== 0) {
         cos = Math.cos(alpha)
@@ -490,16 +491,16 @@ export default Graph;
   }
   mxGraphView.prototype.snapToAnchorPoint = function (edge, start, end, source, pt) {
     if (start !== null && edge !== null) {
-      var constraints = this.graph.getAllConnectionConstraints(start)
-      var nearest = null
-      var dist = null
+      let constraints = this.graph.getAllConnectionConstraints(start)
+      let nearest = null
+      let dist = null
 
       if (constraints !== null) {
-        for (var i = 0; i < constraints.length; i++) {
-          var cp = this.graph.getConnectionPoint(start, constraints[i])
+        for (let i = 0; i < constraints.length; i++) {
+          let cp = this.graph.getConnectionPoint(start, constraints[i])
 
           if (cp != null) {
-            var tmp = (cp.x - pt.x) * (cp.x - pt.x) + (cp.y - pt.y) * (cp.y - pt.y)
+            let tmp = (cp.x - pt.x) * (cp.x - pt.x) + (cp.y - pt.y) * (cp.y - pt.y)
 
             if (dist === null || tmp < dist) {
               nearest = cp
@@ -526,14 +527,14 @@ export default Graph;
 
   // No dashed shapes.
   mxGuide.prototype.createGuideShape = function (horizontal) {
-    var guide = new mxPolyline([], mxConstants.GUIDE_COLOR, mxConstants.GUIDE_STROKEWIDTH)
+    let guide = new mxPolyline([], mxConstants.GUIDE_COLOR, mxConstants.GUIDE_STROKEWIDTH)
 
     return guide
   }
 
   // 替代连接点的亮显形状
   mxConstraintHandler.prototype.createHighlightShape = function () {
-    var hl = new mxEllipse(null, this.highlightColor, this.highlightColor, 0)
+    let hl = new mxEllipse(null, this.highlightColor, this.highlightColor, 0)
     hl.opacity = mxConstants.HIGHLIGHT_OPACITY
 
     return hl
@@ -549,16 +550,16 @@ export default Graph;
     let edge = this.graph.createEdge(null, null, null, null, null, style)
     let state = new mxCellState(this.graph.view, edge, this.graph.getCellStyle(edge))
 
-    for (var key in this.graph.currentEdgeStyle) {
+    for (let key in this.graph.currentEdgeStyle) {
       state.style[key] = this.graph.currentEdgeStyle[key]
     }
     return state
   }
 
   //  使用当前边样式替代虚线状态
-  var connectionHandlerCreateShape = mxConnectionHandler.prototype.createShape
+  let connectionHandlerCreateShape = mxConnectionHandler.prototype.createShape
   mxConnectionHandler.prototype.createShape = function () {
-    var shape = connectionHandlerCreateShape.apply(this, arguments)
+    let shape = connectionHandlerCreateShape.apply(this, arguments)
 
     shape.isDashed = this.graph.currentEdgeStyle[mxConstants.STYLE_DASHED] === '1'
 
@@ -571,13 +572,13 @@ export default Graph;
   }
 
   //  重写连接处理程序以忽略边，而不是不允许连接
-  var mxConnectionHandlerCreateMarker = mxConnectionHandler.prototype.createMarker
+  let mxConnectionHandlerCreateMarker = mxConnectionHandler.prototype.createMarker
   mxConnectionHandler.prototype.createMarker = function () {
-    var marker = mxConnectionHandlerCreateMarker.apply(this, arguments)
+    let marker = mxConnectionHandlerCreateMarker.apply(this, arguments)
 
-    var markerGetCell = marker.getCell
+    let markerGetCell = marker.getCell
     marker.getCell = mxUtils.bind(this, function (me) {
-      var result = markerGetCell.apply(this, arguments)
+      let result = markerGetCell.apply(this, arguments)
 
       this.error = null
 
@@ -638,7 +639,7 @@ export default Graph;
   }
 
   // 翻转
-  var vertexHandlerCreateSizerShape = mxVertexHandler.prototype.createSizerShape
+  let vertexHandlerCreateSizerShape = mxVertexHandler.prototype.createSizerShape
   mxVertexHandler.prototype.createSizerShape = function (bounds, index, fillColor) {
     this.handleImage = (index === mxEvent.ROTATION_HANDLE) ? HoverIcons.prototype.rotationHandle : (index === mxEvent.LABEL_HANDLE) ? this.secondaryHandleImage : this.handleImage
     return vertexHandlerCreateSizerShape.apply(this, arguments)

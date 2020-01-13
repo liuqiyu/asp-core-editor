@@ -3,7 +3,7 @@
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2020-01-10 16:13:24
+ * @LastEditTime : 2020-01-13 11:44:01
  */
 import mxgraph from './mxgraph'
 const {
@@ -57,7 +57,7 @@ Methods.prototype.toggleFontStyle = function (style) {
 
 // 更新 值 多选
 Methods.prototype.updateValueHandler = function (value) {
-  var cells = this.graph.getSelectionCells()
+  const cells = this.graph.getSelectionCells()
   cells.forEach(cell => {
     this.graph.cellLabelChanged(cell, value || '')
   })
@@ -69,7 +69,7 @@ Methods.prototype.updateGeometryHandler = function (value, func) {
   this.graph.getModel().beginUpdate()
   try {
     cells.forEach(cell => {
-      var geo = this.graph.getCellGeometry(cell)
+      let geo = this.graph.getCellGeometry(cell)
       geo = geo.clone()
       func(geo, value)
       this.graph.getModel().setGeometry(cell, geo)
@@ -81,10 +81,10 @@ Methods.prototype.updateGeometryHandler = function (value, func) {
 
 // 返回style 对象
 Methods.prototype.updateGeometryHandler = function () {
-  var cells = this.graph.getSelectionCells()
-  var shape = null
-  for (var i = 0; i < cells.length; i++) {
-    var state = this.graph.view.getState(cells[i])
+  let cells = this.graph.getSelectionCells()
+  let shape = null
+  for (let i = 0; i < cells.length; i++) {
+    let state = this.graph.view.getState(cells[i])
     if (state !== null) {
       shape = state.style
     }
@@ -94,10 +94,10 @@ Methods.prototype.updateGeometryHandler = function () {
 
 // 返回style 对象
 Methods.prototype.getSelectionState = function () {
-  var cells = this.graph.getSelectionCells()
-  var shape = null
-  for (var i = 0; i < cells.length; i++) {
-    var state = this.graph.view.getState(cells[i])
+  let cells = this.graph.getSelectionCells()
+  let shape = null
+  for (let i = 0; i < cells.length; i++) {
+    let state = this.graph.view.getState(cells[i])
     if (state !== null) {
       shape = state.style
     }
@@ -120,7 +120,7 @@ Methods.prototype.changeLabelPosition = function (value) {
   }
   this.graph.getModel().beginUpdate()
   try {
-    var vals = positions[value]
+    let vals = positions[value]
 
     if (vals != null) {
       this.graph.setCellStyles(mxConstants.STYLE_LABEL_POSITION, vals[0], this.graph.getSelectionCells())
@@ -149,14 +149,14 @@ Methods.prototype.handleFontDefaults = function (value) {
 Methods.prototype.edgeStyleChange = function (keys, values) {
   this.graph.getModel().beginUpdate()
   try {
-    var cells = this.graph.getSelectionCells()
-    var edges = []
+    let cells = this.graph.getSelectionCells()
+    let edges = []
 
-    for (var i = 0; i < cells.length; i++) {
-      var cell = cells[i]
+    for (let i = 0; i < cells.length; i++) {
+      let cell = cells[i]
 
       if (this.graph.getModel().isEdge(cell)) {
-        var geo = this.graph.getCellGeometry(cell)
+        let geo = this.graph.getCellGeometry(cell)
 
         // Resets all edge points
         if (geo != null) {
@@ -165,7 +165,7 @@ Methods.prototype.edgeStyleChange = function (keys, values) {
           this.graph.getModel().setGeometry(cell, geo)
         }
 
-        for (var j = 0; j < keys.length; j++) {
+        for (let j = 0; j < keys.length; j++) {
           this.graph.setCellStyles(keys[j], values[j], [cell])
         }
 
@@ -377,8 +377,8 @@ Methods.prototype.showXml = function () {
   // xx.setAttribute('backgroundImage', this.graph.backgroundImage.src)
   // const getXml = mxUtils.getXml(xx)
   // console.log(getXml)
-  var encoder = new mxCodec()
-  var node = encoder.encode(this.graph.getModel())
+  let encoder = new mxCodec()
+  let node = encoder.encode(this.graph.getModel())
   // node.setAttribute('backgroundImage', this.graph.backgroundImage.src)
   mxUtils.popup(mxUtils.getPrettyXml(node), true)
 }
