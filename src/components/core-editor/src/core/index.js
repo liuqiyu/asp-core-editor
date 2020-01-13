@@ -3,14 +3,14 @@
  * @Author: liuqiyu
  * @Date: 2019-12-04 15:00:15
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2020-01-13 17:06:59
+ * @LastEditTime : 2020-01-13 18:36:21
  */
 
 import mxgraph from './mxgraph'
 import { Editor } from './editor'
 import Actions from './actions'
 import KeyHandler from './keyHandler'
-import Methods from './methods'
+import Command from './command'
 import Sidebar from './sidebar'
 import OutLine from './outLine'
 import Utils from './utils'
@@ -30,7 +30,7 @@ function CoreEditor (container, setEnabled) {
     this.actions = new Actions(this)
     this.KeyHandler = new KeyHandler(this)
     this.sidebar = new Sidebar(this)
-    this.methods = new Methods(this)
+    this.command = new Command(this)
   }
 }
 

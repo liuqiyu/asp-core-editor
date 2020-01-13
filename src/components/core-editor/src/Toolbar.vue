@@ -133,8 +133,8 @@ export default {
   },
   props: ['coreEditor'],
   computed: {
-    methods () {
-      return this.coreEditor.methods
+    command () {
+      return this.coreEditor.command
     }
   },
   data () {
@@ -150,18 +150,18 @@ export default {
   },
   methods: {
     actions (name) {
-      this.methods.actions(name)
+      this.command.actions(name)
     },
     // 拖动
     handlePan () {
       this.panStatus = !this.panStatus
-      this.methods.actions('pan', this.panStatus)
+      this.command.actions('pan', this.panStatus)
     },
     handleShowXml () {
-      this.methods.showXml()
+      this.command.showXml()
     },
     handleSave () {
-      this.methods.save((xml, graph) => {
+      this.command.save((xml, graph) => {
         console.log(xml)
         localStorage.setItem('xml', xml)
         this.$message({
