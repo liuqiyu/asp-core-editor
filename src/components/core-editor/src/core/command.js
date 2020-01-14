@@ -1,5 +1,5 @@
 /*
- * @Description: Methods
+ * @Description: Command
  * @Author: liuqiyu
  * @Date: 2019-11-11 14:27:27
  * @LastEditors  : liuqiyu
@@ -13,12 +13,12 @@ const {
   mxCodec
 } = mxgraph
 
-export default function Methods (CoreEditor) {
+export default function Command (CoreEditor) {
   this.editor = CoreEditor.editor
   this.graph = this.editor.graph
 }
 
-Methods.prototype.updateStyleHandler = function (keyword, data) {
+Command.prototype.updateStyleHandler = function (keyword, data) {
   this.graph.getModel().beginUpdate()
   try {
     this.graph.setCellStyles(
@@ -32,7 +32,7 @@ Methods.prototype.updateStyleHandler = function (keyword, data) {
 }
 
 // 更新字体样式 bold italic underline
-Methods.prototype.toggleFontStyle = function (style) {
+Command.prototype.toggleFontStyle = function (style) {
   let fontStyle
   switch (style) {
     case 'bold':
@@ -56,7 +56,7 @@ Methods.prototype.toggleFontStyle = function (style) {
 }
 
 // 更新 值 多选
-Methods.prototype.updateValueHandler = function (value) {
+Command.prototype.updateValueHandler = function (value) {
   const cells = this.graph.getSelectionCells()
   cells.forEach(cell => {
     this.graph.cellLabelChanged(cell, value || '')
@@ -64,7 +64,7 @@ Methods.prototype.updateValueHandler = function (value) {
 }
 
 // 更新 元件几何  宽高 X Y
-Methods.prototype.updateGeometryHandler = function (value, func) {
+Command.prototype.updateGeometryHandler = function (value, func) {
   const cells = this.graph.getSelectionCells()
   this.graph.getModel().beginUpdate()
   try {
@@ -80,7 +80,7 @@ Methods.prototype.updateGeometryHandler = function (value, func) {
 }
 
 // 返回style 对象
-Methods.prototype.updateGeometryHandler = function () {
+Command.prototype.updateGeometryHandler = function () {
   let cells = this.graph.getSelectionCells()
   let shape = null
   for (let i = 0; i < cells.length; i++) {
@@ -93,7 +93,7 @@ Methods.prototype.updateGeometryHandler = function () {
 }
 
 // 返回style 对象
-Methods.prototype.getSelectionState = function () {
+Command.prototype.getSelectionState = function () {
   let cells = this.graph.getSelectionCells()
   let shape = null
   for (let i = 0; i < cells.length; i++) {
@@ -106,7 +106,7 @@ Methods.prototype.getSelectionState = function () {
 }
 
 // 更新 label position
-Methods.prototype.changeLabelPosition = function (value) {
+Command.prototype.changeLabelPosition = function (value) {
   const positions = {
     'topLeft': [mxConstants.ALIGN_LEFT, mxConstants.ALIGN_TOP, mxConstants.ALIGN_RIGHT, mxConstants.ALIGN_BOTTOM],
     'top': [mxConstants.ALIGN_CENTER, mxConstants.ALIGN_TOP, mxConstants.ALIGN_CENTER, mxConstants.ALIGN_BOTTOM],
@@ -134,7 +134,7 @@ Methods.prototype.changeLabelPosition = function (value) {
 }
 
 // 字体
-Methods.prototype.handleFontDefaults = function (value) {
+Command.prototype.handleFontDefaults = function (value) {
   this.graph.getModel().beginUpdate()
   try {
     console.log(value)
@@ -146,7 +146,7 @@ Methods.prototype.handleFontDefaults = function (value) {
 
 // -----------------------------------
 // 修改线条样式
-Methods.prototype.edgeStyleChange = function (keys, values) {
+Command.prototype.edgeStyleChange = function (keys, values) {
   this.graph.getModel().beginUpdate()
   try {
     let cells = this.graph.getSelectionCells()
@@ -181,7 +181,7 @@ Methods.prototype.edgeStyleChange = function (keys, values) {
 }
 
 // 修改线条箭头样式
-Methods.prototype.edgeFillChange = function (key, value) {
+Command.prototype.edgeFillChange = function (key, value) {
   let style = (key === 'startFill' ? 'STYLE_STARTARROW' : 'STYLE_ENDARROW')
 
   switch (value) {
@@ -195,7 +195,7 @@ Methods.prototype.edgeFillChange = function (key, value) {
 }
 
 // 修改线条类型 尖角 圆角 曲线
-Methods.prototype.edgeTypeChange = function (key) {
+Command.prototype.edgeTypeChange = function (key) {
   switch (key) {
     case 'sharp':
       this.edgeStyleChange([mxConstants.STYLE_ROUNDED, mxConstants.STYLE_CURVED], ['0', null])
@@ -210,7 +210,7 @@ Methods.prototype.edgeTypeChange = function (key) {
 }
 
 //  线条样式 虚线 实线
-Methods.prototype.edgeBorderStyleChange = function (key) {
+Command.prototype.edgeBorderStyleChange = function (key) {
   switch (key) {
     case 'solid':
       this.edgeStyleChange([mxConstants.STYLE_DASHED, mxConstants.STYLE_DASH_PATTERN], [null, null])
@@ -222,7 +222,7 @@ Methods.prototype.edgeBorderStyleChange = function (key) {
 }
 
 // 线条航点
-Methods.prototype.edgeWaypointsChange = function (key) {
+Command.prototype.edgeWaypointsChange = function (key) {
   let constant, value
   switch (key) {
     case 'none':
@@ -251,7 +251,7 @@ Methods.prototype.edgeWaypointsChange = function (key) {
 
 // --------------获取初始化样式------------
 // 获取 文字样式 粗细 斜体 下划线
-Methods.prototype.getFontStyle = function (ss) {
+Command.prototype.getFontStyle = function (ss) {
   let fontStyle = mxUtils.getValue(ss, mxConstants.STYLE_FONTSTYLE, 0)
   let fontStyleArr = []
   if ((fontStyle & mxConstants.FONT_BOLD) === mxConstants.FONT_BOLD) {
@@ -267,7 +267,7 @@ Methods.prototype.getFontStyle = function (ss) {
 }
 
 // 获取 文字位置
-Methods.prototype.getLabelPosition = function (ss) {
+Command.prototype.getLabelPosition = function (ss) {
   let labelPosition = null
   let pos = mxUtils.getValue(ss, mxConstants.STYLE_LABEL_POSITION, mxConstants.ALIGN_CENTER)
   let vpos = mxUtils.getValue(ss, mxConstants.STYLE_VERTICAL_LABEL_POSITION, mxConstants.ALIGN_MIDDLE)
@@ -295,7 +295,7 @@ Methods.prototype.getLabelPosition = function (ss) {
 }
 
 // 获取 开始结束箭头
-Methods.prototype.getEdgeFill = function (key, ss) {
+Command.prototype.getEdgeFill = function (key, ss) {
   let val = null
   switch (key) {
     case 'startFill':
@@ -309,7 +309,7 @@ Methods.prototype.getEdgeFill = function (key, ss) {
 }
 
 // 获取 开始结束箭头
-Methods.prototype.getEdgeFill = function (key, ss) {
+Command.prototype.getEdgeFill = function (key, ss) {
   let val = null
   switch (key) {
     case 'startFill':
@@ -323,7 +323,7 @@ Methods.prototype.getEdgeFill = function (key, ss) {
 }
 
 // 获取 线条航点
-Methods.prototype.getWaypoints = function (ss) {
+Command.prototype.getWaypoints = function (ss) {
   let waypoints = null
   let es = mxUtils.getValue(ss, mxConstants.STYLE_EDGE, null)
   if (mxUtils.getValue(ss, mxConstants.STYLE_NOEDGESTYLE, null) === '1') {
@@ -350,7 +350,7 @@ Methods.prototype.getWaypoints = function (ss) {
 }
 
 // 线条类型 曲线 圆角 尖角
-Methods.prototype.getEdgeType = function (ss) {
+Command.prototype.getEdgeType = function (ss) {
   let edgeType
   const curved = mxUtils.getValue(ss, mxConstants.STYLE_CURVED, null)
   const rounded = mxUtils.getValue(ss, mxConstants.STYLE_ROUNDED, null)
@@ -365,19 +365,19 @@ Methods.prototype.getEdgeType = function (ss) {
 }
 
 // 线条样式 虚线 实线
-Methods.prototype.getEdgeStyle = function (ss) {
+Command.prototype.getEdgeStyle = function (ss) {
   const dashed = mxUtils.getValue(ss, mxConstants.STYLE_DASHED, null)
 
   return dashed === 1 ? 'dashed' : 'solid'
 }
 
 // 统一的actions执行函数
-Methods.prototype.actions = function (name, args) {
+Command.prototype.actions = function (name, args) {
   this.editor.editor.actions.actions[name].funct(args)
 }
 
 // 打包XML文件
-Methods.prototype.showXml = function () {
+Command.prototype.showXml = function () {
   // let encoder = new MxCodec()
   // let xx = encoder.encode(this.graph.getModel())
   // // 保存到getXml参数中
@@ -391,7 +391,7 @@ Methods.prototype.showXml = function () {
 }
 
 // 保存xml数据
-Methods.prototype.save = function (func) {
+Command.prototype.save = function (func) {
   let encoder = new mxCodec()
   let xx = encoder.encode(this.graph.getModel())
   // 保存到getXml参数中

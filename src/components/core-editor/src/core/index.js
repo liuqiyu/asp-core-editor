@@ -3,10 +3,10 @@
  * @Author: liuqiyu
  * @Date: 2019-12-04 15:00:15
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2020-01-13 18:36:21
+ * @LastEditTime : 2020-01-14 09:59:23
  */
 
-import mxgraph from './mxgraph'
+import CoreGraph from './mxgraph'
 import { Editor } from './editor'
 import Actions from './actions'
 import KeyHandler from './keyHandler'
@@ -18,7 +18,7 @@ import Utils from './utils'
 const {
   mxUtils,
   mxClient
-} = mxgraph
+} = CoreGraph
 
 function CoreEditor (container, setEnabled) {
   if (!mxClient.isBrowserSupported()) {
@@ -28,7 +28,7 @@ function CoreEditor (container, setEnabled) {
     /* eslint-disable no-new */
     this.editor = new Editor(this, container, setEnabled)
     this.actions = new Actions(this)
-    this.KeyHandler = new KeyHandler(this)
+    this.keyHandler = new KeyHandler(this)
     this.sidebar = new Sidebar(this)
     this.command = new Command(this)
   }
@@ -38,5 +38,5 @@ export {
   CoreEditor,
   OutLine,
   Utils,
-  mxgraph
+  CoreGraph
 }

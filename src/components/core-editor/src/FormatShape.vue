@@ -443,9 +443,9 @@
 </template>
 
 <script>
-import { Utils } from './core'
 import InputUpload from './components/upload'
 import { LABEL_POSITIONS, END_FILL_OPTIONS, START_FILL_OPTIONS, EDGE_STYLE, EDGE_TYPE, FONT_DEFAULTS } from './utils/FORMAT_CONSTANT'
+const { Utils } = AspCoreEditor
 
 export default {
   name: 'FormatShape',
@@ -518,7 +518,7 @@ export default {
       this.cells = cells
       if (cells && cells.length === 1) {
         const geometry = cells[0].geometry
-        const ss = this.coreEditor.methods.getSelectionState()
+        const ss = this.coreEditor.command.getSelectionState()
         switch (ss.shape) {
           case 'image':
             this.shape = 'image'
@@ -542,17 +542,17 @@ export default {
       this.$set(this.format, 'fontSize', ss.fontSize || 12)
       this.$set(this.format, 'value', cell.value || '')
       // 线条类型
-      this.format.edgeType = this.coreEditor.methods.getEdgeType(ss)
+      this.format.edgeType = this.coreEditor.command.getEdgeType(ss)
       // 线条航点
-      this.format.waypoints = this.coreEditor.methods.getWaypoints(ss)
-      this.format.edgeStyle = this.coreEditor.methods.getEdgeStyle(ss)
+      this.format.waypoints = this.coreEditor.command.getWaypoints(ss)
+      this.format.edgeStyle = this.coreEditor.command.getEdgeStyle(ss)
       // 开始结束 箭头
-      this.format.startFill = this.coreEditor.methods.getEdgeFill('startFill', ss) ? 'default' : 'none'
-      this.format.endFill = this.coreEditor.methods.getEdgeFill('endFill', ss) ? 'default' : 'none'
+      this.format.startFill = this.coreEditor.command.getEdgeFill('startFill', ss) ? 'default' : 'none'
+      this.format.endFill = this.coreEditor.command.getEdgeFill('endFill', ss) ? 'default' : 'none'
       // 文字样式 加粗 斜体 下划线
-      this.format.fontStyle = this.coreEditor.methods.getFontStyle(ss)
+      this.format.fontStyle = this.coreEditor.command.getFontStyle(ss)
       // 文字位置
-      this.format.labelPosition = this.coreEditor.methods.getLabelPosition(ss)
+      this.format.labelPosition = this.coreEditor.command.getLabelPosition(ss)
     },
     // 初始化几何
     selectionChangedGeometry (cell, geometry, ss) {
@@ -570,84 +570,84 @@ export default {
       if (keyword === 'strokeColor' && this.shape === 'image') {
         key = 'imageBorder'
       }
-      this.coreEditor.methods.updateStyleHandler(key || keyword, this.format[keyword])
+      this.coreEditor.command.updateStyleHandler(key || keyword, this.format[keyword])
     },
     // 修改线条样式
     handleChangeEdgeStyle (keys, values) {
-      this.coreEditor.methods.edgeWaypointsChange(keys)
+      this.coreEditor.command.edgeWaypointsChange(keys)
     },
     // 线始端
     handleEdgeStartFillchange (e) {
-      this.coreEditor.methods.edgeFillChange('startFill', e)
+      this.coreEditor.command.edgeFillChange('startFill', e)
     },
     // 线始端
     handleEdgeEndFillchange (e) {
-      this.coreEditor.methods.edgeFillChange('endFill', e)
+      this.coreEditor.command.edgeFillChange('endFill', e)
     },
     // 条线类型 尖角 圆角 曲线
     handleEdgeTypeChange (e) {
-      this.coreEditor.methods.edgeTypeChange(e)
+      this.coreEditor.command.edgeTypeChange(e)
     },
     // 线条样式
     handleEdgeStyleChange (e) {
-      this.coreEditor.methods.edgeBorderStyleChange(e)
+      this.coreEditor.command.edgeBorderStyleChange(e)
     },
     //  更新字体样式 bold italic underline
     handleToggleFontStyle (style) {
-      this.coreEditor.methods.toggleFontStyle(style)
+      this.coreEditor.command.toggleFontStyle(style)
     },
     // 更新值
     handleChangeValue (e) {
-      this.coreEditor.methods.updateValueHandler(e)
+      this.coreEditor.command.updateValueHandler(e)
     },
     // 更新 元件几何  宽高 X Y
     handleChangeGeometry (keyword) {
-      this.coreEditor.methods.updateGeometryHandler(this.geometry[keyword], (geo) => {
+      this.coreEditor.command.updateGeometryHandler(this.geometry[keyword], (geo) => {
         geo[keyword] = this.geometry[keyword]
       })
     },
     // actions 翻转
     handleFlipCells (style) {
-      this.coreEditor.methods.actions('flipCells', style)
+      this.coreEditor.command.actions('flipCells', style)
     },
     // actions 对齐
     handleAlign (align) {
-      this.coreEditor.methods.actions('alignCells', align)
+      this.coreEditor.command.actions('alignCells', align)
     },
     // actions 等距分布
     handleDistributeCells (e) {
-      this.coreEditor.methods.actions(e)
+      this.coreEditor.command.actions(e)
     },
     // actions 移至最前
     handleToFront () {
-      this.coreEditor.methods.actions('toFront')
+      this.coreEditor.command.actions('toFront')
     },
     // actions 移至最前
     handleToBack () {
-      this.coreEditor.methods.actions('toBack')
+      this.coreEditor.command.actions('toBack')
     },
     // 字体位置
     handleChangeLabelPosition (value) {
-      this.coreEditor.methods.changeLabelPosition(value)
+      this.coreEditor.command.changeLabelPosition(value)
     },
     // 字体 family
     handleFontDefaults (e) {
       console.log(e)
-      this.coreEditor.methods.changeLabelPosition(e)
+      this.coreEditor.command.changeLabelPosition(e)
     },
     // 上传图片
     onSuccess ({ filename, file }) {
-      const ss = this.coreEditor.methods.getSelectionState()
-      this.coreEditor.methods.updateStyleHandler('oldImage', ss.image)
-      this.coreEditor.methods.updateStyleHandler('image', file.split(';')[0] + '' + file.split(';')[1])
-      this.coreEditor.methods.updateStyleHandler('imageName', filename)
+      const ss = this.coreEditor.command.getSelectionState()
+      this.coreEditor.command.updateStyleHandler('oldImage', ss.image)
+      this.coreEditor.command.updateStyleHandler('image', file.split(';')[0] + '' + file.split(';')[1])
+      this.coreEditor.command.updateStyleHandler('imageName', filename)
     },
     // 清除图片
     clear () {
-      const ss = this.coreEditor.methods.getSelectionState()
-      this.coreEditor.methods.updateStyleHandler('image', ss.oldImage)
-      this.coreEditor.methods.updateStyleHandler('oldImage', '')
-      this.coreEditor.methods.updateStyleHandler('imageName', '')
+      const ss = this.coreEditor.command.getSelectionState()
+      this.coreEditor.command.updateStyleHandler('image', ss.oldImage)
+      this.coreEditor.command.updateStyleHandler('oldImage', '')
+      this.coreEditor.command.updateStyleHandler('imageName', '')
     }
   }
 }

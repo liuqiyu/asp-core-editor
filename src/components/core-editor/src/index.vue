@@ -37,8 +37,8 @@ import Toolbar from './Toolbar.vue'
 import Format from './Format.vue'
 import FormatShape from './FormatShape.vue'
 import Sidebar from './Sidebar.vue'
-const { CoreEditor, OutLine, mxgraph } = AspCoreEditor
-const { mxEvent, mxUtils } = mxgraph
+const { CoreEditor, OutLine, CoreGraph } = AspCoreEditor
+const { mxEvent, mxUtils } = CoreGraph
 
 export default {
   name: 'asp-core-editor',
@@ -105,14 +105,14 @@ export default {
       this.$emit('dblClick', { graph, cell })
     })
 
+    // 鼠标滚动
     const _t = this
-
     mxEvent.addMouseWheelListener(mxUtils.bind(this, function (evt, up) {
       if (!mxEvent.isConsumed(evt)) {
         if (up) {
-          _t.coreEditor.methods.actions('zoomIn')
+          _t.coreEditor.command.actions('zoomIn')
         } else {
-          _t.coreEditor.methods.actions('zoomOut')
+          _t.coreEditor.command.actions('zoomOut')
         }
 
         mxEvent.consume(evt, false, false) // 消耗给定的事件

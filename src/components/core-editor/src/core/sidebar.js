@@ -1,9 +1,9 @@
 /*
- * @Description: createKeyHandler
+ * @Description: create sidebar
  * @Author: liuqiyu
  * @Date: 2019-12-05 14:31:21
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2020-01-13 14:37:26
+ * @LastEditTime : 2020-01-14 09:59:01
  */
 import mxgraph from './mxgraph'
 
