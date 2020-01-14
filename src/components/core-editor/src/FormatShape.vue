@@ -533,7 +533,6 @@ export default {
     },
     // 初始化样式
     selectionChangedFormat (cell, geometry, ss) {
-      console.log(ss)
       this.$set(this.format, 'fontColor', ss.fontColor || '')
       this.$set(this.format, 'labelBackgroundColor', ss.labelBackgroundColor || '')
       this.$set(this.format, 'fillColor', this.shape !== 'image' ? ss.fillColor : ss.imageBackground)
