@@ -18,6 +18,7 @@ export default function Command (CoreEditor) {
   this.graph = this.editor.graph
 }
 
+// 更新 样式
 Command.prototype.updateStyleHandler = function (keyword, data) {
   this.graph.getModel().beginUpdate()
   try {
@@ -55,7 +56,7 @@ Command.prototype.toggleFontStyle = function (style) {
   }
 }
 
-// 更新 值 多选
+// 更新 值
 Command.prototype.updateValueHandler = function (value) {
   const cells = this.graph.getSelectionCells()
   cells.forEach(cell => {
@@ -77,19 +78,6 @@ Command.prototype.updateGeometryHandler = function (value, func) {
   } finally {
     this.graph.getModel().endUpdate()
   }
-}
-
-// 返回style 对象
-Command.prototype.updateGeometryHandler = function () {
-  let cells = this.graph.getSelectionCells()
-  let shape = null
-  for (let i = 0; i < cells.length; i++) {
-    let state = this.graph.view.getState(cells[i])
-    if (state !== null) {
-      shape = state.style
-    }
-  }
-  return shape
 }
 
 // 返回style 对象

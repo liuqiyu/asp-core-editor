@@ -41,6 +41,21 @@
                              show-alpha></el-color-picker>
           </div>
         </div>
+        <!-- 圆角 -->
+        <div class="format-item"
+             v-if="['singleVertex', 'multipleVertex'].includes(selectedType)">
+          <div class="format-label">圆角</div>
+          <div class="format-content">
+            <!-- <el-color-picker v-model="format.rounded"
+                             title="圆角"
+                             size="mini"
+                             @change="handleChangeStyle('rounded')"
+                             show-alpha></el-color-picker> -->
+                             {{format.rounded}}
+            <el-checkbox v-model="format.rounded"
+                         @change="handleChangeStyle('rounded')">圆角</el-checkbox>
+          </div>
+        </div>
         <!-- 元件大小 -->
         <div class="format-item"
              v-if="['singleVertex', 'multipleVertex'].includes(selectedType)">
@@ -485,6 +500,7 @@ export default {
         fontSize: '', // 字体大小
         labelBackgroundColor: '',
         fillColor: '',
+        rounded: '',
 
         fontStyle: [], // 粗细 斜体 下划线
         labelPosition: '', // 文字位置
@@ -562,6 +578,7 @@ export default {
     },
     // 更新元件样式
     handleChangeStyle (keyword) {
+      let value = this.format[keyword]
       let key = ''
       if (keyword === 'fillColor' && this.shape === 'image') {
         key = 'imageBackground'
@@ -569,7 +586,10 @@ export default {
       if (keyword === 'strokeColor' && this.shape === 'image') {
         key = 'imageBorder'
       }
-      this.coreEditor.command.updateStyleHandler(key || keyword, this.format[keyword])
+      if (keyword === 'rounded') {
+        value = value ? 1 : 0
+      }
+      this.coreEditor.command.updateStyleHandler(key || keyword, value)
     },
     // 修改线条样式
     handleChangeEdgeStyle (keys, values) {

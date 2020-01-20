@@ -38,6 +38,7 @@ import Format from './Format.vue'
 import FormatShape from './FormatShape.vue'
 import Sidebar from './Sidebar.vue'
 import { CoreEditor, OutLine, CoreGraph } from './core'
+
 const { mxEvent, mxUtils } = CoreGraph
 
 export default {
@@ -75,7 +76,8 @@ export default {
     Format,
     FormatShape
   },
-  mounted () {
+  async mounted () {
+    await this.$nextTick()
     let container = this.$refs.graph
 
     let outlineContainer = this.$refs.outlineContainer
@@ -90,8 +92,19 @@ export default {
       this.renderXml(this.editorData)
     }
 
-    graph.getSelectionModel().addListener('change', this.updateCells) // 选中元件
-    graph.getModel().addListener('change', this.updateCells) // 拖动元件
+    // 选中元件
+    graph.getSelectionModel().addListener('change', async (sender, evt) => {
+      let cell = graph.getSelectionCell()
+      if (cell) {
+        this.currentFormat = 'FormatShape'
+        await this.$nextTick()
+        this.$refs.format.selectionChanged(graph)
+        this.$refs.toolbar._data.isSelect = true
+      } else {
+        this.currentFormat = 'Format'
+        this.$refs.toolbar._data.isSelect = false
+      }
+    })
 
     // 单击事件
     graph.addListener('click', (sender, evt) => {
@@ -105,8 +118,8 @@ export default {
       this.$emit('dblClick', { graph, cell })
     })
 
-    // 鼠标滚动
     const _t = this
+
     mxEvent.addMouseWheelListener(mxUtils.bind(this, function (evt, up) {
       if (!mxEvent.isConsumed(evt)) {
         if (up) {
@@ -154,18 +167,6 @@ export default {
     renderXml (value) {
       if (value && this.graph) {
         this.coreEditor.editor.renderXml(value)
-      }
-    },
-    async updateCells () {
-      let cell = this.graph.getSelectionCell()
-      if (cell) {
-        this.currentFormat = 'FormatShape'
-        await this.$nextTick()
-        this.$refs.format.selectionChanged(this.graph)
-        this.$refs.toolbar._data.isSelect = true
-      } else {
-        this.currentFormat = 'Format'
-        this.$refs.toolbar._data.isSelect = false
       }
     }
   }
