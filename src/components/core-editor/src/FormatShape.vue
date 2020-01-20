@@ -42,20 +42,14 @@
           </div>
         </div>
         <!-- 圆角 -->
-        <div class="format-item"
+        <!-- <div class="format-item"
              v-if="['singleVertex', 'multipleVertex'].includes(selectedType)">
           <div class="format-label">圆角</div>
           <div class="format-content">
-            <!-- <el-color-picker v-model="format.rounded"
-                             title="圆角"
-                             size="mini"
-                             @change="handleChangeStyle('rounded')"
-                             show-alpha></el-color-picker> -->
-                             {{format.rounded}}
             <el-checkbox v-model="format.rounded"
                          @change="handleChangeStyle('rounded')">圆角</el-checkbox>
           </div>
-        </div>
+        </div> -->
         <!-- 元件大小 -->
         <div class="format-item"
              v-if="['singleVertex', 'multipleVertex'].includes(selectedType)">
