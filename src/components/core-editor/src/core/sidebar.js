@@ -20,15 +20,7 @@ export default function Sidebar (CoreEditor, container) {
   this.graph = this.editor.graph
 }
 
-Sidebar.prototype.createDragSource = function (ele) {
-  const dataset = ele.dataset
-  const src = dataset.src
-  const width = Number(dataset.width)
-  const height = Number(dataset.height)
-  const style = dataset.style
-  const value = dataset.value || ''
-  const type = dataset.type
-
+Sidebar.prototype.createDragSource = function (ele, type, width, height, value, style, src) {
   const _dropGraph = evt => {
     const x = mxEvent.getClientX(evt)
     const y = mxEvent.getClientY(evt)
@@ -51,10 +43,10 @@ Sidebar.prototype.createDragSource = function (ele) {
       cell.geometry.relative = true
       cell.edge = true
     } else if (type === 'curve') {
-      cell = new mxCell('', new mxGeometry(0, 0, 50, 50), 'curved=1;endArrow=classic;html=1;')
-      cell.geometry.setTerminalPoint(new mxPoint(0, 50), true)
-      cell.geometry.setTerminalPoint(new mxPoint(50, 0), false)
-      cell.geometry.points = [new mxPoint(50, 50), new mxPoint(0, 0)]
+      cell = new mxCell('', new mxGeometry(0, 0, width, height), 'curved=1;endArrow=classic;html=1;')
+      cell.geometry.setTerminalPoint(new mxPoint(0, height), true)
+      cell.geometry.setTerminalPoint(new mxPoint(width, 0), false)
+      cell.geometry.points = [new mxPoint(width, height), new mxPoint(0, 0)]
       cell.geometry.relative = true
       cell.edge = true
     } else if (type === 'image') {

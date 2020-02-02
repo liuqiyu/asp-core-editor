@@ -104,26 +104,7 @@ export default {
               width: 50,
               height: 50,
               type: 'curve',
-              style: 'endArrow=none;html=1;'
-            }
-          ]
-        },
-        {
-          title: '箭头',
-          children: [
-            {
-              name: 'Arrow Left',
-              src: require('./images/sidebar/24gl-rectangle.svg'),
-              width: 100,
-              height: 60,
-              style: 'shape=singleArrow;direction=west;whiteSpace=wrap;html=1;'
-            },
-            {
-              name: 'Arrow Right',
-              src: require('./images/sidebar/24gl-rectangle.svg'),
-              width: 100,
-              height: 60,
-              style: 'shape=singleArrow;whiteSpace=wrap;html=1;'
+              style: 'curved=1;endArrow=classic;html=1;'
             }
           ]
         },
@@ -242,7 +223,14 @@ export default {
     createDragSource () {
       const ele = document.querySelectorAll('.drap')
       ele.forEach(item => {
-        this.coreEditor.sidebar.createDragSource(item)
+        const dataset = item.dataset
+        const src = dataset.src
+        const width = Number(dataset.width)
+        const height = Number(dataset.height)
+        const style = dataset.style
+        const value = dataset.value || ''
+        const type = dataset.type
+        this.coreEditor.sidebar.createDragSource(item, type, width, height, value, style, src)
       })
     }
   }
