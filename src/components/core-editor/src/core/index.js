@@ -34,6 +34,8 @@ function CoreEditor (container, setEnabled) {
   }
 }
 
+CoreEditor.prototype.version = '1.1.0'
+
 export {
   CoreEditor,
   OutLine,

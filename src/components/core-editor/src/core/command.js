@@ -237,6 +237,11 @@ Command.prototype.edgeWaypointsChange = function (key) {
   this.edgeStyleChange(constant, value)
 }
 
+// 线条航点
+Command.prototype.edgeAnimation = function (key) {
+
+}
+
 // --------------获取初始化样式------------
 // 获取 文字样式 粗细 斜体 下划线
 Command.prototype.getFontStyle = function (ss) {

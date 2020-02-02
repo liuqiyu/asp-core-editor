@@ -81,7 +81,7 @@ export default {
     let outlineContainer = this.$refs.outlineContainer
 
     this.coreEditor = new CoreEditor(container, this.setEnabled)
-
+    console.log(this.coreEditor.version)
     let graph = this.coreEditor.editor.graph
     this.graph = graph
     OutLine.init(graph, outlineContainer) //

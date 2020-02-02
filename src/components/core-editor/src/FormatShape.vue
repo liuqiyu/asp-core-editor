@@ -1,6 +1,6 @@
 <template>
   <div class="graph-format">
-    <header class="title">文本</header>
+    <header class="title">属性</header>
     <div class="format-wrapper">
 
       <!-- 名称 -->
@@ -712,6 +712,16 @@ export default {
 </style>
 
 <style lang="scss">
+.flow {
+  stroke-dasharray: 8;
+  animation: dash 0.5s linear;
+  animation-iteration-count: infinite;
+}
+@keyframes dash {
+  to {
+    stroke-dashoffset: -16;
+  }
+}
 .graph-format {
   .title {
     color: #333333;
