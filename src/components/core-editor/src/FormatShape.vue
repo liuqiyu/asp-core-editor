@@ -34,7 +34,27 @@
              v-if="['singleVertex', 'multipleVertex'].includes(selectedType)">
           <div class="format-label">边框颜色</div>
           <div class="format-content">
+            <!-- <el-select style="width: 60px;"
+                       v-model="format.edgeStyle"
+                       size="mini"
+                       placeholder=""
+                       @change="handleEdgeStyleChange">
+              <el-option v-for="item in EDGE_STYLE"
+                         :key="item.value"
+                         :label="item.label"
+                         :value="item.value">
+              </el-option>
+            </el-select> -->
+            <el-input-number style="width: 75px;"
+                             class="mini-input-number"
+                             v-model="format.strokeWidth"
+                             size="mini"
+                             placeholder="宽"
+                             controls-position="right"
+                             @change="handleChangeStyle('strokeWidth')"
+                             :min="1"></el-input-number>
             <el-color-picker v-model="format.strokeColor"
+                             style="margin-left: 10px;"
                              title="边框颜色"
                              size="mini"
                              @change="handleChangeStyle('strokeColor')"
@@ -708,6 +728,9 @@ export default {
       }
     }
   }
+}
+::v-deep .el-input__inner {
+  padding: 0 15px 0 5px;
 }
 </style>
 
