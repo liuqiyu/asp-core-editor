@@ -606,8 +606,8 @@ export default {
       this.coreEditor.command.updateStyleHandler(key || keyword, value)
     },
     // 修改线条样式
-    handleChangeEdgeStyle (keys, values) {
-      this.coreEditor.command.edgeWaypointsChange(keys)
+    handleChangeEdgeStyle (value) {
+      this.coreEditor.command.edgeWaypointsChange(value)
     },
     // 线始端
     handleEdgeStartFillchange (e) {

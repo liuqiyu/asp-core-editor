@@ -83,6 +83,7 @@ export default {
     this.coreEditor = new CoreEditor(container, this.setEnabled)
     console.log(this.coreEditor.version)
     let graph = this.coreEditor.editor.graph
+    console.log(graph.getStylesheet())
     this.graph = graph
     OutLine.init(graph, outlineContainer) //
 
