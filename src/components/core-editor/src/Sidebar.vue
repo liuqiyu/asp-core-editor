@@ -47,7 +47,7 @@ export default {
           title: '基础元件',
           children: [
             {
-              name: 'rectangle',
+              name: '矩形',
               src: require('./images/sidebar/24gl-rectangle.svg'),
               width: 120,
               height: 60,
@@ -55,19 +55,19 @@ export default {
               label: '正方形'
             },
             {
-              name: 'rectangle',
+              name: '圆角矩形',
               src: require('./images/sidebar/rectangle.svg'),
               width: 120,
               height: 60,
               style: 'rounded=1;whiteSpace=wrap;html=1;'
             },
             {
-              name: 'Text',
+              name: '文本框',
               src: require('./images/sidebar/text.svg'),
               width: 40,
               height: 20,
               style: 'text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;',
-              label: 'Text'
+              label: '文本框'
             },
             {
               name: '图片',
@@ -77,26 +77,60 @@ export default {
               type: 'image'
             },
             {
-              name: 'Ellipse',
+              name: '圆形',
               src: require('./images/sidebar/ellipse.svg'),
-              width: 120,
+              width: 80,
               height: 80,
-              style: 'ellipse;whiteSpace=wrap;html=1;'
+              style: 'ellipse;whiteSpace=wrap;html=1;aspect=fixed;',
+              label: '圆形'
             },
             {
-              name: 'Ellipse',
-              src: require('./images/sidebar/ellipse.svg'),
+              name: '椭圆',
+              src: require('./images/sidebar/oval.svg'),
               width: 120,
               height: 80,
-              style: 'rhombus;whiteSpace=wrap;html=1'
+              style: 'ellipse;whiteSpace=wrap;html=1;',
+              label: '椭圆'
             },
             {
-              name: 'Line',
+              name: '菱形',
+              src: require('./images/sidebar/diamond.svg'),
+              width: 80,
+              height: 80,
+              style: 'rhombus;whiteSpace=wrap;html=1',
+              label: '菱形'
+            },
+            {
+              name: '直线',
               src: require('./images/sidebar/line.svg'),
               width: 50,
               height: 50,
               type: 'edge',
               style: 'endArrow=none;html=1;'
+            },
+            {
+              name: '虚线',
+              src: require('./images/sidebar/dashed-line.svg'),
+              width: 50,
+              height: 50,
+              type: 'edge',
+              style: 'endArrow=none;dashed=1;html=1;'
+            },
+            {
+              name: '双向箭头',
+              src: require('./images/sidebar/bidirectional-arrow.svg'),
+              width: 50,
+              height: 50,
+              type: 'edge',
+              style: 'endArrow=classic;startArrow=classic;html=1;'
+            },
+            {
+              name: '单向箭头',
+              src: require('./images/sidebar/directional-connector.svg'),
+              width: 50,
+              height: 50,
+              type: 'edge',
+              style: 'endArrow=none;dashed=1;html=1;'
             },
             {
               name: 'curve',
@@ -109,7 +143,7 @@ export default {
           ]
         },
         {
-          title: '办公',
+          title: '办公元件',
           children: [
             {
               name: '地球',
@@ -203,6 +237,67 @@ export default {
               type: 'image'
             }
           ]
+        },
+        {
+          title: '设备元件',
+          children: [
+            {
+              name: 'ATS柜',
+              src: require('./images/equipment/ATS_S.svg'),
+              width: 60,
+              height: 60,
+              type: 'image',
+              label: 'ATS柜'
+            },
+            {
+              name: '变压器',
+              src: require('./images/equipment/byq_S.svg'),
+              width: 60,
+              height: 60,
+              type: 'image',
+              label: '变压器'
+            },
+            {
+              name: '低压出线柜',
+              src: require('./images/equipment/dycxg_S.svg'),
+              width: 60,
+              height: 60,
+              type: 'image',
+              label: '低压出线柜'
+            },
+            {
+              name: '低压进线柜',
+              src: require('./images/equipment/dyjxg_S.svg'),
+              width: 60,
+              height: 60,
+              type: 'image',
+              label: '低压进线柜'
+            },
+            {
+              name: '列头柜',
+              src: require('./images/equipment/ltg_S.svg'),
+              width: 60,
+              height: 60,
+              type: 'image',
+              label: '列头柜'
+            },
+            {
+              name: '微模块',
+              src: require('./images/equipment/wmk_S.svg'),
+              width: 60,
+              height: 60,
+              type: 'image',
+              label: '微模块'
+            },
+            {
+              name: '油机',
+              src: require('./images/equipment/yj_S.svg'),
+              width: 60,
+              height: 60,
+              type: 'image',
+              label: '油机'
+            }
+          ]
         }
       ]
     }
@@ -264,7 +359,7 @@ export default {
     user-select: none;
     .collapse-item {
       width: 60px;
-      height: 60px;
+      // height: 60px;
       text-align: center;
       cursor: move;
       border: 1px solid #fff;
@@ -274,8 +369,8 @@ export default {
       }
       img {
         margin-top: 4px;
-        width: 30px;
-        height: 30px;
+        width: 36px;
+        height: 36px;
         vertical-align: middle;
       }
       .name {
