@@ -20,7 +20,7 @@ export default function Sidebar (CoreEditor, container) {
   this.graph = this.editor.graph
 }
 
-Sidebar.prototype.createDragSource = function (ele, type, width, height, value, style, src) {
+Sidebar.prototype.createDragSource = function (ele, type, width, height, value, style, src, labelPosition) {
   const _dropGraph = evt => {
     const x = mxEvent.getClientX(evt)
     const y = mxEvent.getClientY(evt)
@@ -33,6 +33,18 @@ Sidebar.prototype.createDragSource = function (ele, type, width, height, value, 
     // 鼠标落在其他地方
     return null
   }
+
+  if (labelPosition) {
+    labelPosition = labelPosition.split(',')
+    let labelPositionStr = `;labelPosition=${labelPosition[0]};verticalLabelPosition=${labelPosition[1]};align=${labelPosition[2]};verticalAlign=${labelPosition[3]};`
+    style += labelPositionStr
+  } else if (!labelPosition && type === 'image') {
+    // 文本默认的对齐方式
+    labelPosition = ['left', 'middle', 'right', 'middle']
+    let labelPositionStr = `;labelPosition=${labelPosition[0]};verticalLabelPosition=${labelPosition[1]};align=${labelPosition[2]};verticalAlign=${labelPosition[3]};`
+    style += labelPositionStr
+  }
+  // console.log(style)
 
   const _dropSuccessCb = (graph, evt, target, x, y) => {
     let cell = null
@@ -50,7 +62,7 @@ Sidebar.prototype.createDragSource = function (ele, type, width, height, value, 
       cell.geometry.relative = true
       cell.edge = true
     } else if (type === 'image') {
-      cell = new mxCell(value, new mxGeometry(0, 0, width, height), `shape=image;image=${src};`)
+      cell = new mxCell(value, new mxGeometry(0, 0, width, height), `shape=image;image=${src};${style}`)
       cell.vertex = true
     } else {
       cell = new mxCell(value, new mxGeometry(0, 0, width, height), style)

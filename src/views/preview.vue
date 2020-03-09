@@ -8,15 +8,15 @@
 
 <template>
   <div class="editor">
-    <!-- <core-editor :data="data"
+    <core-editor :data="data"
                  :setEnabled="false"
                  @click="click"
                  @dblClick="dblClick">
-    </core-editor> -->
-    <iframe name="iframe"
+    </core-editor>
+    <!-- <iframe name="iframe"
             style="width: 100%; height: 100%"
             src="http://localhost:9420/#/dashboard"
-            frameborder="0"></iframe>
+            frameborder="0"></iframe> -->
   </div>
 </template>
 

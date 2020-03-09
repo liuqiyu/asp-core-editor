@@ -14,6 +14,7 @@
                :data-style="cell.style"
                :data-value="cell.label"
                :data-type="cell.type"
+               :data-position="cell.position"
                v-for="(cell, key) in item.children"
                :key="key">
             <img ref="ele"
@@ -51,8 +52,7 @@ export default {
               src: require('./images/sidebar/24gl-rectangle.svg'),
               width: 120,
               height: 60,
-              style: 'rounded=0;whiteSpace=wrap;html=1;',
-              label: '正方形'
+              style: 'rounded=0;whiteSpace=wrap;html=1;'
             },
             {
               name: '圆角矩形',
@@ -81,24 +81,21 @@ export default {
               src: require('./images/sidebar/ellipse.svg'),
               width: 80,
               height: 80,
-              style: 'ellipse;whiteSpace=wrap;html=1;aspect=fixed;',
-              label: '圆形'
+              style: 'ellipse;whiteSpace=wrap;html=1;aspect=fixed;'
             },
             {
               name: '椭圆',
               src: require('./images/sidebar/oval.svg'),
               width: 120,
               height: 80,
-              style: 'ellipse;whiteSpace=wrap;html=1;',
-              label: '椭圆'
+              style: 'ellipse;whiteSpace=wrap;html=1;'
             },
             {
               name: '菱形',
               src: require('./images/sidebar/diamond.svg'),
               width: 80,
               height: 80,
-              style: 'rhombus;whiteSpace=wrap;html=1',
-              label: '菱形'
+              style: 'rhombus;whiteSpace=wrap;html=1'
             },
             {
               name: '直线',
@@ -150,7 +147,9 @@ export default {
               src: require('./images/work/Earth_globe_128x128.png'),
               width: 60,
               height: 60,
-              type: 'image'
+              type: 'image',
+              position: ['left', 'middle', 'right', 'middle'],
+              label: '地球'
             },
             {
               name: '邮箱',
@@ -325,7 +324,9 @@ export default {
         const style = dataset.style
         const value = dataset.value || ''
         const type = dataset.type
-        this.coreEditor.sidebar.createDragSource(item, type, width, height, value, style, src)
+        const position = dataset.position
+        console.log(22222222222, position)
+        this.coreEditor.sidebar.createDragSource(item, type, width, height, value, style, src, position)
       })
     }
   }
