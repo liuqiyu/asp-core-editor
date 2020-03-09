@@ -39,7 +39,7 @@ module.exports = {
     resolve: {
       alias: {
         '@': resolve('src'),
-        static: resolve('public')
+        static: resolve('public/static')
       }
     },
     performance: {

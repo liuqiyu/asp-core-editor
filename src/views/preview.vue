@@ -29,10 +29,6 @@ export default {
   },
   mounted () {
     this.data = localStorage.getItem('xml')
-    const iframe = this.$refs.iframe
-    iframe.onload = function () {
-      console.log(window.frames['iframe'].document)
-    }
   },
   methods: {
     click ({ graph, cell }) {

@@ -700,7 +700,10 @@ export default {
   border-bottom: 1px solid #ebeef5;
   width: 241px;
   overflow: auto;
+  display: flex;
+  flex-direction: column;
   .title {
+    flex: none;
     height: 40px;
     background: #f6f6f6;
     line-height: 40px;
@@ -708,6 +711,9 @@ export default {
     font-size: 14px;
   }
   .format-wrapper {
+    flex: 1;
+    height: 100%;
+    overflow-y: auto;
     padding-top: 10px;
     .format-item {
       display: flex;

@@ -94,6 +94,33 @@ Actions.prototype.init = function () {
   this.addAction('horizontal', function () { _distributeCells(true) }, null, null, null) // 等距分布 水平
   this.addAction('vertical', function () { _distributeCells(false) }, null, null, null) // 等距分布 垂直
 
+  this.addAction('exportImg', function () {
+    alert('导出图片')
+    let width = 1000
+    let height = 1000
+    let type = 'png'
+    let name = '下载'
+    let serializer = new XMLSerializer()
+    let node = document.getElementById('graph').getElementsByTagName('svg')[0]
+    console.log(node)
+    let source = serializer.serializeToString(node)
+    let image = new Image()
+    image.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(source)))
+    let canvas = document.createElement('canvas')
+    canvas.width = width
+    canvas.height = height
+    let context = canvas.getContext('2d')
+    context.fillStyle = '#fff'
+    context.fillRect(0, 0, 10000, 10000)
+    image.onload = function () {
+      context.drawImage(image, 0, 0)
+      let a = document.createElement('a')
+      a.download = `${name}.${type}`
+      a.href = canvas.toDataURL(`image/${type}`)
+      a.click()
+    }
+  }, null, null, null) // 导出图片PNG
+
   // 移动 pan
   this.addAction('pan', function (status) {
     graph.panningHandler.isForcePanningEvent = me => {
