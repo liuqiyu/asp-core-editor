@@ -325,7 +325,6 @@ export default {
         const value = dataset.value || ''
         const type = dataset.type
         const position = dataset.position
-        console.log(22222222222, position)
         this.coreEditor.sidebar.createDragSource(item, type, width, height, value, style, src, position)
       })
     }

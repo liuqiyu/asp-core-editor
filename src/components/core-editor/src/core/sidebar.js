@@ -44,7 +44,6 @@ Sidebar.prototype.createDragSource = function (ele, type, width, height, value, 
     let labelPositionStr = `;labelPosition=${labelPosition[0]};verticalLabelPosition=${labelPosition[1]};align=${labelPosition[2]};verticalAlign=${labelPosition[3]};`
     style += labelPositionStr
   }
-  // console.log(style)
 
   const _dropSuccessCb = (graph, evt, target, x, y) => {
     let cell = null

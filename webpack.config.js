@@ -7,6 +7,7 @@
  */
 const path = require('path')
 const webpack = require('webpack')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
@@ -90,7 +91,14 @@ module.exports = {
   performance: {
     hints: false
   },
-  devtool: '#source-map'
+  // devtool: '#source-map',
+  // 外部扩展 不打包某些以依赖
+  // externals: {
+  //   mxgraph: 'mxgraph'
+  // },
+  plugins: [
+    new BundleAnalyzerPlugin()
+  ]
 }
 
 if (process.env.NODE_ENV === 'production') {

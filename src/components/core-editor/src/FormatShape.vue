@@ -563,6 +563,7 @@ export default {
     },
     // 初始化样式
     selectionChangedFormat (cell, geometry, ss) {
+      console.log(ss)
       this.$set(this.format, 'fontColor', ss.fontColor || '')
       this.$set(this.format, 'labelBackgroundColor', ss.labelBackgroundColor || '')
       this.$set(this.format, 'fillColor', this.shape !== 'image' ? ss.fillColor : ss.imageBackground)
@@ -570,6 +571,10 @@ export default {
       this.$set(this.format, 'strokeWidth', ss.strokeWidth || '')
       this.$set(this.format, 'fontSize', ss.fontSize || 12)
       this.$set(this.format, 'value', cell.value || '')
+      // 动态上传图片
+      if (ss.shape === 'image' || ss.imageName) {
+        this.$set(this.format, 'image', ss.imageName)
+      }
       // 线条类型
       this.format.edgeType = this.coreEditor.command.getEdgeType(ss)
       // 线条航点
