@@ -20,13 +20,13 @@ const {
   mxClient
 } = CoreGraph
 
-function CoreEditor (container, setEnabled) {
+function CoreEditor (container) {
   if (!mxClient.isBrowserSupported()) {
     // 判断是否支持mxgraph
     mxUtils.error('Browser is not supported!', 200, false)
   } else {
     /* eslint-disable no-new */
-    this.editor = new Editor(this, container, setEnabled)
+    this.editor = new Editor(this, container)
     this.actions = new Actions(this)
     this.keyHandler = new KeyHandler(this)
     this.sidebar = new Sidebar(this)

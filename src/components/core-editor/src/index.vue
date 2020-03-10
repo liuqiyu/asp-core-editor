@@ -83,11 +83,19 @@ export default {
     this.coreEditor = new CoreEditor(container, this.setEnabled)
     let graph = this.coreEditor.editor.graph
     this.graph = graph
-    OutLine.init(graph, outlineContainer) //
+    OutLine.init(graph, outlineContainer)
+    this.graph.setEnabled(true) // 编辑与运行状态
+    this.graph.setConnectable(true) // 指定图是否应允许新连接
+    this.graph.setMultigraph(true) // 指定图是否应允许同一对顶点之间存在多个连接
+    this.graph.setGridEnabled(false)
 
     if (this.editorData) {
       this.renderXml(this.editorData)
     }
+    // graph.panningHandler.useLeftButtonForPanning = true
+    // graph.panningHandler.ignoreCell = false
+    // graph.container.style.cursor = 'move'
+    // // graph.setPanning(true)
 
     graph.getSelectionModel().addListener('change', this.updateCells) // 选中元件
     graph.getModel().addListener('change', this.updateCells) // 拖动元件

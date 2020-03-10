@@ -8,29 +8,46 @@
 
 <template>
   <div class="editor">
-    <core-editor :data="data"
-                 :setEnabled="false"
-                 @click="click"
-                 @dblClick="dblClick">
-    </core-editor>
-    <!-- <iframe name="iframe"
-            style="width: 100%; height: 100%"
-            src="http://localhost:9420/#/dashboard"
-            frameborder="0"></iframe> -->
+      <div id="graph"
+            ref="graph"
+            class="graph-container">
+      </div>
   </div>
 </template>
 
 <script>
+const { CoreEditor } = AspCoreEditor
 export default {
   data () {
     return {
-      data: ''
+      data: '',
+      coreEditor: null,
+      graph: null
     }
   },
   mounted () {
     this.data = localStorage.getItem('xml')
+    let container = this.$refs.graph
+    this.coreEditor = new CoreEditor(container)
+    let graph = this.coreEditor.editor.graph
+    this.graph = graph
+    this.graph.setEnabled(false) // 运行状态
+    this.graph.panningHandler.useLeftButtonForPanning = true
+    this.graph.panningHandler.ignoreCell = true
+    this.graph.container.style.cursor = 'move'
+    this.graph.setPanning(true)
+
+    if (this.data) {
+      this.renderXml(this.data)
+    }
   },
   methods: {
+    renderXml (value) {
+      console.log(value)
+      if (value && this.graph) {
+        this.coreEditor.editor.renderXml(value)
+      }
+    },
     click ({ graph, cell }) {
       graph.cellLabelChanged(cell, 123)
     },
@@ -44,5 +61,8 @@ export default {
 <style lang="scss" scoped>
 .editor {
   height: 100%;
+  .graph-container {
+    height: 100%;
+  }
 }
 </style>

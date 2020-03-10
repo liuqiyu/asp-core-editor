@@ -321,20 +321,31 @@ export default {
       const ele = document.querySelectorAll('.drap')
       ele.forEach(item => {
         const dataset = item.dataset
-        let src = null
-        if (dataset.type === 'image') {
-          console.log(dataset.value)
-          src = dataset.src
-          console.log(src)
-        }
+        let src = dataset.src
         const width = Number(dataset.width)
         const height = Number(dataset.height)
         const style = dataset.style
         const value = dataset.value || ''
         const type = dataset.type
         const position = dataset.position
+
         this.coreEditor.sidebar.createDragSource(item, type, width, height, value, style, src, position)
       })
+    },
+    getUrlBase64 (url, ext, callback) {
+      let canvas = document.createElement('canvas') // 创建canvas DOM元素
+      let ctx = canvas.getContext('2d')
+      let img = new Image()
+      img.crossOrigin = 'Anonymous'
+      img.src = url
+      img.onload = function () {
+        canvas.height = 60 // 指定画板的高度,自定义
+        canvas.width = 85 // 指定画板的宽度，自定义
+        ctx.drawImage(img, 0, 0, 60, 85) // 参数可自定义
+        let dataURL = canvas.toDataURL('image/' + ext)
+        callback.call(this, dataURL) // 回掉函数获取Base64编码
+        canvas = null
+      }
     }
   }
 }

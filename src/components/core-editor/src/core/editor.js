@@ -18,17 +18,13 @@ const {
   mxCodec
 } = mxgraph
 
-export function Editor (editor, container, setEnabled) {
+export function Editor (editor, container) {
   this.editor = editor
-  this.init(container, setEnabled)
+  this.init(container)
 }
 
-Editor.prototype.init = function (container, setEnabled) {
+Editor.prototype.init = function (container) {
   this.graph = new mxGraph(container)
-  this.graph.setEnabled(setEnabled) // 编辑与运行状态
-  this.graph.setConnectable(true) // 指定图是否应允许新连接
-  this.graph.setMultigraph(true) // 指定图是否应允许同一对顶点之间存在多个连接
-  this.graph.setGridEnabled(false)
 
   // 初始化样式
   const node = mxUtils.parseXml(defaultXml).documentElement
