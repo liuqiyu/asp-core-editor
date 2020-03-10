@@ -3,11 +3,12 @@
  * @Author: liuqiyu
  * @Date: 2019-11-25 09:43:50
  * @LastEditors  : liuqiyu
- * @LastEditTime : 2020-01-13 11:43:34
+ * @LastEditTime : 2020-01-08 17:41:14
  */
 
 import Base64 from './base64'
 import mxgraph from './mxgraph'
+import { IMAGE_PATH } from './path'
 
 const {
   mxImage,
@@ -33,7 +34,7 @@ const {
   mxRectangle
 } = mxgraph
 
-let defaultEdgeStyle = {
+var defaultEdgeStyle = {
   'edgeStyle': 'orthogonalEdgeStyle',
   'rounded': '0',
   'jettySize': 'auto',
@@ -47,7 +48,7 @@ function Graph (graph) {
   graph.currentEdgeStyle = mxUtils.clone(defaultEdgeStyle)
 
   graph.createCurrentEdgeStyle = function () {
-    let style = 'edgeStyle=' + (this.currentEdgeStyle['edgeStyle'] || 'none') + ';'
+    var style = 'edgeStyle=' + (this.currentEdgeStyle['edgeStyle'] || 'none') + ';'
 
     if (!(this.currentEdgeStyle['shape'] === null || this.currentEdgeStyle['shape'] === undefined)) {
       style += 'shape=' + this.currentEdgeStyle['shape'] + ';'
@@ -117,8 +118,7 @@ function Graph (graph) {
   // hover 锚点
   graph.getAllConnectionConstraints = function (terminal) {
     if (terminal != null && this.model.isVertex(terminal.cell)) {
-      return [
-        new mxConnectionConstraint(new mxPoint(0.25, 0), true),
+      return [new mxConnectionConstraint(new mxPoint(0.25, 0), true),
         new mxConnectionConstraint(new mxPoint(0.5, 0), true),
         new mxConnectionConstraint(new mxPoint(0.75, 0), true),
         new mxConnectionConstraint(new mxPoint(0, 0.25), true),
@@ -141,24 +141,24 @@ function Graph (graph) {
 
     cells = this.model.getTopmostCells(cells)
 
-    let model = this.getModel()
-    let s = this.gridSize
-    let select = []
+    var model = this.getModel()
+    var s = this.gridSize
+    var select = []
 
     model.beginUpdate()
     try {
-      let clones = this.cloneCells(cells, false)
+      var clones = this.cloneCells(cells, false)
 
-      for (let i = 0; i < cells.length; i++) {
-        let parent = model.getParent(cells[i])
-        let child = this.moveCells([clones[i]], s, s, false)[0]
+      for (var i = 0; i < cells.length; i++) {
+        var parent = model.getParent(cells[i])
+        var child = this.moveCells([clones[i]], s, s, false)[0]
         select.push(child)
 
         if (append) {
           model.add(parent, clones[i])
         } else {
           // Maintains child index by inserting after clone in parent
-          let index = parent.getIndex(cells[i])
+          var index = parent.getIndex(cells[i])
           model.add(parent, clones[i], index + 1)
         }
       }
@@ -172,9 +172,9 @@ function Graph (graph) {
   /**
   * Overrides createGroupCell to set the group style for new groups to 'group'.
   */
-  let graphCreateGroupCell = graph.createGroupCell
+  var graphCreateGroupCell = graph.createGroupCell
   graph.createGroupCell = function (cells) {
-    let group = graphCreateGroupCell.apply(this, arguments)
+    var group = graphCreateGroupCell.apply(this, arguments)
     group.setStyle('group')
 
     return group
@@ -183,7 +183,7 @@ function Graph (graph) {
 
 // Helper function (requires atob).
 Graph.createSvgImage = function (w, h, data) {
-  let tmp = unescape(encodeURIComponent(
+  var tmp = unescape(encodeURIComponent(
     '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">' +
     '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="' + w + 'px" height="' + h + 'px" ' +
     'version="1.1">' + data + '</svg>'))
@@ -193,11 +193,16 @@ Graph.createSvgImage = function (w, h, data) {
 
 function HoverIcons () { }
 
-HoverIcons.prototype.mainHandle = Graph.createSvgImage(18, 18, '<circle cx="9" cy="9" r="5" stroke="#fff" fill="#007dfc" stroke-width="1"/>')
-HoverIcons.prototype.secondaryHandle = Graph.createSvgImage(16, 16, '<path d="m 8 3 L 13 8 L 8 13 L 3 8 z" stroke="#fff" fill="#fca000"/>')
-HoverIcons.prototype.fixedHandle = Graph.createSvgImage(18, 18, '<circle cx="9" cy="9" r="5" stroke="#fff" fill="#007dfc" stroke-width="1"/><path d="m 7 7 L 11 11 M 7 11 L 11 7" stroke="#fff"/>')
-HoverIcons.prototype.terminalHandle = Graph.createSvgImage(18, 18, '<circle cx="9" cy="9" r="5" stroke="#fff" fill="#007dfc" stroke-width="1"/><circle cx="9" cy="9" r="2" stroke="#fff" fill="transparent"/>')
-HoverIcons.prototype.rotationHandle = new mxImage('data:image/png;base64,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', 19, 21)
+HoverIcons.prototype.mainHandle = (!mxClient.IS_SVG) ? new mxImage(IMAGE_PATH + '/handle-main.png', 17, 17)
+  : Graph.createSvgImage(18, 18, '<circle cx="9" cy="9" r="5" stroke="#fff" fill="#007dfc" stroke-width="1"/>')
+HoverIcons.prototype.secondaryHandle = (!mxClient.IS_SVG) ? new mxImage(IMAGE_PATH + '/handle-secondary.png', 17, 17)
+  : Graph.createSvgImage(16, 16, '<path d="m 8 3 L 13 8 L 8 13 L 3 8 z" stroke="#fff" fill="#fca000"/>')
+HoverIcons.prototype.fixedHandle = (!mxClient.IS_SVG) ? new mxImage(IMAGE_PATH + '/handle-fixed.png', 17, 17)
+  : Graph.createSvgImage(18, 18, '<circle cx="9" cy="9" r="5" stroke="#fff" fill="#007dfc" stroke-width="1"/><path d="m 7 7 L 11 11 M 7 11 L 11 7" stroke="#fff"/>')
+HoverIcons.prototype.terminalHandle = (!mxClient.IS_SVG) ? new mxImage(IMAGE_PATH + '/handle-terminal.png', 17, 17)
+  : Graph.createSvgImage(18, 18, '<circle cx="9" cy="9" r="5" stroke="#fff" fill="#007dfc" stroke-width="1"/><circle cx="9" cy="9" r="2" stroke="#fff" fill="transparent"/>')
+HoverIcons.prototype.rotationHandle = new mxImage((mxClient.IS_SVG) ? 'data:image/png;base64,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'
+  : IMAGE_PATH + '/handle-rotate.png', 19, 21)
 
 if (mxClient.IS_SVG) {
   mxConstraintHandler.prototype.pointImage = Graph.createSvgImage(5, 5, '<path d="m 0 0 L 5 5 M 0 5 L 5 0" stroke="#007dfc"/>')
@@ -239,11 +244,11 @@ export default Graph;
   // 函数：getGraphBounds
   // 重写getGraphBounds以使用SVG中的边界框。
   mxGraphView.prototype.getGraphBounds = function () {
-    let b = this.graphBounds
+    var b = this.graphBounds
 
     if (this.graph.useCssTransforms) {
-      let t = this.graph.currentTranslate
-      let s = this.graph.currentScale
+      var t = this.graph.currentTranslate
+      var s = this.graph.currentScale
 
       b = new mxRectangle(
         (b.x + t.x) * s, (b.y + t.y) * s,
@@ -268,7 +273,7 @@ export default Graph;
   // 功能：验证
   // 重写validate以规范化验证视图状态和传递
   // CSS转换的当前状态。
-  let graphViewValidate = mxGraphView.prototype.validate
+  var graphViewValidate = mxGraphView.prototype.validate
 
   mxGraphView.prototype.validate = function (cell) {
     if (this.graph.useCssTransforms) {
@@ -293,7 +298,7 @@ export default Graph;
   }
 
   // 重置已处理边的列表。
-  let mxGraphViewResetValidationState = mxGraphView.prototype.resetValidationState
+  var mxGraphViewResetValidationState = mxGraphView.prototype.resetValidationState
 
   mxGraphView.prototype.resetValidationState = function () {
     mxGraphViewResetValidationState.apply(this, arguments)
@@ -302,10 +307,10 @@ export default Graph;
   }
 
   // 更新有效边的跳转并根据需要重新绘制。
-  let mxGraphViewValidateCellState = mxGraphView.prototype.validateCellState
+  var mxGraphViewValidateCellState = mxGraphView.prototype.validateCellState
 
   mxGraphView.prototype.validateCellState = function (cell, recurse) {
-    let state = this.getState(cell)
+    var state = this.getState(cell)
 
     // Forces repaint if jumps change on a valid edge
     if (state != null && this.graph.model.isEdge(state.cell) &&
@@ -327,7 +332,7 @@ export default Graph;
   }
 
   // 更新无效边的跳转。
-  let mxGraphViewUpdateCellState = mxGraphView.prototype.updateCellState
+  var mxGraphViewUpdateCellState = mxGraphView.prototype.updateCellState
 
   mxGraphView.prototype.updateCellState = function (state) {
     mxGraphViewUpdateCellState.apply(this, arguments)
@@ -341,36 +346,36 @@ export default Graph;
 
   // 更新给定状态和已处理边之间的跳转。
   mxGraphView.prototype.updateLineJumps = function (state) {
-    let pts = state.absolutePoints
+    var pts = state.absolutePoints
 
     if (Graph.lineJumpsEnabled) {
-      let changed = state.routedPoints != null
-      let actual = null
+      var changed = state.routedPoints != null
+      var actual = null
 
       if (pts != null && this.validEdges != null &&
         mxUtils.getValue(state.style, 'jumpStyle', 'none') !== 'none') {
-        let thresh = 0.5 * this.scale
+        var thresh = 0.5 * this.scale
         changed = false
         actual = []
 
         // Type 0 means normal waypoint, 1 means jump
         function addPoint (type, x, y) {
-          let rpt = new mxPoint(x, y)
+          var rpt = new mxPoint(x, y)
           rpt.type = type
 
           actual.push(rpt)
-          let curr = (state.routedPoints != null) ? state.routedPoints[actual.length - 1] : null
+          var curr = (state.routedPoints != null) ? state.routedPoints[actual.length - 1] : null
 
           return curr == null || curr.type !== type || curr.x !== x || curr.y !== y
         }
 
-        for (let i = 0; i < pts.length - 1; i++) {
-          let p1 = pts[i + 1]
-          let p0 = pts[i]
-          let list = []
+        for (var i = 0; i < pts.length - 1; i++) {
+          var p1 = pts[i + 1]
+          var p0 = pts[i]
+          var list = []
 
           // Ignores waypoints on straight segments
-          let pn = pts[i + 2]
+          var pn = pts[i + 2]
 
           while (i < pts.length - 2 &&
             mxUtils.ptSegDistSq(p0.x, p0.y, pn.x, pn.y,
@@ -383,15 +388,15 @@ export default Graph;
           changed = addPoint(0, p0.x, p0.y) || changed
 
           // Processes all previous edges
-          for (let e = 0; e < this.validEdges.length; e++) {
-            let state2 = this.validEdges[e]
-            let pts2 = state2.absolutePoints
+          for (var e = 0; e < this.validEdges.length; e++) {
+            var state2 = this.validEdges[e]
+            var pts2 = state2.absolutePoints
 
             if (pts2 != null && mxUtils.intersects(state, state2) && state2.style['noJump'] !== '1') {
               // Compares each segment of the edge with the current segment
-              for (let j = 0; j < pts2.length - 1; j++) {
-                let p3 = pts2[j + 1]
-                let p2 = pts2[j]
+              for (var j = 0; j < pts2.length - 1; j++) {
+                var p3 = pts2[j + 1]
+                var p2 = pts2[j]
 
                 // Ignores waypoints on straight segments
                 pn = pts2[j + 2]
@@ -404,19 +409,19 @@ export default Graph;
                   pn = pts2[j + 2]
                 }
 
-                let pt = mxUtils.intersection(p0.x, p0.y, p1.x, p1.y, p2.x, p2.y, p3.x, p3.y)
+                var pt = mxUtils.intersection(p0.x, p0.y, p1.x, p1.y, p2.x, p2.y, p3.x, p3.y)
 
                 // Handles intersection between two segments
                 if (pt != null && (Math.abs(pt.x - p2.x) > thresh ||
                   Math.abs(pt.y - p2.y) > thresh) &&
                   (Math.abs(pt.x - p3.x) > thresh ||
                     Math.abs(pt.y - p3.y) > thresh)) {
-                  let dx = pt.x - p0.x
-                  let dy = pt.y - p0.y
-                  let temp = { distSq: dx * dx + dy * dy, x: pt.x, y: pt.y }
+                  var dx = pt.x - p0.x
+                  var dy = pt.y - p0.y
+                  var temp = { distSq: dx * dx + dy * dy, x: pt.x, y: pt.y }
 
                   // Intersections must be ordered by distance from start of segment
-                  for (let t = 0; t < list.length; t++) {
+                  for (var t = 0; t < list.length; t++) {
                     if (list[t].distSq > temp.distSq) {
                       list.splice(t, 0, temp)
                       temp = null
@@ -442,7 +447,7 @@ export default Graph;
           }
         }
 
-        let ptxx = pts[pts.length - 1]
+        var ptxx = pts[pts.length - 1]
         changed = addPoint(0, ptxx.x, ptxx.y) || changed
       }
 
@@ -454,29 +459,28 @@ export default Graph;
     }
   }
   // // 选中元件锚点
-  let mxGraphViewUpdateFloatingTerminalPoint = mxGraphView.prototype.updateFloatingTerminalPoint
+  var mxGraphViewUpdateFloatingTerminalPoint = mxGraphView.prototype.updateFloatingTerminalPoint
 
   mxGraphView.prototype.updateFloatingTerminalPoint = function (edge, start, end, source) {
-    let cos, sin
     if (start != null && edge != null &&
       (start.style['snapToPoint'] === '1' ||
         edge.style['snapToPoint'] === '1')) {
       start = this.getTerminalPort(edge, start, source)
-      let next = this.getNextPoint(edge, end, source)
+      var next = this.getNextPoint(edge, end, source)
 
-      let orth = this.graph.isOrthogonal(edge)
-      let alpha = mxUtils.toRadians(Number(start.style[mxConstants.STYLE_ROTATION] || '0'))
-      let center = new mxPoint(start.getCenterX(), start.getCenterY())
+      var orth = this.graph.isOrthogonal(edge)
+      var alpha = mxUtils.toRadians(Number(start.style[mxConstants.STYLE_ROTATION] || '0'))
+      var center = new mxPoint(start.getCenterX(), start.getCenterY())
 
       if (alpha !== 0) {
-        cos = Math.cos(-alpha)
-        sin = Math.sin(-alpha)
+        var cos = Math.cos(-alpha)
+        var sin = Math.sin(-alpha)
         next = mxUtils.getRotatedPoint(next, cos, sin, center)
       }
 
-      let border = parseFloat(edge.style[mxConstants.STYLE_PERIMETER_SPACING] || 0)
+      var border = parseFloat(edge.style[mxConstants.STYLE_PERIMETER_SPACING] || 0)
       border += parseFloat(edge.style[(source) ? mxConstants.STYLE_SOURCE_PERIMETER_SPACING : mxConstants.STYLE_TARGET_PERIMETER_SPACING] || 0)
-      let pt = this.getPerimeterPoint(start, next, alpha === 0 && orth, border)
+      var pt = this.getPerimeterPoint(start, next, alpha === 0 && orth, border)
 
       if (alpha !== 0) {
         cos = Math.cos(alpha)
@@ -491,16 +495,16 @@ export default Graph;
   }
   mxGraphView.prototype.snapToAnchorPoint = function (edge, start, end, source, pt) {
     if (start !== null && edge !== null) {
-      let constraints = this.graph.getAllConnectionConstraints(start)
-      let nearest = null
-      let dist = null
+      var constraints = this.graph.getAllConnectionConstraints(start)
+      var nearest = null
+      var dist = null
 
       if (constraints !== null) {
-        for (let i = 0; i < constraints.length; i++) {
-          let cp = this.graph.getConnectionPoint(start, constraints[i])
+        for (var i = 0; i < constraints.length; i++) {
+          var cp = this.graph.getConnectionPoint(start, constraints[i])
 
           if (cp != null) {
-            let tmp = (cp.x - pt.x) * (cp.x - pt.x) + (cp.y - pt.y) * (cp.y - pt.y)
+            var tmp = (cp.x - pt.x) * (cp.x - pt.x) + (cp.y - pt.y) * (cp.y - pt.y)
 
             if (dist === null || tmp < dist) {
               nearest = cp
@@ -527,14 +531,14 @@ export default Graph;
 
   // No dashed shapes.
   mxGuide.prototype.createGuideShape = function (horizontal) {
-    let guide = new mxPolyline([], mxConstants.GUIDE_COLOR, mxConstants.GUIDE_STROKEWIDTH)
+    var guide = new mxPolyline([], mxConstants.GUIDE_COLOR, mxConstants.GUIDE_STROKEWIDTH)
 
     return guide
   }
 
   // 替代连接点的亮显形状
   mxConstraintHandler.prototype.createHighlightShape = function () {
-    let hl = new mxEllipse(null, this.highlightColor, this.highlightColor, 0)
+    var hl = new mxEllipse(null, this.highlightColor, this.highlightColor, 0)
     hl.opacity = mxConstants.HIGHLIGHT_OPACITY
 
     return hl
@@ -550,16 +554,16 @@ export default Graph;
     let edge = this.graph.createEdge(null, null, null, null, null, style)
     let state = new mxCellState(this.graph.view, edge, this.graph.getCellStyle(edge))
 
-    for (let key in this.graph.currentEdgeStyle) {
+    for (var key in this.graph.currentEdgeStyle) {
       state.style[key] = this.graph.currentEdgeStyle[key]
     }
     return state
   }
 
   //  使用当前边样式替代虚线状态
-  let connectionHandlerCreateShape = mxConnectionHandler.prototype.createShape
+  var connectionHandlerCreateShape = mxConnectionHandler.prototype.createShape
   mxConnectionHandler.prototype.createShape = function () {
-    let shape = connectionHandlerCreateShape.apply(this, arguments)
+    var shape = connectionHandlerCreateShape.apply(this, arguments)
 
     shape.isDashed = this.graph.currentEdgeStyle[mxConstants.STYLE_DASHED] === '1'
 
@@ -572,13 +576,13 @@ export default Graph;
   }
 
   //  重写连接处理程序以忽略边，而不是不允许连接
-  let mxConnectionHandlerCreateMarker = mxConnectionHandler.prototype.createMarker
+  var mxConnectionHandlerCreateMarker = mxConnectionHandler.prototype.createMarker
   mxConnectionHandler.prototype.createMarker = function () {
-    let marker = mxConnectionHandlerCreateMarker.apply(this, arguments)
+    var marker = mxConnectionHandlerCreateMarker.apply(this, arguments)
 
-    let markerGetCell = marker.getCell
+    var markerGetCell = marker.getCell
     marker.getCell = mxUtils.bind(this, function (me) {
-      let result = markerGetCell.apply(this, arguments)
+      var result = markerGetCell.apply(this, arguments)
 
       this.error = null
 
@@ -639,7 +643,7 @@ export default Graph;
   }
 
   // 翻转
-  let vertexHandlerCreateSizerShape = mxVertexHandler.prototype.createSizerShape
+  var vertexHandlerCreateSizerShape = mxVertexHandler.prototype.createSizerShape
   mxVertexHandler.prototype.createSizerShape = function (bounds, index, fillColor) {
     this.handleImage = (index === mxEvent.ROTATION_HANDLE) ? HoverIcons.prototype.rotationHandle : (index === mxEvent.LABEL_HANDLE) ? this.secondaryHandleImage : this.handleImage
     return vertexHandlerCreateSizerShape.apply(this, arguments)
