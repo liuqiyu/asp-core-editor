@@ -101,6 +101,13 @@ export default {
               style: 'rhombus;whiteSpace=wrap;html=1'
             },
             {
+              name: '梯形',
+              src: require('static/images/sidebar/diamond.svg'),
+              width: 120,
+              height: 60,
+              style: 'shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;'
+            },
+            {
               name: '直线',
               src: require('static/images/sidebar/line.svg'),
               width: 50,

@@ -92,10 +92,6 @@ export default {
     if (this.editorData) {
       this.renderXml(this.editorData)
     }
-    // graph.panningHandler.useLeftButtonForPanning = true
-    // graph.panningHandler.ignoreCell = false
-    // graph.container.style.cursor = 'move'
-    // // graph.setPanning(true)
 
     graph.getSelectionModel().addListener('change', this.updateCells) // 选中元件
     graph.getModel().addListener('change', this.updateCells) // 拖动元件

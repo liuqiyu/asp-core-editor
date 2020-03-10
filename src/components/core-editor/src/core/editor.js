@@ -7,7 +7,6 @@
  */
 import mxgraph from './mxgraph'
 import PopupMenu from './popupMenu'
-// import MxEvents from './mxEvents'
 import Graph from './graph'
 import { defaultXml } from './constant'
 
@@ -25,10 +24,6 @@ export function Editor (editor, container) {
 
 Editor.prototype.init = function (container) {
   this.graph = new mxGraph(container)
-  this.graph.setEnabled(true) // 编辑与运行状态
-  this.graph.setConnectable(true) // 指定图是否应允许新连接
-  this.graph.setMultigraph(true) // 指定图是否应允许同一对顶点之间存在多个连接
-  this.graph.setGridEnabled(false)
 
   // 初始化样式
   const node = mxUtils.parseXml(defaultXml).documentElement
