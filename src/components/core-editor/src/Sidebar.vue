@@ -101,11 +101,81 @@ export default {
               style: 'rhombus;whiteSpace=wrap;html=1'
             },
             {
-              name: '梯形',
-              src: require('static/images/sidebar/diamond.svg'),
+              name: '平行四边形',
+              src: require('./images/sidebar/parallelogram.svg'),
               width: 120,
               height: 60,
               style: 'shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;'
+            },
+            {
+              name: '六角形',
+              src: require('./images/sidebar/hexagon.svg'),
+              width: 120,
+              height: 80,
+              style: 'shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;'
+            },
+            {
+              name: '三角形',
+              src: require('./images/sidebar/triangle.svg'),
+              width: 80,
+              height: 80,
+              style: 'triangle;whiteSpace=wrap;html=1;'
+            },
+            {
+              name: '圆柱形',
+              src: require('./images/sidebar/cylinder.svg'),
+              width: 60,
+              height: 80,
+              style: 'shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;'
+            },
+            {
+              name: '云',
+              src: require('./images/sidebar/cloud.svg'),
+              width: 120,
+              height: 60,
+              style: 'ellipse;shape=cloud;whiteSpace=wrap;html=1;'
+            },
+            {
+              name: '立方体',
+              src: require('./images/sidebar/cube.svg'),
+              width: 120,
+              height: 80,
+              style: 'shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;'
+            },
+            {
+              name: '步骤条',
+              src: require('./images/sidebar/step.svg'),
+              width: 120,
+              height: 80,
+              style: 'shape=step;perimeter=stepPerimeter;whiteSpace=wrap;html=1;fixedSize=1;'
+            },
+            {
+              name: '梯形',
+              src: require('./images/sidebar/trapezoid.svg'),
+              width: 120,
+              height: 60,
+              style: 'shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;html=1'
+            },
+            {
+              name: '笔记',
+              src: require('./images/sidebar/note.svg'),
+              width: 80,
+              height: 100,
+              style: 'shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;'
+            },
+            {
+              name: '标注',
+              src: require('./images/sidebar/callout.svg'),
+              width: 120,
+              height: 80,
+              style: 'shape=callout;whiteSpace=wrap;html=1;perimeter=calloutPerimeter;'
+            },
+            {
+              name: '卡片',
+              src: require('./images/sidebar/card.svg'),
+              width: 80,
+              height: 100,
+              style: 'shape=card;whiteSpace=wrap;html=1;'
             },
             {
               name: '直线',

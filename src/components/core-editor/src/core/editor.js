@@ -9,6 +9,7 @@ import mxgraph from './mxgraph'
 import PopupMenu from './popupMenu'
 import Graph from './graph'
 import { defaultXml } from './constant'
+import './shapes'
 
 const {
   mxGraph,
