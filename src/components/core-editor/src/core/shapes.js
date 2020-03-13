@@ -15,7 +15,9 @@ const {
   mxEdgeHandler,
   mxPerimeter,
   mxStyleRegistry,
-  mxRectangleShape
+  mxRectangleShape,
+  mxEvent,
+  mxConnectionConstraint
 } = mxgraph
 
 /**
@@ -34,8 +36,87 @@ ParallelogramShape.prototype.redrawPath = function (c, x, y, w, h) {
     this.isRounded, arcSize, true)
   c.end()
 }
-
 mxCellRenderer.registerShape('parallelogram', ParallelogramShape)
+
+/**
+ *  Hexagon shape
+ *  六角形
+ */
+function HexagonShape () {
+  mxActor.call(this)
+};
+mxUtils.extend(HexagonShape, mxHexagon)
+HexagonShape.prototype.size = 0.25
+HexagonShape.prototype.redrawPath = function (c, x, y, w, h) {
+  let s = w * Math.max(0, Math.min(1, parseFloat(mxUtils.getValue(this.style, 'size', this.size))))
+  let arcSize = mxUtils.getValue(this.style, mxConstants.STYLE_ARCSIZE, mxConstants.LINE_ARCSIZE) / 2
+  this.addPoints(c,
+    [
+      new mxPoint(s, 0),
+      new mxPoint(w - s, 0),
+      new mxPoint(w, 0.5 * h),
+      new mxPoint(w - s, h),
+      new mxPoint(s, h), new mxPoint(0, 0.5 * h)
+    ], this.isRounded, arcSize, true)
+}
+mxCellRenderer.registerShape('hexagon', HexagonShape)
+
+// Hexagon Perimeter 2 (keep existing one)
+mxPerimeter.HexagonPerimeter2 = function (bounds, vertex, next, orthogonal) {
+  let size = HexagonShape.prototype.size
+
+  if (vertex != null) {
+    size = mxUtils.getValue(vertex.style, 'size', size)
+  }
+
+  let x = bounds.x
+  let y = bounds.y
+  let w = bounds.width
+  let h = bounds.height
+
+  let cx = bounds.getCenterX()
+  let cy = bounds.getCenterY()
+
+  let direction = (vertex != null) ? mxUtils.getValue(
+    vertex.style, mxConstants.STYLE_DIRECTION,
+    mxConstants.DIRECTION_EAST) : mxConstants.DIRECTION_EAST
+  let vertical = direction === mxConstants.DIRECTION_NORTH ||
+    direction === mxConstants.DIRECTION_SOUTH
+  let points
+
+  if (vertical) {
+    let dy = h * Math.max(0, Math.min(1, size))
+    points = [
+      new mxPoint(cx, y),
+      new mxPoint(x + w, y + dy),
+      new mxPoint(x + w, y + h - dy),
+      new mxPoint(cx, y + h), new mxPoint(x, y + h - dy),
+      new mxPoint(x, y + dy), new mxPoint(cx, y)
+    ]
+  } else {
+    let dx = w * Math.max(0, Math.min(1, size))
+    points = [
+      new mxPoint(x + dx, y), new mxPoint(x + w - dx, y),
+      new mxPoint(x + w, cy),
+      new mxPoint(x + w - dx, y + h),
+      new mxPoint(x + dx, y + h),
+      new mxPoint(x, cy),
+      new mxPoint(x + dx, y)]
+  }
+
+  let p1 = new mxPoint(cx, cy)
+
+  if (orthogonal) {
+    if (next.x < x || next.x > x + w) {
+      p1.y = next.y
+    } else {
+      p1.x = next.x
+    }
+  }
+  return mxUtils.getPerimeterPoint(points, p1, next)
+}
+
+mxStyleRegistry.putValue('hexagonPerimeter2', mxPerimeter.HexagonPerimeter2)
 
 /**
  * Cube Shape
@@ -265,25 +346,39 @@ if (typeof mxVertexHandler !== 'undefined') {
 
       if (mxUtils.getValue(state.style, mxConstants.STYLE_ABSOLUTE_ARCSIZE, 0) === '1') {
         let arcSize = mxUtils.getValue(state.style, mxConstants.STYLE_ARCSIZE, mxConstants.LINE_ARCSIZE) / 2
-
+        alert(11)
         return new mxPoint(bounds.x + bounds.width - Math.min(bounds.width / 2, arcSize), bounds.y + tmp)
       } else {
         let arcSize = Math.max(0, parseFloat(mxUtils.getValue(state.style,
           mxConstants.STYLE_ARCSIZE, mxConstants.RECTANGLE_ROUNDING_FACTOR * 100))) / 100
-
+        alert(2)
         return new mxPoint(bounds.x + bounds.width - Math.min(Math.max(bounds.width / 2, bounds.height / 2),
           Math.min(bounds.width, bounds.height) * arcSize), bounds.y + tmp)
       }
     }, function (bounds, pt, me) {
+      alert(3)
       if (mxUtils.getValue(state.style, mxConstants.STYLE_ABSOLUTE_ARCSIZE, 0) === '1') {
+        alert(33)
         this.state.style[mxConstants.STYLE_ARCSIZE] = Math.round(Math.max(0, Math.min(bounds.width,
           (bounds.x + bounds.width - pt.x) * 2)))
       } else {
+        alert(44)
         let f = Math.min(50, Math.max(0, (bounds.width - pt.x + bounds.x) * 100 /
           Math.min(bounds.width, bounds.height)))
         this.state.style[mxConstants.STYLE_ARCSIZE] = Math.round(f)
       }
     })
+  }
+
+  function createArcHandleFunction () {
+    return function (state) {
+      let handles = []
+      if (mxUtils.getValue(state.style, mxConstants.STYLE_ROUNDED, false)) {
+        handles.push(createArcHandle(state))
+      }
+
+      return handles
+    }
   }
 
   // 立体形
@@ -323,7 +418,38 @@ if (typeof mxVertexHandler !== 'undefined') {
     }
   }
 
+  // 六边形
+  function createDisplayHandleFunction (defaultValue, allowArcHandle, max, redrawEdges, fixedDefaultValue) {
+    max = (max !== null) ? max : 1
+
+    return function (state) {
+      let handles = [createHandle(state, ['size'], function (bounds) {
+        let fixed = (fixedDefaultValue !== null) ? mxUtils.getValue(this.state.style, 'fixedSize', '0') !== '0' : null
+        let size = parseFloat(mxUtils.getValue(this.state.style, 'size', (fixed) ? fixedDefaultValue : defaultValue))
+
+        return new mxPoint(bounds.x + Math.max(0, Math.min(bounds.width, size * ((fixed) ? 1 : bounds.width))), bounds.getCenterY())
+      }, function (bounds, pt, me) {
+        let fixed = (fixedDefaultValue !== null) ? mxUtils.getValue(this.state.style, 'fixedSize', '0') !== '0' : null
+        let size = (fixed) ? (pt.x - bounds.x) : Math.max(0, Math.min(max, (pt.x - bounds.x) / bounds.width))
+
+        if (fixed && !mxEvent.isAltDown(me.getEvent())) {
+          size = state.view.graph.snap(size)
+        }
+
+        this.state.style['size'] = size
+      }, null, redrawEdges)]
+
+      if (allowArcHandle && mxUtils.getValue(state.style, mxConstants.STYLE_ROUNDED, false)) {
+        handles.push(createArcHandle(state))
+      }
+
+      return handles
+    }
+  }
+
   let handleFactory = {
+    'label': createArcHandleFunction(),
+    'rectangle': createArcHandleFunction(),
     'note': function (state) {
       return [createHandle(state, ['size'], function (bounds) {
         let size = Math.max(0, Math.min(bounds.width, Math.min(bounds.height, parseFloat(
@@ -373,7 +499,9 @@ if (typeof mxVertexHandler !== 'undefined') {
     // 立体形
     'cube': createCubeHandleFunction(1, CubeShape.prototype.size, false),
     // 平行四边形
-    'parallelogram': createTrapezoidHandleFunction(1)
+    'parallelogram': createTrapezoidHandleFunction(1),
+    // 六边形
+    'hexagon': createDisplayHandleFunction(1, true, 0.5, true)
   }
 
   mxVertexHandler.prototype.createCustomHandles = function () {
@@ -391,7 +519,7 @@ if (typeof mxVertexHandler !== 'undefined') {
         let fn = handleFactory[name]
         console.log(fn)
 
-        if (fn === null && this.state.shape !== null && this.state.shape.isRoundable()) {
+        if ((fn === null || fn === undefined) && this.state.shape !== null && this.state.shape.isRoundable()) {
           fn = handleFactory[mxConstants.SHAPE_RECTANGLE]
         }
 
@@ -426,9 +554,6 @@ if (typeof mxVertexHandler !== 'undefined') {
   // Graph.createHandle = function () { };
   // Graph.handleFactory = {};
 }
-
-// 锚点
-ParallelogramShape.prototype.constraints = mxRectangleShape.prototype.constraints
 
 // Parallelogram Perimeter
 mxPerimeter.ParallelogramPerimeter = function (bounds, vertex, next, orthogonal) {
@@ -480,3 +605,25 @@ mxPerimeter.ParallelogramPerimeter = function (bounds, vertex, next, orthogonal)
 }
 
 mxStyleRegistry.putValue('parallelogramPerimeter', mxPerimeter.ParallelogramPerimeter)
+
+/**
+ * 锚点
+ */
+// 平行四边形
+ParallelogramShape.prototype.constraints = mxRectangleShape.prototype.constraints
+
+// 六角形
+mxHexagon.prototype.constraints = [
+  new mxConnectionConstraint(new mxPoint(0.375, 0), true),
+  new mxConnectionConstraint(new mxPoint(0.5, 0), true),
+  new mxConnectionConstraint(new mxPoint(0.625, 0), true),
+  new mxConnectionConstraint(new mxPoint(0, 0.25), true),
+  new mxConnectionConstraint(new mxPoint(0, 0.5), true),
+  new mxConnectionConstraint(new mxPoint(0, 0.75), true),
+  new mxConnectionConstraint(new mxPoint(1, 0.25), true),
+  new mxConnectionConstraint(new mxPoint(1, 0.5), true),
+  new mxConnectionConstraint(new mxPoint(1, 0.75), true),
+  new mxConnectionConstraint(new mxPoint(0.375, 1), true),
+  new mxConnectionConstraint(new mxPoint(0.5, 1), true),
+  new mxConnectionConstraint(new mxPoint(0.625, 1), true)
+]
