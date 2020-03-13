@@ -14,7 +14,8 @@ const {
   mxStencilRegistry,
   mxEdgeHandler,
   mxPerimeter,
-  mxStyleRegistry
+  mxStyleRegistry,
+  mxRectangleShape
 } = mxgraph
 
 /**
@@ -285,6 +286,43 @@ if (typeof mxVertexHandler !== 'undefined') {
     })
   }
 
+  // 立体形
+  function createCubeHandleFunction (factor, defaultValue, allowArcHandle) {
+    return function (state) {
+      let handles = [createHandle(state, ['size'], function (bounds) {
+        let size = Math.max(0, Math.min(bounds.width, Math.min(bounds.height, parseFloat(
+          mxUtils.getValue(this.state.style, 'size', defaultValue))))) * factor
+
+        return new mxPoint(bounds.x + size, bounds.y + size)
+      }, function (bounds, pt) {
+        this.state.style['size'] = Math.round(Math.max(0, Math.min(Math.min(bounds.width, pt.x - bounds.x),
+          Math.min(bounds.height, pt.y - bounds.y))) / factor)
+      })]
+      if (allowArcHandle && mxUtils.getValue(state.style, mxConstants.STYLE_ROUNDED, false)) {
+        handles.push(createArcHandle(state))
+      }
+      return handles
+    }
+  }
+
+  function createTrapezoidHandleFunction (max) {
+    return function (state) {
+      let handles = [createHandle(state, ['size'], function (bounds) {
+        let size = Math.max(0, Math.min(max, parseFloat(mxUtils.getValue(this.state.style, 'size', TrapezoidShape.prototype.size))))
+
+        return new mxPoint(bounds.x + size * bounds.width * 0.75, bounds.y + bounds.height / 4)
+      }, function (bounds, pt) {
+        this.state.style['size'] = Math.max(0, Math.min(max, (pt.x - bounds.x) / (bounds.width * 0.75)))
+      }, null, true)]
+
+      if (mxUtils.getValue(state.style, mxConstants.STYLE_ROUNDED, false)) {
+        handles.push(createArcHandle(state))
+      }
+
+      return handles
+    }
+  }
+
   let handleFactory = {
     'note': function (state) {
       return [createHandle(state, ['size'], function (bounds) {
@@ -331,13 +369,18 @@ if (typeof mxVertexHandler !== 'undefined') {
       }
 
       return handles
-    }
+    },
+    // 立体形
+    'cube': createCubeHandleFunction(1, CubeShape.prototype.size, false),
+    // 平行四边形
+    'parallelogram': createTrapezoidHandleFunction(1)
   }
 
   mxVertexHandler.prototype.createCustomHandles = function () {
     // Not rotatable means locked
     if (this.state.view.graph.getSelectionCount() === 1) {
       if (this.graph.isCellRotatable(this.state.cell)) {
+        console.log(this.state.cell)
         let name = this.state.style['shape']
 
         if (mxCellRenderer.defaultShapes[name] == null &&
@@ -346,11 +389,14 @@ if (typeof mxVertexHandler !== 'undefined') {
         }
 
         let fn = handleFactory[name]
+        console.log(fn)
 
         if (fn === null && this.state.shape !== null && this.state.shape.isRoundable()) {
           fn = handleFactory[mxConstants.SHAPE_RECTANGLE]
         }
-        if (fn !== null) {
+
+        console.log(fn !== null)
+        if (fn !== null && fn !== undefined) {
           return fn(this.state)
         }
       }
@@ -380,3 +426,57 @@ if (typeof mxVertexHandler !== 'undefined') {
   // Graph.createHandle = function () { };
   // Graph.handleFactory = {};
 }
+
+// 锚点
+ParallelogramShape.prototype.constraints = mxRectangleShape.prototype.constraints
+
+// Parallelogram Perimeter
+mxPerimeter.ParallelogramPerimeter = function (bounds, vertex, next, orthogonal) {
+  let size = ParallelogramShape.prototype.size
+
+  if (vertex !== null) {
+    size = mxUtils.getValue(vertex.style, 'size', size)
+  }
+
+  let x = bounds.x
+  let y = bounds.y
+  let w = bounds.width
+  let h = bounds.height
+
+  let direction = (vertex != null) ? mxUtils.getValue(
+    vertex.style, mxConstants.STYLE_DIRECTION,
+    mxConstants.DIRECTION_EAST) : mxConstants.DIRECTION_EAST
+  let vertical = direction === mxConstants.DIRECTION_NORTH ||
+    direction === mxConstants.DIRECTION_SOUTH
+  let points
+
+  if (vertical) {
+    let dy = h * Math.max(0, Math.min(1, size))
+    points = [
+      new mxPoint(x, y), new mxPoint(x + w, y + dy),
+      new mxPoint(x + w, y + h), new mxPoint(x, y + h - dy), new mxPoint(x, y)
+    ]
+  } else {
+    let dx = w * Math.max(0, Math.min(1, size))
+    points = [
+      new mxPoint(x + dx, y), new mxPoint(x + w, y),
+      new mxPoint(x + w - dx, y + h), new mxPoint(x, y + h), new mxPoint(x + dx, y)
+    ]
+  }
+
+  let cx = bounds.getCenterX()
+  let cy = bounds.getCenterY()
+  let p1 = new mxPoint(cx, cy)
+
+  if (orthogonal) {
+    if (next.x < x || next.x > x + w) {
+      p1.y = next.y
+    } else {
+      p1.x = next.x
+    }
+  }
+
+  return mxUtils.getPerimeterPoint(points, p1, next)
+}
+
+mxStyleRegistry.putValue('parallelogramPerimeter', mxPerimeter.ParallelogramPerimeter)
