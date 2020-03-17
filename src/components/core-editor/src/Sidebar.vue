@@ -136,6 +136,13 @@ export default {
               style: 'ellipse;shape=cloud;whiteSpace=wrap;html=1;'
             },
             {
+              name: '文档',
+              src: require('./images/sidebar/document.svg'),
+              width: 120,
+              height: 80,
+              style: 'shape=document;whiteSpace=wrap;html=1;boundedLbl=1;'
+            },
+            {
               name: '立方体',
               src: require('./images/sidebar/cube.svg'),
               width: 120,

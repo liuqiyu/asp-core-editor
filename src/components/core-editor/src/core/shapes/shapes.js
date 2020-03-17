@@ -1,6 +1,7 @@
 import mxgraph from './../mxgraph'
 import './parallelogram' // 平行四边形
 import { HexagonShape } from './hexagon' // 六边形
+import { DocumentShape } from './document' // 六边形
 import { StepShape } from './step' // 步骤条
 import { TrapezoidShape } from './trapezoid' // 步骤条
 import { CardShape } from './card' // 立方体
@@ -138,6 +139,7 @@ function createDisplayHandleFunction (defaultValue, allowArcHandle, max, redrawE
 
 let handleFactory = {
   'label': createArcHandleFunction(),
+  'ext': createArcHandleFunction(),
   'rectangle': createArcHandleFunction(),
   'note': function (state) {
     return [createHandle(state, ['size'], function (bounds) {
@@ -196,7 +198,16 @@ let handleFactory = {
   // 梯形
   'trapezoid': createTrapezoidHandleFunction(0.5),
   // 步骤条
-  'step': createDisplayHandleFunction(StepShape.prototype.size, true, null, true, StepShape.prototype.fixedSize)
+  'step': createDisplayHandleFunction(StepShape.prototype.size, true, null, true, StepShape.prototype.fixedSize),
+  'document': function (state) {
+    return [createHandle(state, ['size'], function (bounds) {
+      let size = Math.max(0, Math.min(1, parseFloat(mxUtils.getValue(this.state.style, 'size', DocumentShape.prototype.size))))
+
+      return new mxPoint(bounds.x + 3 * bounds.width / 4, bounds.y + (1 - size) * bounds.height)
+    }, function (bounds, pt) {
+      this.state.style['size'] = Math.max(0, Math.min(1, (bounds.y + bounds.height - pt.y) / bounds.height))
+    })]
+  }
 }
 
 mxVertexHandler.prototype.createCustomHandles = function () {
@@ -212,13 +223,11 @@ mxVertexHandler.prototype.createCustomHandles = function () {
       }
 
       let fn = handleFactory[name]
-      console.log(fn)
 
       if ((fn === null || fn === undefined) && this.state.shape !== null && this.state.shape.isRoundable()) {
         fn = handleFactory[mxConstants.SHAPE_RECTANGLE]
       }
 
-      console.log(fn !== null)
       if (fn !== null && fn !== undefined) {
         return fn(this.state)
       }
