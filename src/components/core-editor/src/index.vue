@@ -1,7 +1,6 @@
 <template>
   <div id="graph-wrapper">
-    <Sidebar v-if="setEnabled"
-             :coreEditor="coreEditor"
+    <Sidebar :coreEditor="coreEditor"
              id="graph-sidebar">
     </Sidebar>
     <div id="graph-map">
@@ -16,15 +15,13 @@
              ref="graph"
              class="graph-container">
         </div>
-        <div v-if="setEnabled"
-             id="outlineContainer"
+        <div id="outlineContainer"
              ref="outlineContainer"
              style="z-index:1;position:absolute;overflow:hidden;top:0px;right:0px;width:220px;height:160px;background:#fff;border: 3px solid black;">
         </div>
       </div>
     </div>
-    <div id="graph-sidebar"
-         v-if="setEnabled">
+    <div id="graph-sidebar">
       <components :is="currentFormat"
                   :coreEditor="coreEditor"
                   ref="format"></components>
@@ -43,10 +40,6 @@ const { mxEvent, mxUtils } = CoreGraph
 export default {
   name: 'asp-core-editor',
   props: {
-    setEnabled: {
-      type: Boolean,
-      default: () => true
-    },
     data: {
       type: String,
       default: () => ''
@@ -80,7 +73,7 @@ export default {
 
     let outlineContainer = this.$refs.outlineContainer
 
-    this.coreEditor = new CoreEditor(container, this.setEnabled)
+    this.coreEditor = new CoreEditor(container)
     let graph = this.coreEditor.editor.graph
     this.graph = graph
     OutLine.init(graph, outlineContainer)
