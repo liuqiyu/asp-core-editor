@@ -34,7 +34,8 @@ div.mxWindow {
   border: 1px solid #c3c3c3;
   position: absolute;
   overflow: hidden;
-  z-index: 1;
+  background: #fff;
+  z-index: 888;
 }
 
 table.mxWindow {

@@ -18,6 +18,35 @@ export default function Command (CoreEditor) {
   this.graph = this.editor.graph
 }
 
+let aspCustomTag = 'asp_custom_'
+
+// 设置 自定义字段
+Command.prototype.setCustomValue = function (keyword, data) {
+  keyword = `${aspCustomTag}${keyword}`
+  this.graph.getModel().beginUpdate()
+  try {
+    this.graph.setCellStyles(
+      keyword,
+      data,
+      this.graph.getSelectionCells()
+    )
+  } finally {
+    this.graph.getModel().endUpdate()
+  }
+}
+
+// 获取 自定义字段
+Command.prototype.getCustomValue = function (keyword) {
+  keyword = `${aspCustomTag}${keyword}`
+  let cells = this.graph.getSelectionCells()
+  if (cells.length > 1) {
+    return null
+  } else if (cells.length === 1) {
+    const ss = this.getSelectionState()
+    return ss[keyword]
+  }
+}
+
 // 更新 样式
 Command.prototype.updateStyleHandler = function (keyword, data) {
   this.graph.getModel().beginUpdate()

@@ -94,6 +94,12 @@
 
     <div class="separator"></div>
 
+    <el-button @click="handleBind"
+               type="text"
+               title="绑定"
+               :disabled="!isSelect"
+               icon="iconfont iconbaocun2"></el-button>
+
     <el-button @click="handleSave"
                type="text"
                title="保存"
@@ -113,6 +119,7 @@
                :close-on-click-modal="false"
                :width="dialogWidth">
       <component :is="currentComponent"
+                 :coreEditor="coreEditor"
                  @importXml="renderXml"
                  @close="close"></component>
     </el-dialog>
@@ -123,13 +130,15 @@
 import importXml from './components/dialog/importXml'
 import help from './components/dialog/help'
 import about from './components/dialog/about'
+import bind from './components/dialog/bind'
 
 export default {
   name: 'Toolbar',
   components: {
     importXml,
     help,
-    about
+    about,
+    bind
   },
   props: ['coreEditor'],
   computed: {
@@ -193,6 +202,12 @@ export default {
     },
     renderXml (xml) {
       this.$emit('renderXml', xml)
+    },
+    handleBind () {
+      this.dialogTitle = '绑定'
+      this.dialogVisible = true
+      this.dialogWidth = '500px'
+      this.currentComponent = 'bind'
     }
   }
 }
